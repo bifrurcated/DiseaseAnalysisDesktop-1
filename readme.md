@@ -20,7 +20,7 @@
 
 ---
 
-##Front-end
+## Front-end
 Команда front-end работает с папкой DiseaseAnalysisDesktop/src/main/resources/views/.
 Задача фронта разработать .fxml файлы с для реализации пользовательского интерфейса.
 .fxml файлы будут отвечать за различные сцены в приложении.
@@ -47,7 +47,7 @@ Skeleton для удобства разработки back-end.
 
 ---
 
-##Back-end
+## Back-end
 Команда front-end работает с папкой DiseaseAnalysisDesktop/src/main/java/
 
 
@@ -62,7 +62,7 @@ Skeleton для удобства разработки back-end.
 
 ---
 
-##BD
+## BD
 Команда bd работает с папкой DiseaseAnalysisDesktop/src/main/java/db/
 
 Задачи:
@@ -75,9 +75,9 @@ Skeleton для удобства разработки back-end.
 
 
 
-##В репозитории представлен небольшой пример работы проекта. 
+## В репозитории представлен небольшой пример работы проекта. 
 
-#Перед этим измените поле PATH в классе UserDAO(DiseaseAnalysisDesktop/src/main/java/dao/), которое отвечает за путь к бд, на соответствующий абсолютный путь у себя  
+# Перед этим измените поле PATH в классе UserDAO(DiseaseAnalysisDesktop/src/main/java/dao/), которое отвечает за путь к бд, на соответствующий абсолютный путь у себя  
 
 
 Main класс для запуска примера находится по пути DiseaseAnalysisDesktop/src/main/java/.
