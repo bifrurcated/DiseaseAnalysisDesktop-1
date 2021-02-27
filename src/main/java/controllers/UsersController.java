@@ -15,25 +15,18 @@ import models.User;
 
 public class UsersController {
     private final UserDAO userDAO;
-    @FXML
-    private ResourceBundle resources;
 
-    @FXML
-    private URL location;
-
-    @FXML
-    private Pane pane;
-
-    @FXML
-    private ListView<String> listNames;
+    @FXML private ResourceBundle resources;
+    @FXML private URL location;
+    @FXML private Pane pane;
+    @FXML private ListView<String> listNames;
 
     private ObservableList<String> names;
+
     @FXML
     void initialize() {
         assert pane != null : "fx:id=\"textField\" was not injected: check your FXML file 'sample.fxml'.";
         assert listNames != null : "fx:id=\"listNames\" was not injected: check your FXML file 'sample.fxml'.";
-
-
     }
 
     public UsersController(){
@@ -42,11 +35,11 @@ public class UsersController {
 
 
     }
-    @FXML
-    void onClick(MouseEvent event) {
+
+    public void onClick(MouseEvent mouseEvent) {
         int count = 0;
         for(User element:userDAO.showAll()){
-            if(!names.contains(element)) {
+            if(!names.contains(element.getName())) {
                 names.add(element.getName());
                 ++count;
             }
@@ -55,6 +48,5 @@ public class UsersController {
             ObservableList<String> additionNames = FXCollections.observableArrayList(names.subList(names.size()-count, names.size()));
             listNames.setItems(additionNames);
         }
-
     }
 }
