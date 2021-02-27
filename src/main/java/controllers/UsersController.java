@@ -25,8 +25,8 @@ public class UsersController {
 
     @FXML
     void initialize() {
-        //assert pane != null : "fx:id=\"textField\" was not injected: check your FXML file 'sample.fxml'.";
-        //assert listNames != null : "fx:id=\"listNames\" was not injected: check your FXML file 'sample.fxml'.";
+        assert pane != null : "fx:id=\"textField\" was not injected: check your FXML file 'sample.fxml'.";
+        assert listNames != null : "fx:id=\"listNames\" was not injected: check your FXML file 'sample.fxml'.";
     }
 
     public UsersController(){
