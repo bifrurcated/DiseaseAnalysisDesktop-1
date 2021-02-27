@@ -1,13 +1,14 @@
 package dao;
 import models.User;
 
+import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO {
     private static Connection connection;
-    private static final String PATH = "C:\\Users\\kerya\\Documents\\DiseaseAnalysisDesktop\\src\\main\\java\\db\\test_db";
+    private static final String PATH = new File("").getAbsolutePath()+"\\src\\main\\java\\db\\test_db";
     private static final String URI = "jdbc:sqlite:" + PATH ;
 
     static {
