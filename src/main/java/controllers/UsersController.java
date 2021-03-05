@@ -27,26 +27,16 @@ public class UsersController {
     void initialize() {
         assert pane != null : "fx:id=\"textField\" was not injected: check your FXML file 'sample.fxml'.";
         assert listNames != null : "fx:id=\"listNames\" was not injected: check your FXML file 'sample.fxml'.";
+        listNames.setItems(names);
     }
 
     public UsersController(){
         this.userDAO = new UserDAO();
         names = FXCollections.observableArrayList();
-
-
     }
-
     public void onClick(MouseEvent mouseEvent) {
-        int count = 0;
-        for(User element:userDAO.showAll()){
-            if(!names.contains(element.getName())) {
-                names.add(element.getName());
-                ++count;
-            }
-        }
-        if (count!=0) {
-            ObservableList<String> additionNames = FXCollections.observableArrayList(names.subList(names.size()-count, names.size()));
-            listNames.setItems(additionNames);
-        }
+        userDAO.showAll().stream()
+                .filter(user -> !names.contains(user.getName()))
+                .forEach(user -> names.add(user.getName()));
     }
 }
