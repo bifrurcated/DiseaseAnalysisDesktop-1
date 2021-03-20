@@ -11,11 +11,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import ru.vvsu.diseaseanalysisdes.io.SQLite;
+import ru.vvsu.diseaseanalysisdes.managers.SQLiteManager;
 
 
 public class UsersController implements Initializable {
-    private final SQLite dataBase;
+    private final SQLiteManager dataBase;
 
     @FXML private Pane pane;
     @FXML private ListView<String> listNames;
@@ -23,7 +23,7 @@ public class UsersController implements Initializable {
     private ObservableList<String> names;
 
     public UsersController(){
-        dataBase = new SQLite();
+        dataBase = new SQLiteManager();
     }
 
     @Override

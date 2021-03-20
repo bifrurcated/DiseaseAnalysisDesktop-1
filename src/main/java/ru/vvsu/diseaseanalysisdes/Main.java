@@ -6,7 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import ru.vvsu.diseaseanalysisdes.helpers.FileHelper;
-import ru.vvsu.diseaseanalysisdes.io.SQLite;
 
 public class Main extends Application {
 

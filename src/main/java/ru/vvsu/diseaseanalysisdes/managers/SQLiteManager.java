@@ -1,4 +1,4 @@
-package ru.vvsu.diseaseanalysisdes.io;
+package ru.vvsu.diseaseanalysisdes.managers;
 
 import ru.vvsu.diseaseanalysisdes.Settings;
 import ru.vvsu.diseaseanalysisdes.helpers.FileHelper;
@@ -6,11 +6,11 @@ import ru.vvsu.diseaseanalysisdes.helpers.FileHelper;
 import java.io.File;
 import java.sql.*;
 
-public class SQLite {
+public class SQLiteManager {
 
     private Connection connection;
 
-    public SQLite() {
+    public SQLiteManager() {
         connect();
     }
 
@@ -32,17 +32,16 @@ public class SQLite {
         }
     }
 
-    public boolean executeQuery(String sql, Object... args) {
+    public int executeQuery(String sql, Object... args) {
         try(PreparedStatement ps = getConnection().prepareStatement(sql)) {
             for(int i = 0; i < args.length; i++) {
                 ps.setObject(i+1, args[i]);
             }
-            ps.executeUpdate();
-            return true;
+            return ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return 0;
     }
 
     public ResultSet getResultSet(String sql, Object... args) {

@@ -40,7 +40,7 @@ public class FileHelper {
     public static File loadFile(String fileName, File dir, String path, String resultPath) {
         File file = new File(dir, fileName);
         if(!file.exists()) {
-            InputStream inputStream = Main.class.getResourceAsStream(path);
+            InputStream inputStream = Main.instance.getClass().getResourceAsStream(path);
 
             try {
                 FileOutputStream outputStream = new FileOutputStream(resultPath);
