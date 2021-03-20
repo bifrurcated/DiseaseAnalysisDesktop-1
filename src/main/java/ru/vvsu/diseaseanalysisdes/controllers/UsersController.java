@@ -38,13 +38,13 @@ public class UsersController implements Initializable {
         try{
             ResultSet resultSet = dataBase.getResultSet("SELECT * FROM users;");
             while (resultSet.next()) {
-                System.out.println(1);
                 String name = resultSet.getString("name");
                 if(!names.contains(name)){
                     names.add(name);
                 }
             }
             resultSet.close();
+            resultSet.getStatement().close();
         } catch (SQLException sqlException){
             sqlException.printStackTrace();
         }
