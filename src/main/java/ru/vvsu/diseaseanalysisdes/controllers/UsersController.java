@@ -1,10 +1,9 @@
-package controllers;
+package ru.vvsu.diseaseanalysisdes.controllers;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import dao.DatabaseRepository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,10 +11,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import ru.vvsu.diseaseanalysisdes.io.SQLite;
 
 
 public class UsersController implements Initializable {
-    private final DatabaseRepository dataBase;
+    private final SQLite dataBase;
 
     @FXML private Pane pane;
     @FXML private ListView<String> listNames;
@@ -23,7 +23,7 @@ public class UsersController implements Initializable {
     private ObservableList<String> names;
 
     public UsersController(){
-        dataBase = new DatabaseRepository();
+        dataBase = new SQLite();
     }
 
     @Override
@@ -32,23 +32,18 @@ public class UsersController implements Initializable {
         assert listNames != null : "fx:id=\"listNames\" was not injected: check your FXML file 'sample.fxml'.";
         names = FXCollections.observableArrayList();
         listNames.setItems(names);
-        if(dataBase.connect()){
-            System.out.println("База данных подключена");
-        }else{
-            System.out.println("Нет подключения к базе данных");
-        }
     }
 
     public void onClick(MouseEvent mouseEvent) {
         try{
-            ResultSet resultSet = dataBase.select("SELECT * FROM users;");
+            ResultSet resultSet = dataBase.getResultSet("SELECT * FROM users;");
             while (resultSet.next()) {
+                System.out.println(1);
                 String name = resultSet.getString("name");
                 if(!names.contains(name)){
                     names.add(name);
                 }
             }
-            resultSet.getStatement().close();
             resultSet.close();
         } catch (SQLException sqlException){
             sqlException.printStackTrace();
