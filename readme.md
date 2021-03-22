@@ -33,7 +33,7 @@
 Skeleton для удобства разработки back-end.
 
 
-НЕ ЗАБУДЬТЕ ОТРЕДАКТИРОВАТЬ В .fxml путь к контроллерам(Например: x:controller="controllers.UsersController")
+НЕ ЗАБУДЬТЕ ОТРЕДАКТИРОВАТЬ В .fxml путь к контроллерам(Например: x:controller="ru.vvsu.diseaseanalysisdes.controllers.UsersController")
 
 
 Обязательно установите SceneBuilder именно под java 8.
@@ -66,7 +66,7 @@ Skeleton для удобства разработки back-end.
 ---
 
 ## BD
-Команда bd работает с папкой DiseaseAnalysisDesktop/src/main/java/db/
+Команда bd работает с папкой DiseaseAnalysisDesktop/src/main/java/ru.vvsu.diseaseanalysisdes.db/
 
 Задачи:
 
@@ -78,20 +78,5 @@ Skeleton для удобства разработки back-end.
 
 
 ---
-
-
-
-## В репозитории представлен небольшой пример работы проекта. 
-
-# Перед этим измените поле PATH в классе UserDAO(DiseaseAnalysisDesktop/src/main/java/dao/), которое отвечает за путь к бд, на соответствующий абсолютный путь у себя  
-
-
-Main класс для запуска примера находится по пути DiseaseAnalysisDesktop/src/main/java/.
-
-
-Здесь обычная выгрузка данных из бд по нажатию кнопки. Вся логига запросов к бд находится в классе UserDAO.
-В качестве модели я взял обычного User. В UsersController вся работа с графическими элементами и событиями.
-Вы также можете в режиме реального времени добавить ещё данные в бд и при повторном нажатии на кнопку 
-новые данные выгрузятся на экран. 
 
 
