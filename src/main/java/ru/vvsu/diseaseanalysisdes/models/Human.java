@@ -64,19 +64,6 @@ public class Human implements Serializable {
         this.paramC = c;
     }
 
-    public static Human serializeFromFile() throws ClassNotFoundException {
-        Human objectClass = null;
-        try {
-        ObjectInputStream objectInputStream = new ObjectInputStream(
-                new FileInputStream("person.out"));
-            objectClass = (Human) objectInputStream.readObject();
-        objectInputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return objectClass;
-    }
-
     public String getString(){
         String buf = ("A:\""+this.paramA+"\"\nB:\""+this.paramB+"\"\nC:\""+this.paramC+"\"");
         System.out.println("A:\""+this.paramA+"\"\nB:\""+this.paramB+"\"\nC:\""+this.paramC+"\"");
