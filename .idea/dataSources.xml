@@ -7,5 +7,11 @@
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:C:\Users\kerya\Documents\DiseaseAnalysisDesktop\src\db\test_db</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="database" uuid="87923a77-cd79-49af-a6ee-76e552964b82">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:C:\Users\kerya\Documents\DiseaseAnalysisDesktop\src\main\java\ru\vvsu\diseaseanalysisdes\db\database.db</jdbc-url>
+    </data-source>
   </component>
 </project>
