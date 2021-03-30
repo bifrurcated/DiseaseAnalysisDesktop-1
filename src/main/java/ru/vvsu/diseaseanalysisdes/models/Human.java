@@ -5,6 +5,8 @@ import java.io.*;
 
 
 public class Human implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String paramA, paramB, paramC;
     private String gender,
             meatEat,
