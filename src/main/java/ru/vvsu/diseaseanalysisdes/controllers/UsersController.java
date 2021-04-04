@@ -1,12 +1,4 @@
 package ru.vvsu.diseaseanalysisdes.controllers;
-import java.io.File;
-import java.io.Serializable;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,11 +8,19 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import ru.vvsu.diseaseanalysisdes.Settings;
+import ru.vvsu.diseaseanalysisdes.helpers.FileHelper;
 import ru.vvsu.diseaseanalysisdes.managers.SQLiteManager;
+import ru.vvsu.diseaseanalysisdes.models.Algo;
 import ru.vvsu.diseaseanalysisdes.models.Human;
-import ru.vvsu.diseaseanalysisdes.models.SaveUserData;
+
+import java.io.File;
+import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.ResourceBundle;
 
 
 public class UsersController implements Initializable {
@@ -30,6 +30,7 @@ public class UsersController implements Initializable {
     @FXML private ListView<String> listNames;
 
     private ObservableList<String> names;
+    private Field field;
 
     public UsersController(){
         dataBase = new SQLiteManager();
@@ -45,18 +46,31 @@ public class UsersController implements Initializable {
 
     public void onClick(MouseEvent mouseEvent) {
         /*createFileSave(new Human("a","w","ac"));
-        Human human = (Human) openFileSave();
+        Optional<Human> human= Optional.ofNullable((Human) openFileSave());
         System.out.println(human.toString());*/
+        Human user = new Human();
+        user.height = "150";
+        user.age = "28";
+        user.weight = "55";
+        Algo algo = new Algo(15); // задаём процент
+        StringBuilder sb = algo.getQuery(user);
+
+        System.out.println(sb);
         try{
-            ResultSet resultSet = dataBase.getResultSet("SELECT * FROM users;");
+            // И в запросе используем
+            ResultSet resultSet = dataBase.getResultSet(
+                    "SELECT * FROM med_card where "+sb+";");
             while (resultSet.next()) {
-                String name = resultSet.getString("name");
-                if(!names.contains(name)){
-                    names.add(name);
+                Human human = new Human();
+                human.height = resultSet.getString("height");
+                if(!names.contains(human.height)){
+                    names.add(human.height);
                 }
             }
+            System.out.println(names);
             resultSet.close();
             resultSet.getStatement().close();
+
         } catch (SQLException sqlException){
             sqlException.printStackTrace();
         }
@@ -65,38 +79,35 @@ public class UsersController implements Initializable {
     public void createFileSave(Serializable userData) {
         FileChooser configFileChooser = new FileChooser();
         configFileChooser.setTitle("Сохранить");
-        SaveUserData saveUserData = new SaveUserData();
-        saveUserData.createDir(Paths.get(Settings.DEFAULT_SAVE_PATH));
         configFileChooser.setInitialDirectory(
-                new File(Settings.DEFAULT_SAVE_PATH)
+                new File(FileHelper.getDir().getAbsolutePath())
         );
         configFileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("SER", "*.ser")
         );
         File configFile = configFileChooser.showSaveDialog(null);
         if(configFile!=null){
-            System.out.println(configFile.getAbsolutePath());
-            saveUserData.exportSave(userData, configFile.getAbsolutePath());
+            System.out.println(configFile.getName());
+            FileHelper.serialize(userData, configFile.getName());
             System.out.println(configFile.getParent());
         }
     }
     public Object openFileSave() {
         FileChooser configFileChooser = new FileChooser();
         configFileChooser.setTitle("Выбор сохранения");
-        SaveUserData saveUserData = new SaveUserData();
-        saveUserData.createDir(Paths.get(Settings.DEFAULT_SAVE_PATH));
         configFileChooser.setInitialDirectory(
-                new File(Settings.DEFAULT_SAVE_PATH)
+                new File(FileHelper.getDir().getAbsolutePath())
         );
         configFileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("SER", "*.ser"),
                 new FileChooser.ExtensionFilter("ALL", "*.*")
         );
         File configFile = configFileChooser.showOpenDialog(null);
+
         if(configFile!=null){
-            System.out.println(configFile.getAbsolutePath());
+            System.out.println(configFile.getName());
             System.out.println(configFile.getParent());
-            return saveUserData.importSave(configFile.getAbsolutePath());
+            return FileHelper.deserialize(configFile.getName());
         }
         return null;
     }
