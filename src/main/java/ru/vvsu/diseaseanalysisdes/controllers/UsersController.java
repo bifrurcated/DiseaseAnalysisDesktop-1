@@ -19,7 +19,9 @@ import java.lang.reflect.Field;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -30,6 +32,7 @@ public class UsersController implements Initializable {
     @FXML private ListView<String> listNames;
 
     private ObservableList<String> names;
+    private List<Human> humanList;
     private Field field;
 
     public UsersController(){
@@ -41,6 +44,7 @@ public class UsersController implements Initializable {
         assert pane != null : "fx:id=\"textField\" was not injected: check your FXML file 'sample.fxml'.";
         assert listNames != null : "fx:id=\"listNames\" was not injected: check your FXML file 'sample.fxml'.";
         names = FXCollections.observableArrayList();
+        humanList = new ArrayList<>();
         listNames.setItems(names);
     }
 
@@ -52,8 +56,10 @@ public class UsersController implements Initializable {
         user.height = "150";
         user.age = "28";
         user.weight = "55";
-        Algo algo = new Algo(15); // задаём процент
-        StringBuilder sb = algo.getQuery(user);
+        user.sex = "1";
+        user.sleep = "8";
+        Algo algo = new Algo(15); // задаём процент выборки
+        StringBuilder sb = algo.getQuerySelections(user);
 
         System.out.println(sb);
         try{
@@ -62,7 +68,15 @@ public class UsersController implements Initializable {
                     "SELECT * FROM med_card where "+sb+";");
             while (resultSet.next()) {
                 Human human = new Human();
-                human.height = resultSet.getString("height");
+                Arrays.stream(human.getClass().getFields()).forEach(val -> {
+                    try {
+                        val.set(human,resultSet.getString(val.getName()));
+                    } catch (IllegalAccessException | SQLException e) {
+                        e.printStackTrace();
+                    }
+                }); //каждой public переменной класса присваиваем значение из таблицы
+                humanList.add(human);
+
                 if(!names.contains(human.height)){
                     names.add(human.height);
                 }
