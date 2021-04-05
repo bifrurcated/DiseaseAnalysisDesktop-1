@@ -52,17 +52,18 @@ public class UsersController implements Initializable {
         Optional<Human> human= Optional.ofNullable((Human) openFileSave());
         System.out.println(human.toString());*/
         Human user = new Human();
-        user.height = "150";
+        user.height = "172";
         user.age = "28";
-        user.weight = "55";
+        user.weight = "60";
         user.sex = "2";
         user.sleep = "7";
-        Algo algo = new Algo(15); // задаём процент выборки
+        Algo algo = new Algo(15); // Р·Р°РґР°С‘Рј РїСЂРѕС†РµРЅС‚ РІС‹Р±РѕСЂРєРё
+        System.out.println(algo.getIndexMassBody(user.height, user.weight));
         StringBuilder sb = algo.getQuerySelections(user);
 
         System.out.println(sb);
         try{
-            // И в запросе используем
+            // Р РїРѕС‚РѕРј РёСЃРїРѕР»СЊР·СѓРµРј РІ Р·Р°РїСЂРѕСЃРµ
             ResultSet resultSet = dataBase.getResultSet(
                     "SELECT * FROM med_card where "+sb+";");
             while (resultSet.next()) {
@@ -73,7 +74,7 @@ public class UsersController implements Initializable {
                     } catch (IllegalAccessException | SQLException e) {
                         e.printStackTrace();
                     }
-                }); //каждой public переменной класса присваиваем значение из таблицы
+                }); // РєР°Р¶РґРѕР№ public РїРµСЂРµРјРµРЅРЅРѕР№ РїСЂРёСЃРІР°РёРІР°РµРј Р·РЅР°С‡РµРЅРёРµ РёР· РІС‹Р±РѕСЂРєРё
                 humanList.add(human);
 
                 if(!names.contains(human.height)){
@@ -91,7 +92,7 @@ public class UsersController implements Initializable {
 
     public void createFileSave(Serializable userData) {
         FileChooser configFileChooser = new FileChooser();
-        configFileChooser.setTitle("Сохранить");
+        configFileChooser.setTitle("РЎРѕС…СЂР°РЅРёС‚СЊ");
         configFileChooser.setInitialDirectory(
                 new File(FileHelper.getDir().getAbsolutePath())
         );
@@ -107,7 +108,7 @@ public class UsersController implements Initializable {
     }
     public Object openFileSave() {
         FileChooser configFileChooser = new FileChooser();
-        configFileChooser.setTitle("Выбор сохранения");
+        configFileChooser.setTitle("Р’С‹Р±СЂР°С‚СЊ С„Р°Р№Р»");
         configFileChooser.setInitialDirectory(
                 new File(FileHelper.getDir().getAbsolutePath())
         );

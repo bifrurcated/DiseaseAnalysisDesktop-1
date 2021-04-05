@@ -56,4 +56,11 @@ public class Algo {
         sb.delete(sb.length()-5,sb.length());
         return sb;
     }
+
+    public String getIndexMassBody(String height, String weight){
+        double h = Double.parseDouble(height);
+        double w = Double.parseDouble(weight);
+        double IMB = 10000*w/(h*h);
+        return String.valueOf(IMB);
+    }
 }
