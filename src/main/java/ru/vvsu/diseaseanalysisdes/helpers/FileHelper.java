@@ -3,10 +3,7 @@ package ru.vvsu.diseaseanalysisdes.helpers;
 import ru.vvsu.diseaseanalysisdes.Main;
 import ru.vvsu.diseaseanalysisdes.Settings;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 public class FileHelper {
 
@@ -63,5 +60,30 @@ public class FileHelper {
             getDir().mkdir();
         }
         //todo something
+    }
+
+    public static void serialize(Serializable object, String fileName) {
+        try (
+                FileOutputStream outputStream = new FileOutputStream(getDir() + File.separator + fileName);
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)
+            )
+        {
+            objectOutputStream.writeObject(object);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Object deserialize(String fileName) {
+        try(
+                FileInputStream fileInputStream = new FileInputStream(getDir() + File.separator + fileName);
+                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)
+            )
+        {
+            return objectInputStream.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

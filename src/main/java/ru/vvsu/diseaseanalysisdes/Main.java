@@ -11,7 +11,6 @@ public class Main extends Application {
 
     public static Main instance;
 
-
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("/views/sample.fxml"));
