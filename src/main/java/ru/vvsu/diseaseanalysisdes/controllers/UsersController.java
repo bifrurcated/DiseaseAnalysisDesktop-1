@@ -33,7 +33,6 @@ public class UsersController implements Initializable {
 
     private ObservableList<String> names;
     private List<Human> humanList;
-    private Field field;
 
     public UsersController(){
         dataBase = new SQLiteManager();
@@ -56,8 +55,8 @@ public class UsersController implements Initializable {
         user.height = "150";
         user.age = "28";
         user.weight = "55";
-        user.sex = "1";
-        user.sleep = "8";
+        user.sex = "2";
+        user.sleep = "7";
         Algo algo = new Algo(15); // задаём процент выборки
         StringBuilder sb = algo.getQuerySelections(user);
 
