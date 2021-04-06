@@ -2,6 +2,7 @@ package ru.vvsu.diseaseanalysisdes.models;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 
 public class Algo {
     private double percent; //value from 0 to 100
@@ -23,11 +24,11 @@ public class Algo {
     }
 
     private String getMinK(String val){
-        return String.valueOf(Double.parseDouble(val)*(1-(percent/100)));
+        return new BigDecimal(val).multiply(BigDecimal.valueOf(1-(percent/100))).toString();
     }
 
     private String getMaxK(String val){
-        return String.valueOf(Double.parseDouble(val)*(1+(percent/100)));
+        return new BigDecimal(val).multiply(BigDecimal.valueOf(1+(percent/100))).toString();
     }
 
     public StringBuilder getQuerySelections(Serializable user){
