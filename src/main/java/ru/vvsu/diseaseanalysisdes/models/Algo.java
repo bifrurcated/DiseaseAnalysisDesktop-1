@@ -72,6 +72,13 @@ public class Algo {
         return String.valueOf(IMB);
     }
 
+    /**
+     * Функция для подсчёта вероятности
+     * @param list список людей попавших под выборку
+     * @return null if list.size() < 2 else Map ключом является имя болезни,
+     * а значение вероятность того, что ты здоров. Вероятность того, что ты болен
+     * можно посчитать как 1 - вероятность того, что ты здоров.
+     */
     public Map<String, Double> getProbabilityHealthy(List<Human> list){
         Map<String,Integer> map = new HashMap<>(18);
         if(list.size() > 2) {
@@ -90,7 +97,7 @@ public class Algo {
                                             }else{
                                                 i = 1;
                                             }
-                                            map.put(str+"1",i);
+                                            map.put(str+"1",i); //количество здоровых
                                         }
                                         else if(value.equals("2") || value.equals("3")){
                                             int i;
@@ -99,7 +106,7 @@ public class Algo {
                                             }else{
                                                 i = 1;
                                             }
-                                            map.put(str+"23",i);
+                                            map.put(str+"23",i); //количество больных
                                         }
                                     }
                                 } catch (IllegalAccessException e) {
@@ -109,7 +116,7 @@ public class Algo {
                         }
                     })
             );
-            Map<String,Double> probabilityMap = new HashMap<>();
+            Map<String,Double> probabilityMap = new HashMap<>(9);
             for (String dis: diseases) {
                 int countHealthy = map.get(dis+"1");
                 int countDisease = map.get(dis+"23");
