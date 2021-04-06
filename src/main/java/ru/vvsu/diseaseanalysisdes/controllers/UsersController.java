@@ -15,7 +15,6 @@ import ru.vvsu.diseaseanalysisdes.models.Human;
 
 import java.io.File;
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -47,23 +46,24 @@ public class UsersController implements Initializable {
         listNames.setItems(names);
     }
 
+    private Algo algo = new Algo(15);// задаём процент выборки
     public void onClick(MouseEvent mouseEvent) {
         /*createFileSave(new Human("a","w","ac"));
         Optional<Human> human= Optional.ofNullable((Human) openFileSave());
         System.out.println(human.toString());*/
         Human user = new Human();
-        user.height = "172";
+        user.height = "160";
         user.age = "28";
         user.weight = "60";
         user.sex = "2";
-        user.sleep = "7";
-        Algo algo = new Algo(15); // задаём процент выборки
+
         System.out.println(algo.getIndexMassBody(user.height, user.weight));
         StringBuilder sb = algo.getQuerySelections(user);
 
         System.out.println(sb);
         try{
             // И потом используем в запросе
+            int count = 0;
             ResultSet resultSet = dataBase.getResultSet(
                     "SELECT * FROM med_card where "+sb+";");
             while (resultSet.next()) {
@@ -76,10 +76,14 @@ public class UsersController implements Initializable {
                     }
                 }); // каждой public переменной присваиваем значение из выборки
                 humanList.add(human);
-
+                count++;
                 if(!names.contains(human.height)){
                     names.add(human.height);
                 }
+            }
+            if(count < 1){algo.setPercent(algo.getPercent()+1);}//как-то так увеличиваем процент выборки
+            if(count > 2){
+                System.out.println(algo.getProbabilityHealthy(humanList));
             }
             System.out.println(names);
             resultSet.close();

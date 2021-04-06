@@ -2,10 +2,16 @@ package ru.vvsu.diseaseanalysisdes.models;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Algo {
     private double percent; //value from 0 to 100
     private final String[] selections;
+    private final String[] diseases;
 
     public Algo (){ this(0); }
     public Algo (double percent){
@@ -13,6 +19,8 @@ public class Algo {
         selections = new String[]{"height","weight","waist","hips","age","walk","cigarettes",
         "average_systolic","average_diastolic","average_heart_rate","total_cholesterol","hdl","lpa",
         "apob","glucose","creatinine","uric_acid","crp","insulin","tsh","probnp"};
+        diseases = new String[]{"osteochondrosis","rheumatoid_arthritis","stroke","myocardial_infarction",
+                "coronary_heart_disease","arrhythmia","kidney_disease","thyroid_disease"};
     }
 
     public double getPercent(){
@@ -23,11 +31,11 @@ public class Algo {
     }
 
     private String getMinK(String val){
-        return String.valueOf(Double.parseDouble(val)*(1-(percent/100)));
+        return new BigDecimal(val).multiply(BigDecimal.valueOf(1-(percent/100))).toString();
     }
 
     private String getMaxK(String val){
-        return String.valueOf(Double.parseDouble(val)*(1+(percent/100)));
+        return new BigDecimal(val).multiply(BigDecimal.valueOf(1+(percent/100))).toString();
     }
 
     public StringBuilder getQuerySelections(Serializable user){
@@ -62,5 +70,62 @@ public class Algo {
         double w = Double.parseDouble(weight);
         double IMB = 10000*w/(h*h);
         return String.valueOf(IMB);
+    }
+
+    /**
+     * Функция для подсчёта вероятности
+     * @param list список людей попавших под выборку
+     * @return null if list.size() < 2 else Map ключом является имя болезни,
+     * а значение вероятность того, что ты здоров. Вероятность того, что ты болен
+     * можно посчитать как 1 - вероятность того, что ты здоров.
+     */
+    public Map<String, Double> getProbabilityHealthy(List<Human> list){
+        Map<String,Integer> map = new HashMap<>(18);
+        if(list.size() > 2) {
+            list.forEach(human ->
+                    Arrays.stream(human.getClass().getFields())
+                    .forEach(var -> {
+                        for (String str: diseases) {
+                            if(var.getName().equals(str)){
+                                try {
+                                    String value = (String)var.get(human);
+                                    if(value != null){
+                                        if(value.equals("1")){
+                                            int i;
+                                            if(map.containsKey(str+"1")){
+                                                i = 1+map.get(str+"1");
+                                            }else{
+                                                i = 1;
+                                            }
+                                            map.put(str+"1",i); //количество здоровых
+                                        }
+                                        else if(value.equals("2") || value.equals("3")){
+                                            int i;
+                                            if(map.containsKey(str+"23")){
+                                                i = 1+map.get(str+"23");
+                                            }else{
+                                                i = 1;
+                                            }
+                                            map.put(str+"23",i); //количество больных
+                                        }
+                                    }
+                                } catch (IllegalAccessException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    })
+            );
+            Map<String,Double> probabilityMap = new HashMap<>(9);
+            for (String dis: diseases) {
+                int countHealthy = map.get(dis+"1");
+                int countDisease = map.get(dis+"23");
+                int totalCount = countHealthy+countDisease;
+                BigDecimal decimal = BigDecimal.valueOf(countHealthy).divide(BigDecimal.valueOf(totalCount),2,BigDecimal.ROUND_UP);
+                probabilityMap.put(dis,decimal.doubleValue());
+            }
+            return probabilityMap;
+        }
+        return null;
     }
 }
