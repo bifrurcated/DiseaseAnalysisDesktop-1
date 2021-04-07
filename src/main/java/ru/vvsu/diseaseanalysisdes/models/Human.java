@@ -5,77 +5,55 @@ import java.io.*;
 
 
 public class Human implements Serializable {
-    private String paramA, paramB, paramC;
-    private String gender,
-            meatEat,
-            fishEat,
-            vegEat,
-            sweetsEat,
-            curdEat,
-            cheeseEat,
-            physicalLoad,
-            walkMinutesADay,
-            physicalLoadAWeek,
-            cigarettesInADay,
-            longOfSleep,
-            sleep,
-            waitSleep,
-            osteochondrosis,
-            rheumatoidArthritis,
-            stroke,
-            myocardialInfarction,
-            IBS,
-            arrhythmia,
-            kidneyDiseases,
-            SHCHZHZabol,
-            headaches,
-            restless,
+    private static final long serialVersionUID = 1L;
+
+    public String
             height,
             weight,
-            waistCircumference,
-            hipCircumference,
+            waist,
+            hips,
             age,
-            avgSAD,
-            avgDAD,
-            avgCHSS,
-            cholesterol,
-            LPVP,
-            LPa,
-            AROV,
+            walk,
+            cigarettes,
+            average_systolic,
+            average_diastolic,
+            average_heart_rate,
+            total_cholesterol,
+            hdl,
+            lpa,
+            apob,
             glucose,
             creatinine,
-            uricAcid,
-            cReactedProtein,
+            uric_acid,
+            crp,
             insulin,
-            TTG,
-            PROBNP,
-            ID;
+            tsh,
+            probnp,
+
+            id,
+            sex,
+            freq_meat,
+            freq_fish,
+            freq_vegatables,
+            freq_sweets,
+            freq_cottage_cheese,
+            freq_cheese,
+            exercise_stress_on_work,
+            exercise_stress,
+            sleep,
+            fall_asleep,
+            abstinence_from_sleep,
+            osteochondrosis,
+            rheumatoid_arthritis,
+            stroke,
+            myocardial_infarction,
+            coronary_heart_disease,
+            arrhythmia,
+            kidney_disease,
+            thyroid_disease,
+            headaches,
+            restless;
 
 
-    public Human(){
-        this.paramA = "construct a";
-        this.paramB = "construct b";
-        this.paramC = "construct c";
-    }
-
-    public Human(String a, String b, String c){
-        this.paramA = a;
-        this.paramB = b;
-        this.paramC = c;
-    }
-
-    public String getString(){
-        String buf = ("A:\""+this.paramA+"\"\nB:\""+this.paramB+"\"\nC:\""+this.paramC+"\"");
-        System.out.println("A:\""+this.paramA+"\"\nB:\""+this.paramB+"\"\nC:\""+this.paramC+"\"");
-        return buf;
-    }
-
-    @Override
-    public String toString() {
-        return "TestClass{" +
-                "paramA='" + paramA + '\'' +
-                ", paramB='" + paramB + '\'' +
-                ", paramC='" + paramC + '\'' +
-                '}';
-    }
+    public Human(){ }
 }

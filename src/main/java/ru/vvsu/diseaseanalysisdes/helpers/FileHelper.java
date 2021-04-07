@@ -63,25 +63,27 @@ public class FileHelper {
     }
 
     public static void serialize(Serializable object, String fileName) {
-        ObjectOutputStream oos = null;
-        try {
-            oos = new ObjectOutputStream(new FileOutputStream(getDir() + File.separator + fileName));
-            oos.writeObject(object);
-            oos.close();
+        try (
+                FileOutputStream outputStream = new FileOutputStream(getDir() + File.separator + fileName);
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)
+            )
+        {
+            objectOutputStream.writeObject(object);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public static Object deserialize(String fileName) {
-        Object objectClass = null;
-        try {
-            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(getDir() + File.separator + fileName));
-            objectClass = objectInputStream.readObject();
-            objectInputStream.close();
+        try(
+                FileInputStream fileInputStream = new FileInputStream(getDir() + File.separator + fileName);
+                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)
+            )
+        {
+            return objectInputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return objectClass;
+        return null;
     }
 }
