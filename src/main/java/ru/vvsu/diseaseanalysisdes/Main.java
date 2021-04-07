@@ -22,7 +22,7 @@ public class Main extends Application {
     public Main() {
         instance = this;
         FileHelper.setupDefault();
-        FileHelper.loadFile("database.db", Settings.DB_PATH_SOURCE);
+        FileHelper.loadFile("precedent.db", Settings.DB_PATH_SOURCE);
     }
 
 
