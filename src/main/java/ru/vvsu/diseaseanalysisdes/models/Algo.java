@@ -3,10 +3,7 @@ package ru.vvsu.diseaseanalysisdes.models;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Algo {
     private double percent; //value from 0 to 100
@@ -31,11 +28,11 @@ public class Algo {
     }
 
     private String getMinK(String val){
-        return new BigDecimal(val).multiply(BigDecimal.valueOf(1-(percent/100))).toString();
+        return new BigDecimal(val).multiply(BigDecimal.ONE.subtract(BigDecimal.valueOf(percent).divide(BigDecimal.valueOf(100),2,BigDecimal.ROUND_UP))).toString();
     }
 
     private String getMaxK(String val){
-        return new BigDecimal(val).multiply(BigDecimal.valueOf(1+(percent/100))).toString();
+        return new BigDecimal(val).multiply(BigDecimal.ONE.add(BigDecimal.valueOf(percent).divide(BigDecimal.valueOf(100),2,BigDecimal.ROUND_UP))).toString();
     }
 
     public StringBuilder getQuerySelections(Serializable user){
@@ -118,8 +115,14 @@ public class Algo {
             );
             Map<String,Double> probabilityMap = new HashMap<>(9);
             for (String dis: diseases) {
-                int countHealthy = map.get(dis+"1");
-                int countDisease = map.get(dis+"23");
+                System.out.println(dis+"23");
+                int countHealthy = 0, countDisease = 0;
+                if(map.containsKey(dis+"1")){
+                    countHealthy = map.get(dis+"1");
+                }
+                if(map.containsKey(dis+"23")){
+                    countDisease = map.get(dis+"23");
+                }
                 int totalCount = countHealthy+countDisease;
                 BigDecimal decimal = BigDecimal.valueOf(countHealthy).divide(BigDecimal.valueOf(totalCount),2,BigDecimal.ROUND_UP);
                 probabilityMap.put(dis,decimal.doubleValue());
