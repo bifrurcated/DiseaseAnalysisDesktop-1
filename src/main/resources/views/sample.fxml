@@ -9,7 +9,6 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
@@ -19,7 +18,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="830.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="ru.vvsu.diseaseanalysisdes.controllers.UsersController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="830.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.vvsu.diseaseanalysisdes.controllers.UsersController">
     <tabs>
         <Tab text="Ввод">
             <content>
@@ -1422,7 +1421,7 @@
                                 </CheckBox>
                             </children>
                         </Pane>
-                        <Button layoutX="690.0" layoutY="630.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" styleClass="colorProceed" text="Продолжить">
+                        <Button layoutX="690.0" layoutY="630.0" mnemonicParsing="false" onAction="#handleBtnContinue" prefHeight="35.0" prefWidth="120.0" text="Продолжить">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font>
@@ -1434,12 +1433,7 @@
             <content>
                 <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(rgb(241, 182, 177), rgb(197, 137, 160), rgb(153, 94, 143), rgb(109, 52, 125), rgb(62, 7, 107));">
                     <children>
-                        <TableView layoutX="15.0" layoutY="47.0" prefHeight="100.0" prefWidth="803.0">
-                            <columns>
-                                <TableColumn prefWidth="75.0" text="C1" />
-                                <TableColumn prefWidth="75.0" text="C2" />
-                            </columns>
-                        </TableView>
+                        <TableView fx:id="tableViewEnterData" layoutX="15.0" layoutY="47.0" prefHeight="100.0" prefWidth="803.0" />
                         <Label layoutX="-5.0" layoutY="5.0" prefHeight="30.0" prefWidth="375.0" style="-fx-text-fill: black;" text="Введенные данные:">
                             <padding>
                                 <Insets left="10.0" top="10.0" />
@@ -1448,12 +1442,7 @@
                                 <Font name="System Bold" size="13.0" />
                             </font>
                         </Label>
-                        <TableView layoutX="15.0" layoutY="191.0" prefHeight="400.0" prefWidth="803.0">
-                            <columns>
-                                <TableColumn prefWidth="75.0" text="C1" />
-                                <TableColumn prefWidth="75.0" text="C2" />
-                            </columns>
-                        </TableView>
+                        <TableView fx:id="tableViewResultSearch" layoutX="15.0" layoutY="191.0" prefHeight="400.0" prefWidth="803.0" />
                         <Label layoutX="-5.0" layoutY="150.0" prefHeight="30.0" prefWidth="375.0" style="-fx-text-fill: black;" text="Результаты поиска:">
                             <padding>
                                 <Insets left="10.0" top="10.0" />
