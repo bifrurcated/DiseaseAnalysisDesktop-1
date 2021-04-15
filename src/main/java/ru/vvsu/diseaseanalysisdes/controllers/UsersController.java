@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
@@ -24,10 +25,9 @@ import java.util.*;
 public class UsersController implements Initializable {
     private final SQLiteManager dataBase;
 
-    @FXML private Pane pane;
-    @FXML private ListView<String> listNames;
+    @FXML private ToggleGroup genderToggleGroup;
 
-    private ObservableList<String> names;
+    //private ObservableList<String> names = FXCollections.observableArrayList();
     private List<Human> humanList;
     private Human user;
     private Algo algo;
@@ -39,11 +39,8 @@ public class UsersController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        assert pane != null : "fx:id=\"textField\" was not injected: check your FXML file 'sample.fxml'.";
-        assert listNames != null : "fx:id=\"listNames\" was not injected: check your FXML file 'sample.fxml'.";
-        names = FXCollections.observableArrayList();
+        //assert listNames != null : "fx:id=\"listNames\" was not injected: check your FXML file 'sample.fxml'.";
         humanList = new ArrayList<>();
-        listNames.setItems(names);
         probabilityMap = new HashMap<>(9);
         algo = new Algo();
         user = new Human();
@@ -80,9 +77,6 @@ public class UsersController implements Initializable {
                         }); // каждой public переменной присваиваем значение из выборки
                         humanList.add(human);
                         count++;
-                        if(!names.contains(human.height)){
-                            names.add(human.height); //этот список для примера, не нужен - удалить
-                        }
                     }
                     if(count < 1){
                         algo.setPercent(algo.getPercent()+1); //увеличиваем процент выборки
