@@ -58,15 +58,12 @@ public class UsersController implements Initializable {
     }
 
     ChangeListener<Toggle> genderListener = (ov, old_toggle, new_toggle) -> {
-        if (genderToggleGroup.getSelectedToggle() != null)
-        {
-            RadioButton chk = (RadioButton)genderToggleGroup.getSelectedToggle();
-            switch (chk.getText()){
-                case "Мужской": user.sex = "1"; break;
-                case "Женский": user.sex = "2"; break;
-            }
-            System.out.println( user.sex );
+        RadioButton selectRadioButton = (RadioButton) new_toggle;
+        switch (selectRadioButton.getText()){
+            case "Мужской": user.sex = "1"; break;
+            case "Женский": user.sex = "2"; break;
         }
+        System.out.println( user.sex );
     };
 
     //Пример создание и загрузка сохранений
