@@ -19,7 +19,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="830.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="ru.vvsu.diseaseanalysisdes.controllers.UsersController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="830.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="ru.vvsu.diseaseanalysisdes.controllers.UsersController">
     <tabs>
         <Tab text="Ввод">
             <content>

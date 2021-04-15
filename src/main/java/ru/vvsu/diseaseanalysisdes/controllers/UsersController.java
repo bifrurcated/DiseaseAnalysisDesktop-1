@@ -1,10 +1,14 @@
 package ru.vvsu.diseaseanalysisdes.controllers;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -39,7 +43,6 @@ public class UsersController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //assert listNames != null : "fx:id=\"listNames\" was not injected: check your FXML file 'sample.fxml'.";
         humanList = new ArrayList<>();
         probabilityMap = new HashMap<>(9);
         algo = new Algo();
@@ -49,7 +52,23 @@ public class UsersController implements Initializable {
         user.age = "28";
         user.weight = "60";
         user.sex = "1";
+        //----------------\\
+        //для групп создаём слушателя
+        genderToggleGroup.selectedToggleProperty().addListener(genderListener);
     }
+
+    ChangeListener<Toggle> genderListener = (ov, old_toggle, new_toggle) -> {
+        if (genderToggleGroup.getSelectedToggle() != null)
+        {
+            RadioButton chk = (RadioButton)genderToggleGroup.getSelectedToggle();
+            switch (chk.getText()){
+                case "Мужской": user.sex = "1"; break;
+                case "Женский": user.sex = "2"; break;
+            }
+            System.out.println( user.sex );
+        }
+    };
+
     //Пример создание и загрузка сохранений
     /*  Human sad = new Human();
         sad.id = "142142";
