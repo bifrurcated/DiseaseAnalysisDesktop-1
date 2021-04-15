@@ -53,7 +53,7 @@ public class UsersController implements Initializable {
         user.weight = "60";
         user.sex = "1";
         //----------------\\
-        //для групп создаём слушателя
+        //для каждой группы создаём своего слушателя
         genderToggleGroup.selectedToggleProperty().addListener(genderListener);
     }
 
