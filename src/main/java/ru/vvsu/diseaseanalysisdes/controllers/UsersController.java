@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import ru.vvsu.diseaseanalysisdes.helpers.FileHelper;
 import ru.vvsu.diseaseanalysisdes.managers.SQLiteManager;
@@ -25,17 +24,16 @@ import java.util.*;
 
 public class UsersController implements Initializable {
     private final SQLiteManager dataBase;
+
     @FXML private TableView<Human> tableViewEnterData;
     @FXML private TableView<Human> tableViewResultSearch;
-
     @FXML private ToggleGroup genderToggleGroup,vegesToggleGroup,sweetsToggleGroup,
             meatToggleGroup,fishToggleGroup,curdToggleGroup,cheeseToggleGroup,
-    physicalStressLevelToggleGroup,onFootToggleGroup,physicalStressFrequencyToggleGroup,
+            physicalStressLevelToggleGroup,onFootToggleGroup,physicalStressFrequencyToggleGroup,
             smokingToggleGroup,sleepToggleGroup,zasnutToggleGroup,vozderzhToggleGroup;
 
     private ObservableList<Human> enterDataList;
     private ObservableList<Human> resultSearchList;
-    private List<Human> humanList;
     private Human user;
     private Algo algo;
     private Map<String, Double> probabilityMap;
@@ -104,7 +102,6 @@ public class UsersController implements Initializable {
             }
         });
 
-        humanList = new ArrayList<>();
         probabilityMap = new HashMap<>(9);
         algo = new Algo();
         user = new Human();
@@ -289,48 +286,7 @@ public class UsersController implements Initializable {
         createFileSave(sad);
         Optional<Human> optionalHuman = Optional.ofNullable((Human) openFileSave());
         optionalHuman.ifPresent(human -> System.out.println(human.id));*/
-
-    public void onClick(MouseEvent mouseEvent) {
-        algo.setPercent(5); // задаём начальный процент выборки
-        System.out.println(algo.getIndexMassBody(user.height, user.weight));
-        Runnable searchEqualUser = () -> {
-            int count = 0;
-            while (count < 1){
-                StringBuilder sb = algo.getQuerySelections(user); System.out.println(sb);
-                try{
-                    ResultSet resultSet = dataBase.getResultSet("SELECT * FROM med_card where "+sb+";");
-                    while (resultSet.next()) {
-                        Human human = new Human();
-                        Arrays.stream(human.getClass().getFields()).forEach(val -> {
-                            try {
-                                val.set(human,resultSet.getString(val.getName()));
-                            } catch (IllegalAccessException | SQLException e) {
-                                e.printStackTrace();
-                            }
-                        }); // каждой public переменной присваиваем значение из выборки
-                        humanList.add(human);
-                        count++;
-                    }
-                    if(count < 1){
-                        algo.setPercent(algo.getPercent()+1); //увеличиваем процент выборки
-                    }
-                    if(count > 2){
-                        probabilityMap = algo.getProbabilityHealthy(humanList);
-                        System.out.println(probabilityMap);
-                    }
-                    resultSet.close();
-                    resultSet.getStatement().close();
-
-                } catch (SQLException sqlException){
-                    sqlException.printStackTrace();
-                }
-            }
-            System.out.println("percent = "+algo.getPercent());
-        };
-        Thread thread = new Thread(searchEqualUser);
-        thread.setDaemon(true);
-        thread.start();
-    }
+    //System.out.println(algo.getIndexMassBody(user.height, user.weight));
 
     public void createFileSave(Serializable userData) {
         FileChooser configFileChooser = new FileChooser();
@@ -371,11 +327,9 @@ public class UsersController implements Initializable {
     public void handleBtnContinue(ActionEvent actionEvent) {
         if(!enterDataList.isEmpty()){ enterDataList.remove(0); }
         enterDataList.add(user);
-
         if(!resultSearchList.isEmpty()){ resultSearchList.remove(0, resultSearchList.size()); }
 
         algo.setPercent(5); // задаём начальный процент выборки
-        System.out.println(algo.getIndexMassBody(user.height, user.weight));
         Runnable searchEqualUser = () -> {
             int count = 0;
             while (count < 1){
@@ -391,15 +345,17 @@ public class UsersController implements Initializable {
                                 e.printStackTrace();
                             }
                         }); // каждой public переменной присваиваем значение из выборки
-                        humanList.add(human);
                         resultSearchList.add(human);
                         count++;
                     }
                     if(count < 1){
                         algo.setPercent(algo.getPercent()+1); //увеличиваем процент выборки
+                        if(algo.getPercent() == 30){
+                            break; // порог на всякий случай
+                        }
                     }
                     if(count > 2){
-                        probabilityMap = algo.getProbabilityHealthy(humanList);
+                        probabilityMap = algo.getProbabilityHealthy(resultSearchList);
                         System.out.println(probabilityMap);
                     }
                     resultSet.close();
