@@ -141,10 +141,10 @@ public class UsersController implements Initializable {
     ChangeListener<Toggle> vegesListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
         switch (selectRadioButton.getText()){
-            case "Каждый день": user.freq_vegatables = "1"; break;
-            case "Несколько раз в неделю": user.freq_vegatables = "2"; break;
-            case "Один или два раза в неделю": user.freq_vegatables = "3"; break;
-            case "Редко": user.freq_vegatables = "4"; break;
+            case "Каждый день": user.freq_vegatables = "4"; break;
+            case "Несколько раз в неделю": user.freq_vegatables = "3"; break;
+            case "Один или два раза в неделю": user.freq_vegatables = "2"; break;
+            case "Редко": user.freq_vegatables = "1"; break;
         }
         System.out.println( user.freq_vegatables );
     };
@@ -152,10 +152,10 @@ public class UsersController implements Initializable {
     ChangeListener<Toggle> sweetsListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
         switch (selectRadioButton.getText()){
-            case "Каждый день": user.freq_sweets = "1"; break;
-            case "Несколько раз в неделю": user.freq_sweets = "2"; break;
-            case "Один или два раза в неделю": user.freq_sweets = "3"; break;
-            case "Редко": user.freq_sweets = "4"; break;
+            case "Каждый день": user.freq_sweets = "4"; break;
+            case "Несколько раз в неделю": user.freq_sweets = "3"; break;
+            case "Один или два раза в неделю": user.freq_sweets = "2"; break;
+            case "Редко": user.freq_sweets = "1"; break;
         }
         System.out.println( user.freq_sweets );
     };
@@ -163,10 +163,10 @@ public class UsersController implements Initializable {
     ChangeListener<Toggle> fishListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
         switch (selectRadioButton.getText()){
-            case "Каждый день": user.freq_fish = "1"; break;
-            case "Несколько раз в неделю": user.freq_fish = "2"; break;
-            case "Один или два раза в неделю": user.freq_fish = "3"; break;
-            case "Редко": user.freq_fish = "4"; break;
+            case "Каждый день": user.freq_fish = "4"; break;
+            case "Несколько раз в неделю": user.freq_fish = "3"; break;
+            case "Один или два раза в неделю": user.freq_fish = "2"; break;
+            case "Редко": user.freq_fish = "1"; break;
         }
         System.out.println( user.freq_fish );
     };
@@ -174,10 +174,10 @@ public class UsersController implements Initializable {
     ChangeListener<Toggle> meatListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
         switch (selectRadioButton.getText()){
-            case "Каждый день": user.freq_meat = "1"; break;
-            case "Несколько раз в неделю": user.freq_meat = "2"; break;
-            case "Один или два раза в неделю": user.freq_meat = "3"; break;
-            case "Редко": user.freq_meat = "4"; break;
+            case "Каждый день": user.freq_meat = "4"; break;
+            case "Несколько раз в неделю": user.freq_meat = "3"; break;
+            case "Один или два раза в неделю": user.freq_meat = "2"; break;
+            case "Редко": user.freq_meat = "1"; break;
         }
         System.out.println( user.freq_meat );
     };
@@ -185,10 +185,10 @@ public class UsersController implements Initializable {
     ChangeListener<Toggle> curdListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
         switch (selectRadioButton.getText()){
-            case "Каждый день": user.freq_cottage_cheese = "1"; break;
-            case "Несколько раз в неделю": user.freq_cottage_cheese = "2"; break;
-            case "Один или два раза в неделю": user.freq_cottage_cheese = "3"; break;
-            case "Редко": user.freq_cottage_cheese = "4"; break;
+            case "Каждый день": user.freq_cottage_cheese = "4"; break;
+            case "Несколько раз в неделю": user.freq_cottage_cheese = "3"; break;
+            case "Один или два раза в неделю": user.freq_cottage_cheese = "2"; break;
+            case "Редко": user.freq_cottage_cheese = "1"; break;
         }
         System.out.println( user.freq_cottage_cheese );
     };
@@ -204,6 +204,8 @@ public class UsersController implements Initializable {
         System.out.println( user.freq_cheese );
     };
 
+    //Всё, что ниже, должно иметь значения не 1,2,3,4
+    //
     ChangeListener<Toggle> physicalWorkListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
         switch (selectRadioButton.getText()){
