@@ -28,7 +28,10 @@ public class UsersController implements Initializable {
     @FXML private TableView<Human> tableViewEnterData;
     @FXML private TableView<Human> tableViewResultSearch;
 
-    @FXML private ToggleGroup genderToggleGroup;
+    @FXML private ToggleGroup genderToggleGroup,vegesToggleGroup,sweetsToggleGroup,
+            meatToggleGroup,fishToggleGroup,curdToggleGroup,cheeseToggleGroup,
+    physicalStressLevelToggleGroup,onFootToggleGroup,physicalStressFrequencyToggleGroup,
+            smokingToggleGroup,sleepToggleGroup,zasnutToggleGroup,vozderzhToggleGroup;
 
     private ObservableList<Human> enterDataList;
     private ObservableList<Human> resultSearchList;
@@ -114,6 +117,19 @@ public class UsersController implements Initializable {
         //----------------\\
         //для каждой группы создаём своего слушателя
         genderToggleGroup.selectedToggleProperty().addListener(genderListener);
+        vegesToggleGroup.selectedToggleProperty().addListener(vegesListener);
+        sweetsToggleGroup.selectedToggleProperty().addListener(sweetsListener);
+        meatToggleGroup.selectedToggleProperty().addListener(meatListener);
+        fishToggleGroup.selectedToggleProperty().addListener(fishListener);
+        curdToggleGroup.selectedToggleProperty().addListener(curdListener);
+        cheeseToggleGroup.selectedToggleProperty().addListener(cheeseListener);
+        physicalStressLevelToggleGroup.selectedToggleProperty().addListener(physicalWorkListener);
+        onFootToggleGroup.selectedToggleProperty().addListener(footListener);
+        physicalStressFrequencyToggleGroup.selectedToggleProperty().addListener(physicalListener);
+        smokingToggleGroup.selectedToggleProperty().addListener(smokeListener);
+        sleepToggleGroup.selectedToggleProperty().addListener(sleepListener);
+        zasnutToggleGroup.selectedToggleProperty().addListener(zasnutListener);
+        vozderzhToggleGroup.selectedToggleProperty().addListener(vozderzhListener);
     }
 
     ChangeListener<Toggle> genderListener = (ov, old_toggle, new_toggle) -> {
@@ -125,6 +141,148 @@ public class UsersController implements Initializable {
         System.out.println( user.sex );
     };
 
+    ChangeListener<Toggle> vegesListener = (ov, old_toggle, new_toggle) -> {
+        RadioButton selectRadioButton = (RadioButton) new_toggle;
+        switch (selectRadioButton.getText()){
+            case "Каждый день": user.freq_vegatables = "1"; break;
+            case "Несколько раз в неделю": user.freq_vegatables = "2"; break;
+            case "Один или два раза в неделю": user.freq_vegatables = "3"; break;
+            case "Редко": user.freq_vegatables = "4"; break;
+        }
+        System.out.println( user.freq_vegatables );
+    };
+
+    ChangeListener<Toggle> sweetsListener = (ov, old_toggle, new_toggle) -> {
+        RadioButton selectRadioButton = (RadioButton) new_toggle;
+        switch (selectRadioButton.getText()){
+            case "Каждый день": user.freq_sweets = "1"; break;
+            case "Несколько раз в неделю": user.freq_sweets = "2"; break;
+            case "Один или два раза в неделю": user.freq_sweets = "3"; break;
+            case "Редко": user.freq_sweets = "4"; break;
+        }
+        System.out.println( user.freq_sweets );
+    };
+
+    ChangeListener<Toggle> fishListener = (ov, old_toggle, new_toggle) -> {
+        RadioButton selectRadioButton = (RadioButton) new_toggle;
+        switch (selectRadioButton.getText()){
+            case "Каждый день": user.freq_fish = "1"; break;
+            case "Несколько раз в неделю": user.freq_fish = "2"; break;
+            case "Один или два раза в неделю": user.freq_fish = "3"; break;
+            case "Редко": user.freq_fish = "4"; break;
+        }
+        System.out.println( user.freq_fish );
+    };
+
+    ChangeListener<Toggle> meatListener = (ov, old_toggle, new_toggle) -> {
+        RadioButton selectRadioButton = (RadioButton) new_toggle;
+        switch (selectRadioButton.getText()){
+            case "Каждый день": user.freq_meat = "1"; break;
+            case "Несколько раз в неделю": user.freq_meat = "2"; break;
+            case "Один или два раза в неделю": user.freq_meat = "3"; break;
+            case "Редко": user.freq_meat = "4"; break;
+        }
+        System.out.println( user.freq_meat );
+    };
+
+    ChangeListener<Toggle> curdListener = (ov, old_toggle, new_toggle) -> {
+        RadioButton selectRadioButton = (RadioButton) new_toggle;
+        switch (selectRadioButton.getText()){
+            case "Каждый день": user.freq_cottage_cheese = "1"; break;
+            case "Несколько раз в неделю": user.freq_cottage_cheese = "2"; break;
+            case "Один или два раза в неделю": user.freq_cottage_cheese = "3"; break;
+            case "Редко": user.freq_cottage_cheese = "4"; break;
+        }
+        System.out.println( user.freq_cottage_cheese );
+    };
+
+    ChangeListener<Toggle> cheeseListener = (ov, old_toggle, new_toggle) -> {
+        RadioButton selectRadioButton = (RadioButton) new_toggle;
+        switch (selectRadioButton.getText()){
+            case "Каждый день": user.freq_cheese = "1"; break;
+            case "Несколько раз в неделю": user.freq_cheese = "2"; break;
+            case "Один или два раза в неделю": user.freq_cheese = "3"; break;
+            case "Редко": user.freq_cheese = "4"; break;
+        }
+        System.out.println( user.freq_cheese );
+    };
+
+    ChangeListener<Toggle> physicalWorkListener = (ov, old_toggle, new_toggle) -> {
+        RadioButton selectRadioButton = (RadioButton) new_toggle;
+        switch (selectRadioButton.getText()){
+            case "Каждый день": user.exercise_stress_on_work = "1"; break;
+            case "Несколько раз в неделю": user.exercise_stress_on_work = "2"; break;
+            case "Один или два раза в неделю": user.exercise_stress_on_work = "3"; break;
+            case "Редко": user.exercise_stress_on_work = "4"; break;
+        }
+        System.out.println( user.exercise_stress_on_work );
+    };
+
+    ChangeListener<Toggle> footListener = (ov, old_toggle, new_toggle) -> {
+        RadioButton selectRadioButton = (RadioButton) new_toggle;
+        switch (selectRadioButton.getText()){
+            case "Каждый день": user.walk = "1"; break;
+            case "Несколько раз в неделю": user.walk = "2"; break;
+            case "Один или два раза в неделю": user.walk = "3"; break;
+            case "Редко": user.walk = "4"; break;
+        }
+        System.out.println( user.walk );
+    };
+
+    ChangeListener<Toggle> physicalListener = (ov, old_toggle, new_toggle) -> {
+        RadioButton selectRadioButton = (RadioButton) new_toggle;
+        switch (selectRadioButton.getText()){
+            case "Каждый день": user.exercise_stress = "1"; break;
+            case "Несколько раз в неделю": user.exercise_stress = "2"; break;
+            case "Один или два раза в неделю": user.exercise_stress = "3"; break;
+            case "Редко": user.exercise_stress = "4"; break;
+        }
+        System.out.println( user.exercise_stress );
+    };
+
+    ChangeListener<Toggle> smokeListener = (ov, old_toggle, new_toggle) -> {
+        RadioButton selectRadioButton = (RadioButton) new_toggle;
+        switch (selectRadioButton.getText()){
+            case "Каждый день": user.cigarettes = "1"; break;
+            case "Несколько раз в неделю": user.cigarettes = "2"; break;
+            case "Один или два раза в неделю": user.cigarettes = "3"; break;
+            case "Редко": user.cigarettes = "4"; break;
+        }
+        System.out.println( user.cigarettes );
+    };
+
+    ChangeListener<Toggle> sleepListener = (ov, old_toggle, new_toggle) -> {
+        RadioButton selectRadioButton = (RadioButton) new_toggle;
+        switch (selectRadioButton.getText()){
+            case "Каждый день": user.sleep = "1"; break;
+            case "Несколько раз в неделю": user.sleep = "2"; break;
+            case "Один или два раза в неделю": user.sleep = "3"; break;
+            case "Редко": user.sleep = "4"; break;
+        }
+        System.out.println( user.sleep );
+    };
+
+    ChangeListener<Toggle> zasnutListener = (ov, old_toggle, new_toggle) -> {
+        RadioButton selectRadioButton = (RadioButton) new_toggle;
+        switch (selectRadioButton.getText()){
+            case "Каждый день": user.abstinence_from_sleep = "1"; break;
+            case "Несколько раз в неделю": user.abstinence_from_sleep = "2"; break;
+            case "Один или два раза в неделю": user.abstinence_from_sleep = "3"; break;
+            case "Редко": user.abstinence_from_sleep = "4"; break;
+        }
+        System.out.println( user.abstinence_from_sleep );
+    };
+
+    ChangeListener<Toggle> vozderzhListener = (ov, old_toggle, new_toggle) -> {
+        RadioButton selectRadioButton = (RadioButton) new_toggle;
+        switch (selectRadioButton.getText()){
+            case "Каждый день": user.fall_asleep = "1"; break;
+            case "Несколько раз в неделю": user.fall_asleep = "2"; break;
+            case "Один или два раза в неделю": user.fall_asleep = "3"; break;
+            case "Редко": user.fall_asleep = "4"; break;
+        }
+        System.out.println( user.fall_asleep );
+    };
     //Пример создание и загрузка сохранений
     /*  Human sad = new Human();
         sad.id = "142142";
