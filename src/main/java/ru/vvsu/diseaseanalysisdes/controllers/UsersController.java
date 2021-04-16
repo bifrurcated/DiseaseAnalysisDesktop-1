@@ -6,9 +6,13 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.util.Callback;
 import ru.vvsu.diseaseanalysisdes.helpers.FileHelper;
 import ru.vvsu.diseaseanalysisdes.managers.SQLiteManager;
 import ru.vvsu.diseaseanalysisdes.models.Algo;
@@ -29,15 +33,14 @@ public class UsersController implements Initializable {
     @FXML private TableView<Human> tableViewResultSearch;
     @FXML private ToggleGroup genderToggleGroup,vegesToggleGroup,sweetsToggleGroup,
             meatToggleGroup,fishToggleGroup,curdToggleGroup,cheeseToggleGroup,
-            physicalStressLevelToggleGroup,onFootToggleGroup,physicalStressFrequencyToggleGroup,
-            smokingToggleGroup,sleepToggleGroup,zasnutToggleGroup,vozderzhToggleGroup;
+            zasnutToggleGroup,vozderzhToggleGroup;
 
     private ObservableList<Human> enterDataList;
     private ObservableList<Human> resultSearchList;
     private Human user;
     private Algo algo;
     private Map<String, Double> probabilityMap;
-    private Map<String, String> namesColumns;
+    private Map<String,String> scaleMap;
 
     public UsersController(){
         dataBase = new SQLiteManager();
@@ -45,7 +48,7 @@ public class UsersController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        namesColumns = new LinkedHashMap<>(40);
+        Map<String, String> namesColumns = new LinkedHashMap<>(50);
         namesColumns.put("sex","Пол");
         namesColumns.put("age","Возраст");
         namesColumns.put("height","Рост");
@@ -81,21 +84,47 @@ public class UsersController implements Initializable {
         namesColumns.put("insulin","Инсулин");
         namesColumns.put("tsh","ТТГ");
         namesColumns.put("probnp","PROBNP");
+        namesColumns.put("osteochondrosis","Остеохондроз");
+        namesColumns.put("rheumatoid_arthritis","Ревматоидный артрит");
+        namesColumns.put("stroke","Инсульт");
+        namesColumns.put("myocardial_infarction","Инфаркт миокарда");
+        namesColumns.put("coronary_heart_disease","Ишемическая болезнь сердца");
+        namesColumns.put("arrhythmia","Аритмия");
+        namesColumns.put("kidney_disease","Заболевания почек");
+        namesColumns.put("thyroid_disease","Заболевания щитовидной железы");
+        namesColumns.put("id","Идентификатор");
 
         enterDataList = FXCollections.observableArrayList();
         resultSearchList = FXCollections.observableArrayList();
         tableViewEnterData.setItems(enterDataList);
         tableViewResultSearch.setItems(resultSearchList);
 
-        namesColumns.forEach((key,val) -> {
-            TableColumn<Human,String> tableColumnEnterData = new TableColumn<>(val);
-            tableColumnEnterData.setCellValueFactory(new PropertyValueFactory<>(key));
-            tableViewEnterData.getColumns().add(tableColumnEnterData);
+
+        Callback<TableColumn<Human, String>, TableCell<Human, String>> defaultCellFactory
+                = TextFieldTableCell.forTableColumn();
+        namesColumns.forEach((key, val) -> {
+            if(!key.equals("id")){
+                TableColumn<Human,String> tableColumnEnterData = new TableColumn<>(val);
+                tableColumnEnterData.setCellValueFactory(new PropertyValueFactory<>(key));
+                tableColumnEnterData.setCellFactory(col -> {
+                    TableCell<Human, String> cell = defaultCellFactory.call(col);
+                    cell.setAlignment(Pos.CENTER);
+                    return cell ;
+                });
+                tableViewEnterData.getColumns().add(tableColumnEnterData);
+            }
+
             TableColumn<Human,String> tableColumnResultSearch = new TableColumn<>(val);
             tableColumnResultSearch.setCellValueFactory(new PropertyValueFactory<>(key));
+            tableColumnResultSearch.setCellFactory(col -> {
+                TableCell<Human, String> cell = defaultCellFactory.call(col);
+                cell.setAlignment(Pos.CENTER);
+                return cell ;
+            });
             tableViewResultSearch.getColumns().add(tableColumnResultSearch);
-            if(key.equals("weight") || key.equals("fall_asleep") || key.equals("hips")){
-                tableColumnEnterData = new TableColumn<>(".........");
+            if(key.equals("weight") || key.equals("fall_asleep") ||
+                    key.equals("hips") || key.equals("probnp") || key.equals("thyroid_disease")){
+                TableColumn<Human,String> tableColumnEnterData = new TableColumn<>(".........");
                 tableViewEnterData.getColumns().add(tableColumnEnterData);
                 tableColumnResultSearch = new TableColumn<>(".........");
                 tableViewResultSearch.getColumns().add(tableColumnResultSearch);
@@ -112,6 +141,13 @@ public class UsersController implements Initializable {
         user.weight = "60";
         user.sex = "1";
         //----------------\\
+        scaleMap = new HashMap<>(25);
+        scaleMap.put("Мужской","1");
+        scaleMap.put("Женский","2");
+        scaleMap.put("Каждый день","4");
+        scaleMap.put("Несколько раз в неделю","3");
+        scaleMap.put("Один или два раза в неделю","2");
+        scaleMap.put("Редко","1");
         //для каждой группы создаём своего слушателя
         genderToggleGroup.selectedToggleProperty().addListener(genderListener);
         vegesToggleGroup.selectedToggleProperty().addListener(vegesListener);
@@ -120,168 +156,65 @@ public class UsersController implements Initializable {
         fishToggleGroup.selectedToggleProperty().addListener(fishListener);
         curdToggleGroup.selectedToggleProperty().addListener(curdListener);
         cheeseToggleGroup.selectedToggleProperty().addListener(cheeseListener);
-        physicalStressLevelToggleGroup.selectedToggleProperty().addListener(physicalWorkListener);
-        onFootToggleGroup.selectedToggleProperty().addListener(footListener);
-        physicalStressFrequencyToggleGroup.selectedToggleProperty().addListener(physicalListener);
-        smokingToggleGroup.selectedToggleProperty().addListener(smokeListener);
-        sleepToggleGroup.selectedToggleProperty().addListener(sleepListener);
         zasnutToggleGroup.selectedToggleProperty().addListener(zasnutListener);
         vozderzhToggleGroup.selectedToggleProperty().addListener(vozderzhListener);
+
     }
 
     ChangeListener<Toggle> genderListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
-        switch (selectRadioButton.getText()){
-            case "Мужской": user.sex = "1"; break;
-            case "Женский": user.sex = "2"; break;
-        }
+        user.sex = scaleMap.get(selectRadioButton.getText());
         System.out.println( user.sex );
     };
 
     ChangeListener<Toggle> vegesListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
-        switch (selectRadioButton.getText()){
-            case "Каждый день": user.freq_vegatables = "4"; break;
-            case "Несколько раз в неделю": user.freq_vegatables = "3"; break;
-            case "Один или два раза в неделю": user.freq_vegatables = "2"; break;
-            case "Редко": user.freq_vegatables = "1"; break;
-        }
+        user.freq_vegatables = scaleMap.get(selectRadioButton.getText());
         System.out.println( user.freq_vegatables );
     };
 
     ChangeListener<Toggle> sweetsListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
-        switch (selectRadioButton.getText()){
-            case "Каждый день": user.freq_sweets = "4"; break;
-            case "Несколько раз в неделю": user.freq_sweets = "3"; break;
-            case "Один или два раза в неделю": user.freq_sweets = "2"; break;
-            case "Редко": user.freq_sweets = "1"; break;
-        }
+        user.freq_sweets = scaleMap.get(selectRadioButton.getText());
         System.out.println( user.freq_sweets );
     };
 
     ChangeListener<Toggle> fishListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
-        switch (selectRadioButton.getText()){
-            case "Каждый день": user.freq_fish = "4"; break;
-            case "Несколько раз в неделю": user.freq_fish = "3"; break;
-            case "Один или два раза в неделю": user.freq_fish = "2"; break;
-            case "Редко": user.freq_fish = "1"; break;
-        }
+        user.freq_fish = scaleMap.get(selectRadioButton.getText());
         System.out.println( user.freq_fish );
     };
 
     ChangeListener<Toggle> meatListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
-        switch (selectRadioButton.getText()){
-            case "Каждый день": user.freq_meat = "4"; break;
-            case "Несколько раз в неделю": user.freq_meat = "3"; break;
-            case "Один или два раза в неделю": user.freq_meat = "2"; break;
-            case "Редко": user.freq_meat = "1"; break;
-        }
+        user.freq_meat = scaleMap.get(selectRadioButton.getText());
         System.out.println( user.freq_meat );
     };
 
     ChangeListener<Toggle> curdListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
-        switch (selectRadioButton.getText()){
-            case "Каждый день": user.freq_cottage_cheese = "4"; break;
-            case "Несколько раз в неделю": user.freq_cottage_cheese = "3"; break;
-            case "Один или два раза в неделю": user.freq_cottage_cheese = "2"; break;
-            case "Редко": user.freq_cottage_cheese = "1"; break;
-        }
+        user.freq_cottage_cheese = scaleMap.get(selectRadioButton.getText());
         System.out.println( user.freq_cottage_cheese );
     };
 
     ChangeListener<Toggle> cheeseListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
-        switch (selectRadioButton.getText()){
-            case "Каждый день": user.freq_cheese = "1"; break;
-            case "Несколько раз в неделю": user.freq_cheese = "2"; break;
-            case "Один или два раза в неделю": user.freq_cheese = "3"; break;
-            case "Редко": user.freq_cheese = "4"; break;
-        }
+        user.freq_cheese = scaleMap.get(selectRadioButton.getText());
         System.out.println( user.freq_cheese );
-    };
-
-    //Всё, что ниже, должно иметь значения не 1,2,3,4
-    //
-    ChangeListener<Toggle> physicalWorkListener = (ov, old_toggle, new_toggle) -> {
-        RadioButton selectRadioButton = (RadioButton) new_toggle;
-        switch (selectRadioButton.getText()){
-            case "Каждый день": user.exercise_stress_on_work = "1"; break;
-            case "Несколько раз в неделю": user.exercise_stress_on_work = "2"; break;
-            case "Один или два раза в неделю": user.exercise_stress_on_work = "3"; break;
-            case "Редко": user.exercise_stress_on_work = "4"; break;
-        }
-        System.out.println( user.exercise_stress_on_work );
-    };
-
-    ChangeListener<Toggle> footListener = (ov, old_toggle, new_toggle) -> {
-        RadioButton selectRadioButton = (RadioButton) new_toggle;
-        switch (selectRadioButton.getText()){
-            case "Каждый день": user.walk = "1"; break;
-            case "Несколько раз в неделю": user.walk = "2"; break;
-            case "Один или два раза в неделю": user.walk = "3"; break;
-            case "Редко": user.walk = "4"; break;
-        }
-        System.out.println( user.walk );
-    };
-
-    ChangeListener<Toggle> physicalListener = (ov, old_toggle, new_toggle) -> {
-        RadioButton selectRadioButton = (RadioButton) new_toggle;
-        switch (selectRadioButton.getText()){
-            case "Каждый день": user.exercise_stress = "1"; break;
-            case "Несколько раз в неделю": user.exercise_stress = "2"; break;
-            case "Один или два раза в неделю": user.exercise_stress = "3"; break;
-            case "Редко": user.exercise_stress = "4"; break;
-        }
-        System.out.println( user.exercise_stress );
-    };
-
-    ChangeListener<Toggle> smokeListener = (ov, old_toggle, new_toggle) -> {
-        RadioButton selectRadioButton = (RadioButton) new_toggle;
-        switch (selectRadioButton.getText()){
-            case "Каждый день": user.cigarettes = "1"; break;
-            case "Несколько раз в неделю": user.cigarettes = "2"; break;
-            case "Один или два раза в неделю": user.cigarettes = "3"; break;
-            case "Редко": user.cigarettes = "4"; break;
-        }
-        System.out.println( user.cigarettes );
-    };
-
-    ChangeListener<Toggle> sleepListener = (ov, old_toggle, new_toggle) -> {
-        RadioButton selectRadioButton = (RadioButton) new_toggle;
-        switch (selectRadioButton.getText()){
-            case "Каждый день": user.sleep = "1"; break;
-            case "Несколько раз в неделю": user.sleep = "2"; break;
-            case "Один или два раза в неделю": user.sleep = "3"; break;
-            case "Редко": user.sleep = "4"; break;
-        }
-        System.out.println( user.sleep );
-    };
-
-    ChangeListener<Toggle> zasnutListener = (ov, old_toggle, new_toggle) -> {
-        RadioButton selectRadioButton = (RadioButton) new_toggle;
-        switch (selectRadioButton.getText()){
-            case "Каждый день": user.abstinence_from_sleep = "1"; break;
-            case "Несколько раз в неделю": user.abstinence_from_sleep = "2"; break;
-            case "Один или два раза в неделю": user.abstinence_from_sleep = "3"; break;
-            case "Редко": user.abstinence_from_sleep = "4"; break;
-        }
-        System.out.println( user.abstinence_from_sleep );
     };
 
     ChangeListener<Toggle> vozderzhListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
-        switch (selectRadioButton.getText()){
-            case "Каждый день": user.fall_asleep = "1"; break;
-            case "Несколько раз в неделю": user.fall_asleep = "2"; break;
-            case "Один или два раза в неделю": user.fall_asleep = "3"; break;
-            case "Редко": user.fall_asleep = "4"; break;
-        }
+        user.abstinence_from_sleep = scaleMap.get(selectRadioButton.getText());
+        System.out.println( user.abstinence_from_sleep );
+    };
+
+    ChangeListener<Toggle> zasnutListener = (ov, old_toggle, new_toggle) -> {
+        RadioButton selectRadioButton = (RadioButton) new_toggle;
+        user.fall_asleep = scaleMap.get(selectRadioButton.getText());
         System.out.println( user.fall_asleep );
     };
+
     //Пример создание и загрузка сохранений
     /*  Human sad = new Human();
         sad.id = "142142";
@@ -327,9 +260,9 @@ public class UsersController implements Initializable {
     }
 
     public void handleBtnContinue(ActionEvent actionEvent) {
-        if(!enterDataList.isEmpty()){ enterDataList.remove(0); }
+        if(!enterDataList.isEmpty()){ enterDataList.clear(); }
         enterDataList.add(user);
-        if(!resultSearchList.isEmpty()){ resultSearchList.remove(0, resultSearchList.size()); }
+        if(!resultSearchList.isEmpty()){ resultSearchList.clear(); }
 
         algo.setPercent(5); // задаём начальный процент выборки
         Runnable searchEqualUser = () -> {
@@ -368,10 +301,40 @@ public class UsersController implements Initializable {
                 }
             }
             System.out.println("percent = "+algo.getPercent());
-
+            autoResizeColumns(tableViewEnterData);
+            autoResizeColumns(tableViewResultSearch);
         };
         Thread thread = new Thread(searchEqualUser);
         thread.setDaemon(true);
         thread.start();
     }
+
+    public static void autoResizeColumns( TableView<?> table )
+    {
+        //Set the right policy
+        table.setColumnResizePolicy( TableView.UNCONSTRAINED_RESIZE_POLICY);
+        table.getColumns().forEach( (column) ->
+        {
+            //Minimal width = columnheader
+            Text t = new Text( column.getText() );
+            double max = t.getLayoutBounds().getWidth();
+            for ( int i = 0; i < table.getItems().size(); i++ )
+            {
+                //cell must not be empty
+                if ( column.getCellData( i ) != null )
+                {
+                    t = new Text( column.getCellData( i ).toString() );
+                    double calcwidth = t.getLayoutBounds().getWidth();
+                    //remember new max-width
+                    if ( calcwidth > max )
+                    {
+                        max = calcwidth;
+                    }
+                }
+            }
+            //set the new max-widht with some extra space
+            column.setPrefWidth( max + 50.0d );
+        } );
+    }
+
 }

@@ -1,11 +1,14 @@
 package ru.vvsu.diseaseanalysisdes.models;
 
 import java.io.Serializable;
-import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Human implements Serializable {
     private static final long serialVersionUID = 1L;
+    private final Map<String,String> countScaleMap;
+    private final Map<String,String> diseasesScaleMap;
 
     public String
             height,
@@ -55,7 +58,17 @@ public class Human implements Serializable {
             restless;
 
 
-    public Human(){ }
+    public Human(){
+        countScaleMap = new HashMap<>(5);
+        countScaleMap.put("1","Редко");
+        countScaleMap.put("2","Один или два раза в неделю");
+        countScaleMap.put("3","Несколько раз в неделю");
+        countScaleMap.put("4","Каждый день");
+        diseasesScaleMap = new HashMap<>( 4);
+        diseasesScaleMap.put("1","Нет");
+        diseasesScaleMap.put("2","Есть, но не доставляет особых проблем");
+        diseasesScaleMap.put("3","Есть в интенсивной фазе");
+    }
 
     public String getHeight() {
         return height;
@@ -234,6 +247,12 @@ public class Human implements Serializable {
     }
 
     public String getSex() {
+        if(sex != null){
+            if(sex.equals("1")){
+                return "Мужской";
+            }
+            return "Женский";
+        }
         return sex;
     }
 
@@ -242,7 +261,7 @@ public class Human implements Serializable {
     }
 
     public String getFreq_meat() {
-        return freq_meat;
+        return countScaleMap.get(freq_meat);
     }
 
     public void setFreq_meat(String freq_meat) {
@@ -250,7 +269,7 @@ public class Human implements Serializable {
     }
 
     public String getFreq_fish() {
-        return freq_fish;
+        return countScaleMap.get(freq_fish);
     }
 
     public void setFreq_fish(String freq_fish) {
@@ -258,7 +277,7 @@ public class Human implements Serializable {
     }
 
     public String getFreq_vegatables() {
-        return freq_vegatables;
+        return countScaleMap.get(freq_vegatables);
     }
 
     public void setFreq_vegatables(String freq_vegatables) {
@@ -266,7 +285,7 @@ public class Human implements Serializable {
     }
 
     public String getFreq_sweets() {
-        return freq_sweets;
+        return countScaleMap.get(freq_sweets);
     }
 
     public void setFreq_sweets(String freq_sweets) {
@@ -274,7 +293,7 @@ public class Human implements Serializable {
     }
 
     public String getFreq_cottage_cheese() {
-        return freq_cottage_cheese;
+        return countScaleMap.get(freq_cottage_cheese);
     }
 
     public void setFreq_cottage_cheese(String freq_cottage_cheese) {
@@ -282,7 +301,7 @@ public class Human implements Serializable {
     }
 
     public String getFreq_cheese() {
-        return freq_cheese;
+        return countScaleMap.get(freq_cheese);
     }
 
     public void setFreq_cheese(String freq_cheese) {
@@ -314,7 +333,7 @@ public class Human implements Serializable {
     }
 
     public String getFall_asleep() {
-        return fall_asleep;
+        return countScaleMap.get(fall_asleep);
     }
 
     public void setFall_asleep(String fall_asleep) {
@@ -322,7 +341,7 @@ public class Human implements Serializable {
     }
 
     public String getAbstinence_from_sleep() {
-        return abstinence_from_sleep;
+        return countScaleMap.get(abstinence_from_sleep);
     }
 
     public void setAbstinence_from_sleep(String abstinence_from_sleep) {
@@ -330,7 +349,7 @@ public class Human implements Serializable {
     }
 
     public String getOsteochondrosis() {
-        return osteochondrosis;
+        return diseasesScaleMap.get(osteochondrosis);
     }
 
     public void setOsteochondrosis(String osteochondrosis) {
@@ -338,7 +357,7 @@ public class Human implements Serializable {
     }
 
     public String getRheumatoid_arthritis() {
-        return rheumatoid_arthritis;
+        return diseasesScaleMap.get(rheumatoid_arthritis);
     }
 
     public void setRheumatoid_arthritis(String rheumatoid_arthritis) {
@@ -346,7 +365,7 @@ public class Human implements Serializable {
     }
 
     public String getStroke() {
-        return stroke;
+        return diseasesScaleMap.get(stroke);
     }
 
     public void setStroke(String stroke) {
@@ -354,7 +373,7 @@ public class Human implements Serializable {
     }
 
     public String getMyocardial_infarction() {
-        return myocardial_infarction;
+        return diseasesScaleMap.get(myocardial_infarction);
     }
 
     public void setMyocardial_infarction(String myocardial_infarction) {
@@ -362,7 +381,7 @@ public class Human implements Serializable {
     }
 
     public String getCoronary_heart_disease() {
-        return coronary_heart_disease;
+        return diseasesScaleMap.get(coronary_heart_disease);
     }
 
     public void setCoronary_heart_disease(String coronary_heart_disease) {
@@ -370,7 +389,7 @@ public class Human implements Serializable {
     }
 
     public String getArrhythmia() {
-        return arrhythmia;
+        return diseasesScaleMap.get(arrhythmia);
     }
 
     public void setArrhythmia(String arrhythmia) {
@@ -378,7 +397,7 @@ public class Human implements Serializable {
     }
 
     public String getKidney_disease() {
-        return kidney_disease;
+        return diseasesScaleMap.get(kidney_disease);
     }
 
     public void setKidney_disease(String kidney_disease) {
@@ -386,7 +405,7 @@ public class Human implements Serializable {
     }
 
     public String getThyroid_disease() {
-        return thyroid_disease;
+        return diseasesScaleMap.get(thyroid_disease);
     }
 
     public void setThyroid_disease(String thyroid_disease) {
@@ -394,6 +413,12 @@ public class Human implements Serializable {
     }
 
     public String getHeadaches() {
+        if(headaches != null){
+            if(headaches.equals("1")){
+                return "Нет";
+            }
+            return "Да";
+        }
         return headaches;
     }
 
