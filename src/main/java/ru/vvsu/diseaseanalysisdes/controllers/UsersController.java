@@ -26,10 +26,14 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class UsersController implements Initializable {
     private final SQLiteManager dataBase;
+
+    private static Pattern pattern = Pattern.compile("[\\d]+[\\.]?[\\d]*");
 
     @FXML private TableView<Human> tableViewEnterData;
     @FXML private TableView<Human> tableViewResultSearch;
@@ -236,17 +240,17 @@ public class UsersController implements Initializable {
     };
 
     ChangeListener<String> hipsListener = (ov, old_toggle, new_toggle) -> {
-        user.hips = new_toggle;
+        user.hips = readString(new_toggle);
         System.out.println(user.hips);
     };
 
     ChangeListener<String> waistListener = (ov, old_toggle, new_toggle) -> {
-        user.waist = new_toggle;
+        user.waist = readString(new_toggle);
         System.out.println(user.waist);
     };
 
     ChangeListener<String> dreamListener = (ov, old_toggle, new_toggle) -> {
-        user.sleep = new_toggle;
+        user.sleep = readString(new_toggle);
         System.out.println(user.sleep);
     };
 
@@ -372,6 +376,14 @@ public class UsersController implements Initializable {
             //set the new max-widht with some extra space
             column.setPrefWidth( max + 50.0d );
         } );
+    }
+
+    public static String readString(String s) {
+        Matcher matcher = pattern.matcher(s);
+        if(matcher.matches()) {
+            return s;
+        }
+        return "";
     }
 
 }
