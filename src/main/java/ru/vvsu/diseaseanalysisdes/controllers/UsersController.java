@@ -33,7 +33,7 @@ public class UsersController implements Initializable {
     @FXML private TableView<Human> tableViewResultSearch;
     @FXML private ToggleGroup genderToggleGroup,vegesToggleGroup,sweetsToggleGroup,
             meatToggleGroup,fishToggleGroup,curdToggleGroup,cheeseToggleGroup,
-            zasnutToggleGroup,vozderzhToggleGroup;
+            zasnutToggleGroup,vozderzhToggleGroup,headachesToggleGroup,restlessToggleGroup;
 
     private ObservableList<Human> enterDataList;
     private ObservableList<Human> resultSearchList;
@@ -149,23 +149,47 @@ public class UsersController implements Initializable {
         scaleMap.put("Несколько раз в неделю","3");
         scaleMap.put("Один или два раза в неделю","2");
         scaleMap.put("Редко","1");
+
+        scaleMap.put("Да","2");
+        scaleMap.put("Нет","1");
+        scaleMap.put("Очень часто","4");
+        scaleMap.put("Довольно часто","3");
+        scaleMap.put("Довольно редко","2");
+        scaleMap.put("Очень редко","1");
+        scaleMap.put("Верно","3");              // Вкладка "Параметры", параметр "Я неусидчив"
+        scaleMap.put("Скорее да, чем нет","2"); // ↑
+        scaleMap.put("Скорее нет, чем да","1"); // ↑↑
+        scaleMap.put("Неверно","0");            // ↑↑↑
         //для каждой группы создаём своего слушателя
         genderToggleGroup.selectedToggleProperty().addListener(genderListener);
-        vegesToggleGroup.selectedToggleProperty().addListener(vegesListener);
-        sweetsToggleGroup.selectedToggleProperty().addListener(sweetsListener);
         meatToggleGroup.selectedToggleProperty().addListener(meatListener);
         fishToggleGroup.selectedToggleProperty().addListener(fishListener);
+        vegesToggleGroup.selectedToggleProperty().addListener(vegesListener);
+        sweetsToggleGroup.selectedToggleProperty().addListener(sweetsListener);
         curdToggleGroup.selectedToggleProperty().addListener(curdListener);
         cheeseToggleGroup.selectedToggleProperty().addListener(cheeseListener);
         zasnutToggleGroup.selectedToggleProperty().addListener(zasnutListener);
         vozderzhToggleGroup.selectedToggleProperty().addListener(vozderzhListener);
-
+        headachesToggleGroup.selectedToggleProperty().addListener(headachesListener);
+        restlessToggleGroup.selectedToggleProperty().addListener(restlessListener);
     }
 
     ChangeListener<Toggle> genderListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
         user.sex = scaleMap.get(selectRadioButton.getText());
         System.out.println( user.sex );
+    };
+
+    ChangeListener<Toggle> meatListener = (ov, old_toggle, new_toggle) -> {
+        RadioButton selectRadioButton = (RadioButton) new_toggle;
+        user.freq_meat = scaleMap.get(selectRadioButton.getText());
+        System.out.println( user.freq_meat );
+    };
+
+    ChangeListener<Toggle> fishListener = (ov, old_toggle, new_toggle) -> {
+        RadioButton selectRadioButton = (RadioButton) new_toggle;
+        user.freq_fish = scaleMap.get(selectRadioButton.getText());
+        System.out.println( user.freq_fish );
     };
 
     ChangeListener<Toggle> vegesListener = (ov, old_toggle, new_toggle) -> {
@@ -180,18 +204,6 @@ public class UsersController implements Initializable {
         System.out.println( user.freq_sweets );
     };
 
-    ChangeListener<Toggle> fishListener = (ov, old_toggle, new_toggle) -> {
-        RadioButton selectRadioButton = (RadioButton) new_toggle;
-        user.freq_fish = scaleMap.get(selectRadioButton.getText());
-        System.out.println( user.freq_fish );
-    };
-
-    ChangeListener<Toggle> meatListener = (ov, old_toggle, new_toggle) -> {
-        RadioButton selectRadioButton = (RadioButton) new_toggle;
-        user.freq_meat = scaleMap.get(selectRadioButton.getText());
-        System.out.println( user.freq_meat );
-    };
-
     ChangeListener<Toggle> curdListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
         user.freq_cottage_cheese = scaleMap.get(selectRadioButton.getText());
@@ -204,6 +216,12 @@ public class UsersController implements Initializable {
         System.out.println( user.freq_cheese );
     };
 
+    ChangeListener<Toggle> headachesListener = (ov, old_toggle, new_toggle) -> {
+        RadioButton selectRadioButton = (RadioButton) new_toggle;
+        user.headaches = scaleMap.get(selectRadioButton.getText());
+        System.out.println( user.headaches );
+    };
+
     ChangeListener<Toggle> vozderzhListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
         user.abstinence_from_sleep = scaleMap.get(selectRadioButton.getText());
@@ -214,6 +232,12 @@ public class UsersController implements Initializable {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
         user.fall_asleep = scaleMap.get(selectRadioButton.getText());
         System.out.println( user.fall_asleep );
+    };
+
+    ChangeListener<Toggle> restlessListener = (ov, old_toggle, new_toggle) -> {
+        RadioButton selectRadioButton = (RadioButton) new_toggle;
+        user.headaches = scaleMap.get(selectRadioButton.getText());
+        System.out.println( user.headaches );
     };
 
     //Пример создание и загрузка сохранений
