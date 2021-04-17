@@ -4,6 +4,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -28,6 +29,7 @@ import java.util.*;
 
 public class UsersController implements Initializable {
     private final SQLiteManager dataBase;
+    @FXML private Tab tabResult;
 
     @FXML private TableView<Human> tableViewEnterData;
     @FXML private TableView<Human> tableViewResultSearch;
@@ -41,6 +43,7 @@ public class UsersController implements Initializable {
     private Algo algo;
     private Map<String, Double> probabilityMap;
     private Map<String,String> scaleMap;
+    private SingleSelectionModel<Tab> selectionModel;
 
     public UsersController(){
         dataBase = new SQLiteManager();
@@ -98,6 +101,7 @@ public class UsersController implements Initializable {
         resultSearchList = FXCollections.observableArrayList();
         tableViewEnterData.setItems(enterDataList);
         tableViewResultSearch.setItems(resultSearchList);
+        selectionModel = tabResult.getTabPane().getSelectionModel();
 
         Callback<TableColumn<Human, String>, TableCell<Human, String>> defaultCellFactory
                 = TextFieldTableCell.forTableColumn();
@@ -136,8 +140,8 @@ public class UsersController implements Initializable {
         user = new Human();
 
         //для теста
-        user.height = "160";
-        user.age = "28";
+        user.height = "177";
+        user.age = "20";
         user.weight = "60";
         user.sex = "1";
         System.out.println(algo.getIndexMassBody(user.height, user.weight));
@@ -240,14 +244,6 @@ public class UsersController implements Initializable {
         System.out.println( user.headaches );
     };
 
-    //Пример создание и загрузка сохранений
-    /*  Human sad = new Human();
-        sad.id = "142142";
-        createFileSave(sad);
-        Optional<Human> optionalHuman = Optional.ofNullable((Human) openFileSave());
-        optionalHuman.ifPresent(human -> System.out.println(human.id));*/
-    //System.out.println(algo.getIndexMassBody(user.height, user.weight));
-
     public void createFileSave(Serializable userData) {
         FileChooser configFileChooser = new FileChooser();
         configFileChooser.setTitle("Сохранить");
@@ -327,7 +323,7 @@ public class UsersController implements Initializable {
                         }
                         if(countSearch < 1){
                             algo.setPercent(algo.getPercent()+1); //увеличиваем процент выборки
-                            if(algo.getPercent() == 20){
+                            if(algo.getPercent() == 500){
                                 break; // порог на всякий случай
                             }
                         }
@@ -345,6 +341,13 @@ public class UsersController implements Initializable {
             System.out.println("percent = "+algo.getPercent());
             autoResizeColumns(tableViewEnterData);
             autoResizeColumns(tableViewResultSearch);
+            selectionModel.select(tabResult);
+            try {
+                Thread.sleep(100L);
+                tableViewResultSearch.refresh();
+            } catch (InterruptedException exception) {
+                exception.printStackTrace();
+            }
         };
         Thread thread = new Thread(searchEqualUser);
         thread.setDaemon(true);
@@ -379,4 +382,21 @@ public class UsersController implements Initializable {
         } );
     }
 
+    public void handleBtnSave(ActionEvent actionEvent) {
+        tableViewEnterData.getColumns().get(0).setVisible(false);
+        tableViewEnterData.getColumns().get(0).setVisible(true);
+        tableViewResultSearch.getColumns().get(0).setVisible(false);
+        tableViewResultSearch.getColumns().get(0).setVisible(true);
+        createFileSave(user);
+    }
+
+    public void handleBtnLoad(ActionEvent actionEvent) {
+        Optional<Human> optionalHuman = Optional.ofNullable((Human) openFileSave());
+        optionalHuman.ifPresent(human -> user = human);
+    }
+
+    public void onSelectionChangedResult(Event event) {
+        tableViewEnterData.refresh();
+        tableViewResultSearch.refresh();
+    }
 }

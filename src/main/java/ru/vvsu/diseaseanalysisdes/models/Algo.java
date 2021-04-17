@@ -66,7 +66,11 @@ public class Algo {
     }
 
     private String getMinK(String val){
-        return new BigDecimal(val).multiply(BigDecimal.ONE.subtract(BigDecimal.valueOf(percent).divide(BigDecimal.valueOf(100),2,BigDecimal.ROUND_UP))).toString();
+        BigDecimal bigDecimal = new BigDecimal(val).multiply(BigDecimal.ONE.subtract(BigDecimal.valueOf(percent).divide(BigDecimal.valueOf(100),2,BigDecimal.ROUND_UP)));
+        /*if(bigDecimal.compareTo(BigDecimal.valueOf(23)) <= 0){
+            return "23";
+        }*/
+        return bigDecimal.toString();
     }
 
     private String getMaxK(String val){
@@ -143,21 +147,39 @@ public class Algo {
                         if(isNextSearch){
                             if(field.getName().equals("height") && strHeight.equals("")){
                                 if(!strWeight.equals("")){
-                                    String str =  "imb >=" + getMinIMB(val,strWeight) + " and " + "imb <" + getMaxIMB(val,strWeight) + " and ";
-                                    sb.append(str);
+                                    if(rangeSelection >= 1){
+                                        String str =  "imb >=" + getMinIMB(val,strWeight) + " and " + "imb <" + getMaxIMB(val,strWeight) + " and ";
+                                        sb.append(str);
+                                    }else{
+                                        double p = percent;
+                                        percent = 2*rangeSelection;
+                                        String str =  "imb >=" + getMinK(getMinIMB(val,strWeight)) + " and " + "imb <" + getMaxK(getMaxIMB(val,strWeight)) + " and ";
+                                        sb.append(str);
+                                        percent = p;
+                                    }
                                 }
                                 else {
                                     strHeight=val;
                                 }
-                            } else if (field.getName().equals("weight") && strWeight.equals("")){
+                            }
+                            else if (field.getName().equals("weight") && strWeight.equals("")){
                                 if(!strHeight.equals("")){
-                                    String str = "imb >=" + getMinIMB(strHeight,val) + " and " + "imb <" + getMaxIMB(strHeight,val) + " and ";
-                                    sb.append(str);
+                                    if(rangeSelection == 1) {
+                                        String str = "imb >=" + getMinIMB(strHeight, val) + " and " + "imb <" + getMaxIMB(strHeight, val) + " and ";
+                                        sb.append(str);
+                                    }else{
+                                        double p = percent;
+                                        percent = 2*rangeSelection;
+                                        String str =  "imb >=" + getMinK(getMinIMB(strHeight,val)) + " and " + "imb <" + getMaxK(getMaxIMB(strHeight,val)) + " and ";
+                                        sb.append(str);
+                                        percent = p;
+                                    }
                                 }
                                 else{
                                     strWeight=val;
                                 }
-                            }else {
+                            }
+                            else {
                                 String str = field.getName() + "=" + val + " and ";
                                 sb.append(str);
                             }
@@ -200,21 +222,39 @@ public class Algo {
                             else{
                                 if(field.getName().equals("height") && strHeight.equals("")){
                                     if(!strWeight.equals("")){
-                                        String str =  "imb >=" + getMinIMB(val,strWeight) + " and " + "imb <" + getMaxIMB(val,strWeight) + " and ";
-                                        sb.append(str);
+                                        if(rangeSelection == 1){
+                                            String str =  "imb >=" + getMinIMB(val,strWeight) + " and " + "imb <" + getMaxIMB(val,strWeight) + " and ";
+                                            sb.append(str);
+                                        }else{
+                                            double p = percent;
+                                            percent = 2*rangeSelection;
+                                            String str =  "imb >=" + getMinK(getMinIMB(val,strWeight)) + " and " + "imb <" + getMaxK(getMaxIMB(val,strWeight)) + " and ";
+                                            sb.append(str);
+                                            percent = p;
+                                        }
                                     }
                                     else {
                                         strHeight=val;
                                     }
-                                } else if (field.getName().equals("weight") && strWeight.equals("")){
+                                }
+                                else if (field.getName().equals("weight") && strWeight.equals("")){
                                     if(!strHeight.equals("")){
-                                        String str = "imb >=" + getMinIMB(strHeight,val) + " and " + "imb <" + getMaxIMB(strHeight,val) + " and ";
-                                        sb.append(str);
+                                        if(rangeSelection >= 1) {
+                                            String str = "imb >=" + getMinIMB(strHeight, val) + " and " + "imb <" + getMaxIMB(strHeight, val) + " and ";
+                                            sb.append(str);
+                                        }else{
+                                            double p = percent;
+                                            percent = 5*rangeSelection;
+                                            String str =  "imb >=" + getMinK(getMinIMB(strHeight,val)) + " and " + "imb <" + getMaxK(getMaxIMB(strHeight,val)) + " and ";
+                                            sb.append(str);
+                                            percent = p;
+                                        }
                                     }
                                     else{
                                         strWeight=val;
                                     }
-                                }else{
+                                }
+                                else {
                                     String str = field.getName() + "=" + val + " and ";
                                     sb.append(str);
                                 }

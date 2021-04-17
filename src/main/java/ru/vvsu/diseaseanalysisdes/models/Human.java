@@ -433,4 +433,14 @@ public class Human implements Serializable {
     public void setRestless(String restless) {
         this.restless = restless;
     }
+
+    @Override
+    public String toString() {
+        return "Human{" +
+                "height='" + height + '\'' +
+                ", weight='" + weight + '\'' +
+                ", age='" + age + '\'' +
+                ", freq_meat='" + freq_meat + '\'' +
+                '}';
+    }
 }
