@@ -1,15 +1,1458 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.vvsu.diseaseanalysisdes.controllers.UsersController">
-   <children>
-      <ListView fx:id="listNames" editable="true" layoutX="211.0" layoutY="82.0" prefHeight="200.0" prefWidth="200.0" />
-      <Label layoutX="211.0" layoutY="65.0" text="Список пользователей" />
-      <JFXButton buttonType="RAISED" layoutX="274.0" layoutY="317.0" onMouseClicked="#onClick" prefHeight="25.0" prefWidth="67.0" style="-fx-background-color: rgb(23,50,150); -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.7) , 10,0,0,1 );" text="Click" textFill="WHITE" />
-
-   </children>
-</Pane>
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="830.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.vvsu.diseaseanalysisdes.controllers.UsersController">
+    <tabs>
+        <Tab text="Ввод">
+            <content>
+                <AnchorPane fx:id="AnchorPane" style="-fx-background-color: linear-gradient(rgb(241, 182, 177), rgb(197, 137, 160), rgb(153, 94, 143), rgb(109, 52, 125), rgb(62, 7, 107));" stylesheets="@styles.css">
+                    <children>
+                        <Label style="-fx-text-fill: black;" text="Введите необходимые параметры для анализа:">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                            <padding>
+                                <Insets left="10.0" top="10.0" />
+                            </padding>
+                        </Label>
+                        <TitledPane collapsible="false" layoutX="10.0" layoutY="35.0" prefWidth="400.0" styleClass="tp_color2" text="   + Пол">
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                            <font>
+                                <Font name="Arial Bold" size="14.0" />
+                            </font>
+                            <content>
+                                <AnchorPane layoutX="5.0">
+                                    <padding>
+                                        <Insets bottom="-1.0" />
+                                    </padding>
+                                    <children>
+                                        <RadioButton layoutY="5.0" mnemonicParsing="false" selected="true" text="Мужской">
+                                            <padding>
+                                                <Insets bottom="6.0" left="10.0" top="6.0" />
+                                            </padding>
+                                            <font>
+                                                <Font name="Arial Bold" size="14.0" />
+                                            </font>
+                                            <toggleGroup>
+                                                <ToggleGroup fx:id="genderToggleGroup" />
+                                            </toggleGroup>
+                                        </RadioButton>
+                                        <RadioButton layoutY="35.0" mnemonicParsing="false" text="Женский" toggleGroup="$genderToggleGroup">
+                                            <font>
+                                                <Font name="Arial Bold" size="14.0" />
+                                            </font>
+                                            <padding>
+                                                <Insets bottom="6.0" left="10.0" top="6.0" />
+                                            </padding>
+                                        </RadioButton>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </TitledPane>
+                        <TextField layoutX="472.0" layoutY="30.0" prefHeight="34.0" prefWidth="88.0" promptText=" Возраст">
+                            <font>
+                                <Font name="Arial Bold" size="14.0" />
+                            </font>
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                        </TextField>
+                        <TextField layoutX="580.0" layoutY="30.0" prefHeight="34.0" prefWidth="60.0" promptText=" Рост">
+                            <font>
+                                <Font name="Arial Bold" size="14.0" />
+                            </font>
+                        </TextField>
+                        <TextField layoutX="660.0" layoutY="30.0" prefHeight="34.0" prefWidth="60.0" promptText=" Вес">
+                            <font>
+                                <Font name="Arial Bold" size="14.0" />
+                            </font>
+                        </TextField>
+                        <Line endX="434.00006103515625" layoutX="386.0" layoutY="146.0" startX="-386.0" stroke="#dddddd" strokeWidth="3.0" />
+                        <TabPane layoutX="10.0" layoutY="156.0" prefHeight="340.0" prefWidth="823.0" tabClosingPolicy="UNAVAILABLE">
+                            <tabs>
+                                <Tab style="-fx-background-color: rgb(255, 240, 199);" text="Вопросы">
+                                    <content>
+                                        <ScrollPane prefHeight="170.0" prefWidth="823.0">
+                                            <content>
+                                                <AnchorPane>
+                                                    <children>
+                                                        <Accordion cacheShape="false" centerShape="false" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="380.0" scaleShape="false" style="-fx-background-color: transparent;">
+                                                            <panes>
+                                                                <TitledPane expanded="false" prefWidth="400.0" styleClass="tp_color1" text="+ Как часто вы употребляете мясо?">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                    <content>
+                                                                        <AnchorPane prefWidth="1122.0">
+                                                                            <padding>
+                                                                                <Insets bottom="-10.0" />
+                                                                            </padding>
+                                                                            <children>
+                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Каждый день">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <toggleGroup>
+                                                                                        <ToggleGroup fx:id="vegesToggleGroup" />
+                                                                                    </toggleGroup>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$vegesToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$vegesToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$vegesToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                            </children>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" prefWidth="400.0" styleClass="tp_color1" text="+ Как часто вы употребляете рыбу?">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                    <content>
+                                                                        <AnchorPane prefHeight="100.0" prefWidth="398.0">
+                                                                            <padding>
+                                                                                <Insets bottom="-10.0" />
+                                                                            </padding>
+                                                                            <children>
+                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Каждый день">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <toggleGroup>
+                                                                                        <ToggleGroup fx:id="sweetsToggleGroup" />
+                                                                                    </toggleGroup>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$sweetsToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$sweetsToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$sweetsToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                            </children>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" prefWidth="400.0" styleClass="tp_color1" text="+ Как часто вы употребляете свежие овощи?">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                    <content>
+                                                                        <AnchorPane prefHeight="122.0" prefWidth="214.0">
+                                                                            <padding>
+                                                                                <Insets bottom="-10.0" />
+                                                                            </padding>
+                                                                            <children>
+                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Каждый день">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <toggleGroup>
+                                                                                        <ToggleGroup fx:id="meatToggleGroup" />
+                                                                                    </toggleGroup>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$meatToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$meatToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$meatToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                            </children>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" prefWidth="400.0" styleClass="tp_color1" text="+ Как часто вы употребляете сладости?">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                    <content>
+                                                                        <AnchorPane prefHeight="122.0" prefWidth="214.0">
+                                                                            <padding>
+                                                                                <Insets bottom="-10.0" />
+                                                                            </padding>
+                                                                            <children>
+                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Каждый день">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <toggleGroup>
+                                                                                        <ToggleGroup fx:id="fishToggleGroup" />
+                                                                                    </toggleGroup>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$fishToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$fishToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$fishToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                            </children>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" layoutX="10.0" layoutY="120.0" prefWidth="400.0" styleClass="tp_color1" text="+ Как часто вы употребляете творог?">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                    <content>
+                                                                        <AnchorPane prefHeight="122.0" prefWidth="214.0">
+                                                                            <children>
+                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Каждый день">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <toggleGroup>
+                                                                                        <ToggleGroup fx:id="curdToggleGroup" />
+                                                                                    </toggleGroup>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$curdToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$curdToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$curdToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets bottom="-10.0" />
+                                                                            </padding>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" layoutX="10.0" layoutY="322.0" prefWidth="400.0" styleClass="tp_color1" text="+ Как часто вы употребляете сыр?">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                    <content>
+                                                                        <AnchorPane prefHeight="122.0" prefWidth="214.0">
+                                                                            <children>
+                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Каждый день">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <toggleGroup>
+                                                                                        <ToggleGroup fx:id="cheeseToggleGroup" />
+                                                                                    </toggleGroup>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$cheeseToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$cheeseToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$cheeseToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets bottom="-10.0" />
+                                                                            </padding>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                </TitledPane>
+                                                            </panes>
+                                                        </Accordion>
+                                                        <Accordion cacheShape="false" centerShape="false" layoutX="404.0" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="380.0" scaleShape="false" style="-fx-background-color: transparent;">
+                                                            <panes>
+                                                                <TitledPane expanded="false" prefWidth="400.0" styleClass="tp_color1" text="+ Уровень физ. нагрузки во время работы?">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                    <content>
+                                                                        <AnchorPane prefWidth="1122.0">
+                                                                            <padding>
+                                                                                <Insets bottom="-10.0" />
+                                                                            </padding>
+                                                                            <children>
+                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Каждый день">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <toggleGroup>
+                                                                                        <ToggleGroup fx:id="physicalStressLevelToggleGroup" />
+                                                                                    </toggleGroup>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$physicalStressLevelToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$physicalStressLevelToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$physicalStressLevelToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                            </children>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" maxWidth="360.0" prefWidth="360.0" styleClass="tp_color1" text="+ Сколько в среднем минут в день ходите пешк..." textOverrun="ELLIPSIS">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                    <content>
+                                                                        <AnchorPane prefHeight="100.0" prefWidth="398.0">
+                                                                            <padding>
+                                                                                <Insets bottom="-10.0" />
+                                                                            </padding>
+                                                                            <children>
+                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Каждый день">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <toggleGroup>
+                                                                                        <ToggleGroup fx:id="onFootToggleGroup" />
+                                                                                    </toggleGroup>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$onFootToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$onFootToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$onFootToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                            </children>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" prefWidth="400.0" styleClass="tp_color1" text="+ Сколько раз в неделю физ. нагрузка?">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                    <content>
+                                                                        <AnchorPane prefHeight="122.0" prefWidth="214.0">
+                                                                            <padding>
+                                                                                <Insets bottom="-10.0" />
+                                                                            </padding>
+                                                                            <children>
+                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Каждый день">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <toggleGroup>
+                                                                                        <ToggleGroup fx:id="physicalStressFrequencyToggleGroup" />
+                                                                                    </toggleGroup>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$physicalStressFrequencyToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$physicalStressFrequencyToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$physicalStressFrequencyToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                            </children>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" prefWidth="400.0" styleClass="tp_color1" text="+ Сколько в среднем сигарет вы выкуриваете в...">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                    <content>
+                                                                        <AnchorPane prefHeight="122.0" prefWidth="214.0">
+                                                                            <padding>
+                                                                                <Insets bottom="-10.0" />
+                                                                            </padding>
+                                                                            <children>
+                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Каждый день">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <toggleGroup>
+                                                                                        <ToggleGroup fx:id="smokingToggleGroup" />
+                                                                                    </toggleGroup>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$smokingToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$smokingToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$smokingToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                            </children>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" layoutX="10.0" layoutY="120.0" prefWidth="400.0" styleClass="tp_color1" text="+ Длительность ежедневного сна?">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                    <content>
+                                                                        <AnchorPane prefHeight="122.0" prefWidth="214.0">
+                                                                            <children>
+                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Каждый день">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <toggleGroup>
+                                                                                        <ToggleGroup fx:id="sleepToggleGroup" />
+                                                                                    </toggleGroup>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$sleepToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$sleepToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$sleepToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets bottom="-10.0" />
+                                                                            </padding>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" layoutX="10.0" layoutY="322.0" prefWidth="400.0" styleClass="tp_color1" text="+ Как часто вы испытывали трудности в том, чт...">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                    <content>
+                                                                        <AnchorPane prefHeight="122.0" prefWidth="214.0">
+                                                                            <children>
+                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Каждый день">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <toggleGroup>
+                                                                                        <ToggleGroup fx:id="zasnutToggleGroup" />
+                                                                                    </toggleGroup>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$zasnutToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$zasnutToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$zasnutToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets bottom="-10.0" />
+                                                                            </padding>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" layoutX="10.0" layoutY="214.0" prefWidth="400.0" styleClass="tp_color1" text="+ Насколько часто Вам было трудно заснуть в т...">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                    <content>
+                                                                        <AnchorPane prefHeight="122.0" prefWidth="214.0">
+                                                                            <children>
+                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Каждый день">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <toggleGroup>
+                                                                                        <ToggleGroup fx:id="vozderzhToggleGroup" />
+                                                                                    </toggleGroup>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$vozderzhToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$vozderzhToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$vozderzhToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets bottom="-10.0" />
+                                                                            </padding>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                </TitledPane>
+                                                            </panes>
+                                                        </Accordion>
+                                                    </children>
+                                                </AnchorPane>
+                                            </content>
+                                        </ScrollPane>
+                                    </content>
+                                </Tab>
+                                <Tab style="-fx-background-color: rgb(140, 221, 255);" text="Параметры">
+                                    <content>
+                                        <ScrollPane prefHeight="170.0" prefWidth="823.0">
+                                            <content>
+                                                <AnchorPane>
+                                                    <children>
+                                                        <Accordion cacheShape="false" centerShape="false" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" scaleShape="false" style="-fx-background-color: transparent;">
+                                                            <panes>
+                                                                <TitledPane expanded="false" prefWidth="400.0" styleClass="tp_color2" text="+ Я неусидчив">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                    <content>
+                                                                        <AnchorPane prefWidth="1122.0">
+                                                                            <children>
+                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Да">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <toggleGroup>
+                                                                                        <ToggleGroup fx:id="restlessToggleGroup" />
+                                                                                    </toggleGroup>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Скорее да, чем нет" toggleGroup="$restlessToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Скорее нет, чем да" toggleGroup="$restlessToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Нет" toggleGroup="$restlessToggleGroup">
+                                                                                    <padding>
+                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                                                    </padding>
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                </RadioButton>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets bottom="-5.0" />
+                                                                            </padding>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" prefWidth="360.0" styleClass="tp_color2" text="+ Окружность талии">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <content>
+                                                                        <AnchorPane>
+                                                                            <children>
+                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <opaqueInsets>
+                                                                                        <Insets />
+                                                                                    </opaqueInsets>
+                                                                                </TextField>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets bottom="-5.0" />
+                                                                            </padding>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" prefWidth="360.0" styleClass="tp_color2" text="+ Окружность бедер">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <content>
+                                                                        <AnchorPane>
+                                                                            <children>
+                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <opaqueInsets>
+                                                                                        <Insets />
+                                                                                    </opaqueInsets>
+                                                                                </TextField>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets bottom="-5.0" />
+                                                                            </padding>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" prefWidth="360.0" styleClass="tp_color2" text="+ Длительность ежедневного сна">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <content>
+                                                                        <AnchorPane>
+                                                                            <children>
+                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <opaqueInsets>
+                                                                                        <Insets />
+                                                                                    </opaqueInsets>
+                                                                                </TextField>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets bottom="-5.0" />
+                                                                            </padding>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                </TitledPane>
+                                                            </panes>
+                                                        </Accordion>
+                                                    </children>
+                                                </AnchorPane>
+                                            </content>
+                                        </ScrollPane>
+                                    </content>
+                                </Tab>
+                                <Tab style="-fx-background-color: rgb(217, 109, 82);" text="Анализы">
+                                    <content>
+                                        <ScrollPane prefHeight="170.0" prefWidth="823.0">
+                                            <content>
+                                                <AnchorPane>
+                                                    <children>
+                                                        <Accordion cacheShape="false" centerShape="false" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" scaleShape="false" style="-fx-background-color: transparent;">
+                                                            <panes>
+                                                                <TitledPane expanded="false" prefWidth="360.0" styleClass="tp_color3" text="+ САД">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <content>
+                                                                        <AnchorPane>
+                                                                            <children>
+                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <opaqueInsets>
+                                                                                        <Insets />
+                                                                                    </opaqueInsets>
+                                                                                </TextField>
+                                                                            </children>
+                                                                            <opaqueInsets>
+                                                                                <Insets />
+                                                                            </opaqueInsets>
+                                                                            <padding>
+                                                                                <Insets bottom="-5.0" />
+                                                                            </padding>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" layoutX="10.0" layoutY="51.0" prefWidth="360.0" styleClass="tp_color3" text="+ ДАД">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <content>
+                                                                        <AnchorPane>
+                                                                            <children>
+                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <opaqueInsets>
+                                                                                        <Insets />
+                                                                                    </opaqueInsets>
+                                                                                </TextField>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets bottom="-5.0" />
+                                                                            </padding>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" layoutX="10.0" layoutY="92.0" prefWidth="360.0" styleClass="tp_color3" text="+ ЧСС">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <content>
+                                                                        <AnchorPane>
+                                                                            <children>
+                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <opaqueInsets>
+                                                                                        <Insets />
+                                                                                    </opaqueInsets>
+                                                                                </TextField>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets bottom="-5.0" />
+                                                                            </padding>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" layoutX="10.0" layoutY="10.0" prefWidth="360.0" styleClass="tp_color3" text="+ Общий холестерин">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <content>
+                                                                        <AnchorPane>
+                                                                            <children>
+                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <opaqueInsets>
+                                                                                        <Insets />
+                                                                                    </opaqueInsets>
+                                                                                </TextField>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets bottom="-5.0" />
+                                                                            </padding>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" layoutX="10.0" layoutY="51.0" prefWidth="360.0" styleClass="tp_color3" text="+ ЛПВП">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <content>
+                                                                        <AnchorPane>
+                                                                            <children>
+                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <opaqueInsets>
+                                                                                        <Insets />
+                                                                                    </opaqueInsets>
+                                                                                </TextField>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets bottom="-5.0" />
+                                                                            </padding>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" layoutX="10.0" layoutY="92.0" prefWidth="360.0" styleClass="tp_color3" text="+ ЛП(а)">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <content>
+                                                                        <AnchorPane>
+                                                                            <children>
+                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <opaqueInsets>
+                                                                                        <Insets />
+                                                                                    </opaqueInsets>
+                                                                                </TextField>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets bottom="-5.0" />
+                                                                            </padding>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" layoutX="10.0" layoutY="320.0" prefWidth="360.0" styleClass="tp_color3" text="+ PROBNP">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <content>
+                                                                        <AnchorPane>
+                                                                            <children>
+                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <opaqueInsets>
+                                                                                        <Insets />
+                                                                                    </opaqueInsets>
+                                                                                </TextField>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets bottom="-5.0" />
+                                                                            </padding>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                </TitledPane>
+                                                            </panes>
+                                                        </Accordion>
+                                                        <Accordion cacheShape="false" centerShape="false" layoutX="404.0" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" scaleShape="false" style="-fx-background-color: transparent;">
+                                                            <panes>
+                                                                <TitledPane expanded="false" prefWidth="360.0" styleClass="tp_color3" text="+ ABOP">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <content>
+                                                                        <AnchorPane>
+                                                                            <children>
+                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <opaqueInsets>
+                                                                                        <Insets />
+                                                                                    </opaqueInsets>
+                                                                                </TextField>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets bottom="-5.0" />
+                                                                            </padding>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" layoutX="10.0" layoutY="51.0" prefWidth="360.0" styleClass="tp_color3" text="+ Глюкоза">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <content>
+                                                                        <AnchorPane>
+                                                                            <children>
+                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <opaqueInsets>
+                                                                                        <Insets />
+                                                                                    </opaqueInsets>
+                                                                                </TextField>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets bottom="-5.0" />
+                                                                            </padding>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" layoutX="10.0" layoutY="92.0" prefWidth="360.0" styleClass="tp_color3" text="+ Креатинин">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <content>
+                                                                        <AnchorPane>
+                                                                            <children>
+                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <opaqueInsets>
+                                                                                        <Insets />
+                                                                                    </opaqueInsets>
+                                                                                </TextField>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets bottom="-5.0" />
+                                                                            </padding>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" layoutX="10.0" layoutY="10.0" prefWidth="360.0" styleClass="tp_color3" text="+ Мочевая кислота">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <content>
+                                                                        <AnchorPane>
+                                                                            <children>
+                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <opaqueInsets>
+                                                                                        <Insets />
+                                                                                    </opaqueInsets>
+                                                                                </TextField>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets bottom="-5.0" />
+                                                                            </padding>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" layoutX="10.0" layoutY="51.0" prefWidth="360.0" styleClass="tp_color3" text="+ С-реактивный белок">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <content>
+                                                                        <AnchorPane>
+                                                                            <children>
+                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <opaqueInsets>
+                                                                                        <Insets />
+                                                                                    </opaqueInsets>
+                                                                                </TextField>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets bottom="-5.0" />
+                                                                            </padding>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" layoutX="10.0" layoutY="92.0" prefWidth="360.0" styleClass="tp_color3" text="+ Инсулин">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <content>
+                                                                        <AnchorPane>
+                                                                            <children>
+                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <opaqueInsets>
+                                                                                        <Insets />
+                                                                                    </opaqueInsets>
+                                                                                </TextField>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets bottom="-5.0" />
+                                                                            </padding>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                </TitledPane>
+                                                                <TitledPane expanded="false" layoutX="10.0" layoutY="320.0" prefWidth="360.0" styleClass="tp_color3" text="+ ТТГ">
+                                                                    <opaqueInsets>
+                                                                        <Insets />
+                                                                    </opaqueInsets>
+                                                                    <font>
+                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                    </font>
+                                                                    <content>
+                                                                        <AnchorPane>
+                                                                            <children>
+                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                                    <font>
+                                                                                        <Font name="Arial Bold" size="14.0" />
+                                                                                    </font>
+                                                                                    <opaqueInsets>
+                                                                                        <Insets />
+                                                                                    </opaqueInsets>
+                                                                                </TextField>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets bottom="-5.0" />
+                                                                            </padding>
+                                                                        </AnchorPane>
+                                                                    </content>
+                                                                    <padding>
+                                                                        <Insets bottom="10.0" />
+                                                                    </padding>
+                                                                </TitledPane>
+                                                            </panes>
+                                                        </Accordion>
+                                                    </children>
+                                                </AnchorPane>
+                                            </content>
+                                        </ScrollPane>
+                                    </content>
+                                </Tab>
+                            </tabs>
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                        </TabPane>
+                        <Pane layoutX="414.0" layoutY="510.0" prefHeight="109.0" prefWidth="400.0" style="-fx-background-radius: 20px; -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.3) , 1,0,3,5);" styleClass="colorProceed">
+                            <children>
+                                <Label layoutX="12.0" layoutY="-5.0" prefHeight="30.0" prefWidth="375.0" style="-fx-text-fill: black;" text="Выберите способ представления обработанных данных:">
+                                    <padding>
+                                        <Insets left="10.0" top="10.0" />
+                                    </padding>
+                                    <font>
+                                        <Font name="System Bold" size="13.0" />
+                                    </font>
+                                </Label>
+                                <CheckBox layoutX="25.0" layoutY="35.0" mnemonicParsing="false" style="-fx-text-fill: black;" text="Статистика" textFill="WHITE">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </CheckBox>
+                                <CheckBox layoutX="25.0" layoutY="70.0" mnemonicParsing="false" style="-fx-text-fill: black;" text="Все похожие" textFill="WHITE">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </CheckBox>
+                            </children>
+                        </Pane>
+                        <Button layoutX="690.0" layoutY="630.0" mnemonicParsing="false" onAction="#handleBtnContinue" prefHeight="35.0" prefWidth="120.0" text="Продолжить">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </Button>
+                    </children>
+                </AnchorPane>
+            </content></Tab>
+        <Tab text="Результат">
+            <content>
+                <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(rgb(241, 182, 177), rgb(197, 137, 160), rgb(153, 94, 143), rgb(109, 52, 125), rgb(62, 7, 107));">
+                    <children>
+                        <TableView fx:id="tableViewEnterData" layoutX="15.0" layoutY="47.0" prefHeight="100.0" prefWidth="803.0" />
+                        <Label layoutX="-5.0" layoutY="5.0" prefHeight="30.0" prefWidth="375.0" style="-fx-text-fill: black;" text="Введенные данные:">
+                            <padding>
+                                <Insets left="10.0" top="10.0" />
+                            </padding>
+                            <font>
+                                <Font name="System Bold" size="13.0" />
+                            </font>
+                        </Label>
+                        <TableView fx:id="tableViewResultSearch" layoutX="15.0" layoutY="191.0" prefHeight="400.0" prefWidth="803.0" />
+                        <Label layoutX="-5.0" layoutY="150.0" prefHeight="30.0" prefWidth="375.0" style="-fx-text-fill: black;" text="Результаты поиска:">
+                            <padding>
+                                <Insets left="10.0" top="10.0" />
+                            </padding>
+                            <font>
+                                <Font name="System Bold" size="13.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+            </content></Tab>
+    </tabs>
+</TabPane>
