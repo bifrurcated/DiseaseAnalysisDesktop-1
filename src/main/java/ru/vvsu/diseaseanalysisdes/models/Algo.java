@@ -67,9 +67,9 @@ public class Algo {
 
     private String getMinK(String val){
         BigDecimal bigDecimal = new BigDecimal(val).multiply(BigDecimal.ONE.subtract(BigDecimal.valueOf(percent).divide(BigDecimal.valueOf(100),2,BigDecimal.ROUND_UP)));
-        /*if(bigDecimal.compareTo(BigDecimal.valueOf(23)) <= 0){
-            return "23";
-        }*/
+        if(bigDecimal.compareTo(BigDecimal.ONE) <= 0){
+            return "1";
+        }
         return bigDecimal.toString();
     }
 
@@ -127,7 +127,13 @@ public class Algo {
                     if(!isWithoutSelection){
                         for (String sel: selections) {
                             if(field.getName().equals(sel)){
-                                String str = field.getName()+">="+getMinK(val)+" and "+field.getName()+"<="+getMaxK(val)+" and ";
+                                String str;
+                                if(val.equals("") || val.equals("0")){
+                                    str = field.getName()+" is null and ";
+                                }
+                                else {
+                                    str = field.getName()+">="+getMinK(val)+" and "+field.getName()+"<="+getMaxK(val)+" and ";
+                                }
                                 sb.append(str);
                                 isSelections = true;
                                 break;

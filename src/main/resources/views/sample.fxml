@@ -442,7 +442,7 @@
                                                                         <Insets bottom="10.0" />
                                                                     </padding>
                                                    <content>
-                                                      <TextField fx:id="exerciseStressOnWorkTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение от 1 до 9">
+                                                      <TextField fx:id="exerciseStressOnWorkTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение от 1 до 6">
                                                          <font>
                                                             <Font name="Arial Bold" size="14.0" />
                                                          </font>

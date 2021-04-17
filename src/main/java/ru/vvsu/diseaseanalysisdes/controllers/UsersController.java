@@ -144,6 +144,7 @@ public class UsersController implements Initializable {
         user.age = "20";
         user.weight = "60";
         user.sex = "1";
+        user.cigarettes = "";
         System.out.println(algo.getIndexMassBody(user.height, user.weight));
         //----------------\\
         scaleMap = new HashMap<>(25);
