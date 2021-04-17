@@ -241,16 +241,19 @@ public class UsersController implements Initializable {
 
     ChangeListener<String> hipsListener = (ov, old_toggle, new_toggle) -> {
         user.hips = readString(new_toggle);
+        hipTextField.setText(user.hips);
         System.out.println(user.hips);
     };
 
     ChangeListener<String> waistListener = (ov, old_toggle, new_toggle) -> {
         user.waist = readString(new_toggle);
+        waistTextField.setText(user.waist);
         System.out.println(user.waist);
     };
 
     ChangeListener<String> dreamListener = (ov, old_toggle, new_toggle) -> {
         user.sleep = readString(new_toggle);
+        dreamTextField.setText(user.sleep);
         System.out.println(user.sleep);
     };
 
