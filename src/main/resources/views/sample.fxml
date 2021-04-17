@@ -18,7 +18,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="830.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.vvsu.diseaseanalysisdes.controllers.UsersController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="830.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.vvsu.diseaseanalysisdes.controllers.UsersController">
     <tabs>
         <Tab text="Ввод">
             <content>
@@ -120,11 +120,11 @@
                                                                                     <font>
                                                                                         <Font name="Arial Bold" size="14.0" />
                                                                                     </font>
-                                                                                    <toggleGroup>
-                                                                                        <ToggleGroup fx:id="vegesToggleGroup" />
-                                                                                    </toggleGroup>
+                                                               <toggleGroup>
+                                                                  <ToggleGroup fx:id="meatToggleGroup" />
+                                                               </toggleGroup>
                                                                                 </RadioButton>
-                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$vegesToggleGroup">
+                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" text="Несколько раз в неделю" toggleGroup="$meatToggleGroup">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -132,7 +132,7 @@
                                                                                         <Font name="Arial Bold" size="14.0" />
                                                                                     </font>
                                                                                 </RadioButton>
-                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$vegesToggleGroup">
+                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$meatToggleGroup">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -140,7 +140,7 @@
                                                                                         <Font name="Arial Bold" size="14.0" />
                                                                                     </font>
                                                                                 </RadioButton>
-                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$vegesToggleGroup">
+                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$meatToggleGroup">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -175,11 +175,11 @@
                                                                                     <font>
                                                                                         <Font name="Arial Bold" size="14.0" />
                                                                                     </font>
-                                                                                    <toggleGroup>
-                                                                                        <ToggleGroup fx:id="sweetsToggleGroup" />
-                                                                                    </toggleGroup>
+                                                               <toggleGroup>
+                                                                  <ToggleGroup fx:id="fishToggleGroup" />
+                                                               </toggleGroup>
                                                                                 </RadioButton>
-                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$sweetsToggleGroup">
+                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" text="Несколько раз в неделю" toggleGroup="$fishToggleGroup">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -187,7 +187,7 @@
                                                                                         <Font name="Arial Bold" size="14.0" />
                                                                                     </font>
                                                                                 </RadioButton>
-                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$sweetsToggleGroup">
+                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$fishToggleGroup">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -195,7 +195,7 @@
                                                                                         <Font name="Arial Bold" size="14.0" />
                                                                                     </font>
                                                                                 </RadioButton>
-                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$sweetsToggleGroup">
+                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$fishToggleGroup">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -230,11 +230,11 @@
                                                                                     <font>
                                                                                         <Font name="Arial Bold" size="14.0" />
                                                                                     </font>
-                                                                                    <toggleGroup>
-                                                                                        <ToggleGroup fx:id="meatToggleGroup" />
-                                                                                    </toggleGroup>
+                                                               <toggleGroup>
+                                                                  <ToggleGroup fx:id="vegesToggleGroup" />
+                                                               </toggleGroup>
                                                                                 </RadioButton>
-                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$meatToggleGroup">
+                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" text="Несколько раз в неделю" toggleGroup="$vegesToggleGroup">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -242,7 +242,7 @@
                                                                                         <Font name="Arial Bold" size="14.0" />
                                                                                     </font>
                                                                                 </RadioButton>
-                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$meatToggleGroup">
+                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$vegesToggleGroup">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -250,7 +250,7 @@
                                                                                         <Font name="Arial Bold" size="14.0" />
                                                                                     </font>
                                                                                 </RadioButton>
-                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$meatToggleGroup">
+                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$vegesToggleGroup">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -285,11 +285,11 @@
                                                                                     <font>
                                                                                         <Font name="Arial Bold" size="14.0" />
                                                                                     </font>
-                                                                                    <toggleGroup>
-                                                                                        <ToggleGroup fx:id="fishToggleGroup" />
-                                                                                    </toggleGroup>
+                                                               <toggleGroup>
+                                                                  <ToggleGroup fx:id="sweetsToggleGroup" />
+                                                               </toggleGroup>
                                                                                 </RadioButton>
-                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$fishToggleGroup">
+                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" text="Несколько раз в неделю" toggleGroup="$sweetsToggleGroup">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -297,7 +297,7 @@
                                                                                         <Font name="Arial Bold" size="14.0" />
                                                                                     </font>
                                                                                 </RadioButton>
-                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$fishToggleGroup">
+                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$sweetsToggleGroup">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -305,7 +305,7 @@
                                                                                         <Font name="Arial Bold" size="14.0" />
                                                                                     </font>
                                                                                 </RadioButton>
-                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$fishToggleGroup">
+                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$sweetsToggleGroup">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -341,7 +341,7 @@
                                                                                         <ToggleGroup fx:id="curdToggleGroup" />
                                                                                     </toggleGroup>
                                                                                 </RadioButton>
-                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$curdToggleGroup">
+                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" text="Несколько раз в неделю" toggleGroup="$curdToggleGroup">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -396,7 +396,7 @@
                                                                                         <ToggleGroup fx:id="cheeseToggleGroup" />
                                                                                     </toggleGroup>
                                                                                 </RadioButton>
-                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$cheeseToggleGroup">
+                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" text="Несколько раз в неделю" toggleGroup="$cheeseToggleGroup">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -441,50 +441,16 @@
                                                                     <padding>
                                                                         <Insets bottom="10.0" />
                                                                     </padding>
-                                                                    <content>
-                                                                        <AnchorPane prefWidth="1122.0">
-                                                                            <padding>
-                                                                                <Insets bottom="-10.0" />
-                                                                            </padding>
-                                                                            <children>
-                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Каждый день">
-                                                                                    <padding>
-                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
-                                                                                    </padding>
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                    <toggleGroup>
-                                                                                        <ToggleGroup fx:id="physicalStressLevelToggleGroup" />
-                                                                                    </toggleGroup>
-                                                                                </RadioButton>
-                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$physicalStressLevelToggleGroup">
-                                                                                    <padding>
-                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
-                                                                                    </padding>
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                </RadioButton>
-                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$physicalStressLevelToggleGroup">
-                                                                                    <padding>
-                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
-                                                                                    </padding>
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                </RadioButton>
-                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$physicalStressLevelToggleGroup">
-                                                                                    <padding>
-                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
-                                                                                    </padding>
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                </RadioButton>
-                                                                            </children>
-                                                                        </AnchorPane>
-                                                                    </content>
+                                                   <content>
+                                                      <TextField fx:id="exerciseStressOnWorkTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение от 1 до 9">
+                                                         <font>
+                                                            <Font name="Arial Bold" size="14.0" />
+                                                         </font>
+                                                         <opaqueInsets>
+                                                            <Insets />
+                                                         </opaqueInsets>
+                                                      </TextField>
+                                                   </content>
                                                                 </TitledPane>
                                                                 <TitledPane expanded="false" maxWidth="360.0" prefWidth="360.0" styleClass="tp_color1" text="+ Сколько в среднем минут в день ходите пешк..." textOverrun="ELLIPSIS">
                                                                     <opaqueInsets>
@@ -496,50 +462,16 @@
                                                                     <padding>
                                                                         <Insets bottom="10.0" />
                                                                     </padding>
-                                                                    <content>
-                                                                        <AnchorPane prefHeight="100.0" prefWidth="398.0">
-                                                                            <padding>
-                                                                                <Insets bottom="-10.0" />
-                                                                            </padding>
-                                                                            <children>
-                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Каждый день">
-                                                                                    <padding>
-                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
-                                                                                    </padding>
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                    <toggleGroup>
-                                                                                        <ToggleGroup fx:id="onFootToggleGroup" />
-                                                                                    </toggleGroup>
-                                                                                </RadioButton>
-                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$onFootToggleGroup">
-                                                                                    <padding>
-                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
-                                                                                    </padding>
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                </RadioButton>
-                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$onFootToggleGroup">
-                                                                                    <padding>
-                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
-                                                                                    </padding>
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                </RadioButton>
-                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$onFootToggleGroup">
-                                                                                    <padding>
-                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
-                                                                                    </padding>
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                </RadioButton>
-                                                                            </children>
-                                                                        </AnchorPane>
-                                                                    </content>
+                                                   <content>
+                                                      <TextField fx:id="walkTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                         <font>
+                                                            <Font name="Arial Bold" size="14.0" />
+                                                         </font>
+                                                         <opaqueInsets>
+                                                            <Insets />
+                                                         </opaqueInsets>
+                                                      </TextField>
+                                                   </content>
                                                                 </TitledPane>
                                                                 <TitledPane expanded="false" prefWidth="400.0" styleClass="tp_color1" text="+ Сколько раз в неделю физ. нагрузка?">
                                                                     <opaqueInsets>
@@ -551,50 +483,16 @@
                                                                     <padding>
                                                                         <Insets bottom="10.0" />
                                                                     </padding>
-                                                                    <content>
-                                                                        <AnchorPane prefHeight="122.0" prefWidth="214.0">
-                                                                            <padding>
-                                                                                <Insets bottom="-10.0" />
-                                                                            </padding>
-                                                                            <children>
-                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Каждый день">
-                                                                                    <padding>
-                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
-                                                                                    </padding>
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                    <toggleGroup>
-                                                                                        <ToggleGroup fx:id="physicalStressFrequencyToggleGroup" />
-                                                                                    </toggleGroup>
-                                                                                </RadioButton>
-                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$physicalStressFrequencyToggleGroup">
-                                                                                    <padding>
-                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
-                                                                                    </padding>
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                </RadioButton>
-                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$physicalStressFrequencyToggleGroup">
-                                                                                    <padding>
-                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
-                                                                                    </padding>
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                </RadioButton>
-                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$physicalStressFrequencyToggleGroup">
-                                                                                    <padding>
-                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
-                                                                                    </padding>
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                </RadioButton>
-                                                                            </children>
-                                                                        </AnchorPane>
-                                                                    </content>
+                                                   <content>
+                                                      <TextField fx:id="exerciseStressTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение от 0 до 10">
+                                                         <font>
+                                                            <Font name="Arial Bold" size="14.0" />
+                                                         </font>
+                                                         <opaqueInsets>
+                                                            <Insets />
+                                                         </opaqueInsets>
+                                                      </TextField>
+                                                   </content>
                                                                 </TitledPane>
                                                                 <TitledPane expanded="false" prefWidth="400.0" styleClass="tp_color1" text="+ Сколько в среднем сигарет вы выкуриваете в...">
                                                                     <opaqueInsets>
@@ -606,105 +504,16 @@
                                                                     <padding>
                                                                         <Insets bottom="10.0" />
                                                                     </padding>
-                                                                    <content>
-                                                                        <AnchorPane prefHeight="122.0" prefWidth="214.0">
-                                                                            <padding>
-                                                                                <Insets bottom="-10.0" />
-                                                                            </padding>
-                                                                            <children>
-                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Каждый день">
-                                                                                    <padding>
-                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
-                                                                                    </padding>
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                    <toggleGroup>
-                                                                                        <ToggleGroup fx:id="smokingToggleGroup" />
-                                                                                    </toggleGroup>
-                                                                                </RadioButton>
-                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$smokingToggleGroup">
-                                                                                    <padding>
-                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
-                                                                                    </padding>
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                </RadioButton>
-                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$smokingToggleGroup">
-                                                                                    <padding>
-                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
-                                                                                    </padding>
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                </RadioButton>
-                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$smokingToggleGroup">
-                                                                                    <padding>
-                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
-                                                                                    </padding>
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                </RadioButton>
-                                                                            </children>
-                                                                        </AnchorPane>
-                                                                    </content>
-                                                                </TitledPane>
-                                                                <TitledPane expanded="false" layoutX="10.0" layoutY="120.0" prefWidth="400.0" styleClass="tp_color1" text="+ Длительность ежедневного сна?">
-                                                                    <opaqueInsets>
-                                                                        <Insets />
-                                                                    </opaqueInsets>
-                                                                    <font>
-                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                    </font>
-                                                                    <padding>
-                                                                        <Insets bottom="10.0" />
-                                                                    </padding>
-                                                                    <content>
-                                                                        <AnchorPane prefHeight="122.0" prefWidth="214.0">
-                                                                            <children>
-                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Каждый день">
-                                                                                    <padding>
-                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
-                                                                                    </padding>
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                    <toggleGroup>
-                                                                                        <ToggleGroup fx:id="sleepToggleGroup" />
-                                                                                    </toggleGroup>
-                                                                                </RadioButton>
-                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$sleepToggleGroup">
-                                                                                    <padding>
-                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
-                                                                                    </padding>
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                </RadioButton>
-                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$sleepToggleGroup">
-                                                                                    <padding>
-                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
-                                                                                    </padding>
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                </RadioButton>
-                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$sleepToggleGroup">
-                                                                                    <padding>
-                                                                                        <Insets bottom="6.0" left="10.0" top="6.0" />
-                                                                                    </padding>
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                </RadioButton>
-                                                                            </children>
-                                                                            <padding>
-                                                                                <Insets bottom="-10.0" />
-                                                                            </padding>
-                                                                        </AnchorPane>
-                                                                    </content>
+                                                   <content>
+                                                      <TextField fx:id="cigarettesTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                         <font>
+                                                            <Font name="Arial Bold" size="14.0" />
+                                                         </font>
+                                                         <opaqueInsets>
+                                                            <Insets />
+                                                         </opaqueInsets>
+                                                      </TextField>
+                                                   </content>
                                                                 </TitledPane>
                                                                 <TitledPane expanded="false" layoutX="10.0" layoutY="322.0" prefWidth="400.0" styleClass="tp_color1" text="+ Как часто вы испытывали трудности в том, чт...">
                                                                     <opaqueInsets>
@@ -719,7 +528,7 @@
                                                                     <content>
                                                                         <AnchorPane prefHeight="122.0" prefWidth="214.0">
                                                                             <children>
-                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Каждый день">
+                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Очень часто">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -730,7 +539,7 @@
                                                                                         <ToggleGroup fx:id="zasnutToggleGroup" />
                                                                                     </toggleGroup>
                                                                                 </RadioButton>
-                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$zasnutToggleGroup">
+                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" text="Довольно часто" toggleGroup="$zasnutToggleGroup">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -738,7 +547,7 @@
                                                                                         <Font name="Arial Bold" size="14.0" />
                                                                                     </font>
                                                                                 </RadioButton>
-                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$zasnutToggleGroup">
+                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Довольно редко" toggleGroup="$zasnutToggleGroup">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -746,7 +555,7 @@
                                                                                         <Font name="Arial Bold" size="14.0" />
                                                                                     </font>
                                                                                 </RadioButton>
-                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$zasnutToggleGroup">
+                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Очень редко" toggleGroup="$zasnutToggleGroup">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -774,7 +583,7 @@
                                                                     <content>
                                                                         <AnchorPane prefHeight="122.0" prefWidth="214.0">
                                                                             <children>
-                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Каждый день">
+                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Очень часто">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -785,7 +594,7 @@
                                                                                         <ToggleGroup fx:id="vozderzhToggleGroup" />
                                                                                     </toggleGroup>
                                                                                 </RadioButton>
-                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Несколько раз в неделю" toggleGroup="$vozderzhToggleGroup">
+                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" text="Довольно часто" toggleGroup="$vozderzhToggleGroup">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -793,7 +602,7 @@
                                                                                         <Font name="Arial Bold" size="14.0" />
                                                                                     </font>
                                                                                 </RadioButton>
-                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Один или два раза в неделю" toggleGroup="$vozderzhToggleGroup">
+                                                                                <RadioButton layoutY="65.0" mnemonicParsing="false" text="Довольно редко" toggleGroup="$vozderzhToggleGroup">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -801,7 +610,7 @@
                                                                                         <Font name="Arial Bold" size="14.0" />
                                                                                     </font>
                                                                                 </RadioButton>
-                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Редко" toggleGroup="$vozderzhToggleGroup">
+                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Очень редко" toggleGroup="$vozderzhToggleGroup">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -816,6 +625,45 @@
                                                                         </AnchorPane>
                                                                     </content>
                                                                 </TitledPane>
+                                                <TitledPane expanded="false" prefWidth="400.0" styleClass="tp_color1" text="+ Бывают ли головные боли?">
+                                                   <opaqueInsets>
+                                                      <Insets />
+                                                   </opaqueInsets>
+                                                   <font>
+                                                      <Font name="Arial Bold" size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets bottom="10.0" />
+                                                   </padding>
+                                                   <content>
+                                                      <AnchorPane prefWidth="214.0">
+                                                         <children>
+                                                            <RadioButton layoutY="5.0" mnemonicParsing="false" text="Да">
+                                                               <padding>
+                                                                  <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                               </padding>
+                                                               <font>
+                                                                  <Font name="Arial Bold" size="14.0" />
+                                                               </font>
+                                                               <toggleGroup>
+                                                                  <ToggleGroup fx:id="headachesToggleGroup" />
+                                                               </toggleGroup>
+                                                            </RadioButton>
+                                                            <RadioButton layoutY="35.0" mnemonicParsing="false" text="Нет" toggleGroup="$headachesToggleGroup">
+                                                               <padding>
+                                                                  <Insets bottom="6.0" left="10.0" top="6.0" />
+                                                               </padding>
+                                                               <font>
+                                                                  <Font name="Arial Bold" size="14.0" />
+                                                               </font>
+                                                            </RadioButton>
+                                                         </children>
+                                                         <padding>
+                                                            <Insets bottom="-10.0" />
+                                                         </padding>
+                                                      </AnchorPane>
+                                                   </content>
+                                                </TitledPane>
                                                             </panes>
                                                         </Accordion>
                                                     </children>
@@ -845,7 +693,7 @@
                                                                     <content>
                                                                         <AnchorPane prefWidth="1122.0">
                                                                             <children>
-                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Да">
+                                                                                <RadioButton layoutY="5.0" mnemonicParsing="false" text="Верно">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -856,7 +704,7 @@
                                                                                         <ToggleGroup fx:id="restlessToggleGroup" />
                                                                                     </toggleGroup>
                                                                                 </RadioButton>
-                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" selected="true" text="Скорее да, чем нет" toggleGroup="$restlessToggleGroup">
+                                                                                <RadioButton layoutY="35.0" mnemonicParsing="false" text="Скорее да, чем нет" toggleGroup="$restlessToggleGroup">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -872,7 +720,7 @@
                                                                                         <Font name="Arial Bold" size="14.0" />
                                                                                     </font>
                                                                                 </RadioButton>
-                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Нет" toggleGroup="$restlessToggleGroup">
+                                                                                <RadioButton layoutY="95.0" mnemonicParsing="false" text="Неверно" toggleGroup="$restlessToggleGroup">
                                                                                     <padding>
                                                                                         <Insets bottom="6.0" left="10.0" top="6.0" />
                                                                                     </padding>
@@ -940,7 +788,7 @@
                                                                         <Insets bottom="10.0" />
                                                                     </padding>
                                                    <content>
-                                                      <TextField fx:id="dreamTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                      <TextField fx:id="sleepTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
                                                          <font>
                                                             <Font name="Arial Bold" size="14.0" />
                                                          </font>
@@ -1277,7 +1125,7 @@
                                 <Insets />
                             </opaqueInsets>
                         </TabPane>
-                        <Pane layoutX="414.0" layoutY="510.0" prefHeight="109.0" prefWidth="400.0" style="-fx-background-radius: 20px; -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.3) , 1,0,3,5);" styleClass="colorProceed">
+                        <Pane layoutX="414.0" layoutY="510.0" prefHeight="100.0" prefWidth="400.0" style="-fx-background-radius: 20px; -fx-effect: dropshadow(one-pass-box, rgba(0,0,0,0.3) , 1,0,3,5);" styleClass="colorProceed">
                             <children>
                                 <Label layoutX="12.0" layoutY="-5.0" prefHeight="30.0" prefWidth="375.0" style="-fx-text-fill: black;" text="Выберите способ представления обработанных данных:">
                                     <padding>
@@ -1299,11 +1147,21 @@
                                 </CheckBox>
                             </children>
                         </Pane>
-                        <Button fx:id="proceedButton" layoutX="690.0" layoutY="630.0" mnemonicParsing="false" onAction="#handleBtnContinue" prefHeight="35.0" prefWidth="120.0" text="Продолжить">
+                        <Button fx:id="proceedButton" layoutX="690.0" layoutY="620.0" mnemonicParsing="false" onAction="#handleBtnContinue" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: rgb(197, 153, 247);" text="Продолжить">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font>
                         </Button>
+                  <Button fx:id="saveButton" layoutX="555.0" layoutY="620.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: rgb(197, 153, 247);" text="Сохранить">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="loadButton" layoutX="420.0" layoutY="620.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: rgb(197, 153, 247);" text="Загрузить">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
                     </children>
                 </AnchorPane>
             </content></Tab>
