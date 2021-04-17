@@ -68,7 +68,7 @@
                                 </AnchorPane>
                             </content>
                         </TitledPane>
-                        <TextField layoutX="472.0" layoutY="30.0" prefHeight="34.0" prefWidth="88.0" promptText=" Возраст">
+                        <TextField fx:id="ageTextField" layoutX="472.0" layoutY="30.0" prefHeight="34.0" prefWidth="88.0" promptText=" Возраст">
                             <font>
                                 <Font name="Arial Bold" size="14.0" />
                             </font>
@@ -76,12 +76,12 @@
                                 <Insets />
                             </opaqueInsets>
                         </TextField>
-                        <TextField layoutX="580.0" layoutY="30.0" prefHeight="34.0" prefWidth="60.0" promptText=" Рост">
+                        <TextField fx:id="heightTextField" layoutX="580.0" layoutY="30.0" prefHeight="34.0" prefWidth="60.0" promptText=" Рост">
                             <font>
                                 <Font name="Arial Bold" size="14.0" />
                             </font>
                         </TextField>
-                        <TextField layoutX="660.0" layoutY="30.0" prefHeight="34.0" prefWidth="60.0" promptText=" Вес">
+                        <TextField fx:id="weightTextField" layoutX="660.0" layoutY="30.0" prefHeight="34.0" prefWidth="60.0" promptText=" Вес">
                             <font>
                                 <Font name="Arial Bold" size="14.0" />
                             </font>
@@ -894,26 +894,19 @@
                                                                     <font>
                                                                         <Font name="Arial Bold" size="14.0" />
                                                                     </font>
-                                                                    <content>
-                                                                        <AnchorPane>
-                                                                            <children>
-                                                                                <TextField fx:id="waistTextField" layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                    <opaqueInsets>
-                                                                                        <Insets />
-                                                                                    </opaqueInsets>
-                                                                                </TextField>
-                                                                            </children>
-                                                                            <padding>
-                                                                                <Insets bottom="-5.0" />
-                                                                            </padding>
-                                                                        </AnchorPane>
-                                                                    </content>
                                                                     <padding>
                                                                         <Insets bottom="10.0" />
                                                                     </padding>
+                                                                    <content>
+                                                                        <TextField fx:id="waistTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                            <font>
+                                                                                <Font name="Arial Bold" size="14.0" />
+                                                                            </font>
+                                                                            <opaqueInsets>
+                                                                                <Insets />
+                                                                            </opaqueInsets>
+                                                                        </TextField>
+                                                                    </content>
                                                                 </TitledPane>
                                                                 <TitledPane expanded="false" prefWidth="360.0" styleClass="tp_color2" text="+ Окружность бедер">
                                                                     <opaqueInsets>
@@ -922,26 +915,19 @@
                                                                     <font>
                                                                         <Font name="Arial Bold" size="14.0" />
                                                                     </font>
-                                                                    <content>
-                                                                        <AnchorPane>
-                                                                            <children>
-                                                                                <TextField fx:id="hipTextField" layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                    <opaqueInsets>
-                                                                                        <Insets />
-                                                                                    </opaqueInsets>
-                                                                                </TextField>
-                                                                            </children>
-                                                                            <padding>
-                                                                                <Insets bottom="-5.0" />
-                                                                            </padding>
-                                                                        </AnchorPane>
-                                                                    </content>
                                                                     <padding>
                                                                         <Insets bottom="10.0" />
                                                                     </padding>
+                                                                    <content>
+                                                                        <TextField fx:id="hipTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                            <font>
+                                                                                <Font name="Arial Bold" size="14.0" />
+                                                                            </font>
+                                                                            <opaqueInsets>
+                                                                                <Insets />
+                                                                            </opaqueInsets>
+                                                                        </TextField>
+                                                                    </content>
                                                                 </TitledPane>
                                                                 <TitledPane expanded="false" prefWidth="360.0" styleClass="tp_color2" text="+ Длительность ежедневного сна">
                                                                     <opaqueInsets>
@@ -950,26 +936,19 @@
                                                                     <font>
                                                                         <Font name="Arial Bold" size="14.0" />
                                                                     </font>
-                                                                    <content>
-                                                                        <AnchorPane>
-                                                                            <children>
-                                                                                <TextField fx:id="dreamTextField" layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                    <opaqueInsets>
-                                                                                        <Insets />
-                                                                                    </opaqueInsets>
-                                                                                </TextField>
-                                                                            </children>
-                                                                            <padding>
-                                                                                <Insets bottom="-5.0" />
-                                                                            </padding>
-                                                                        </AnchorPane>
-                                                                    </content>
                                                                     <padding>
                                                                         <Insets bottom="10.0" />
                                                                     </padding>
+                                                                    <content>
+                                                                        <TextField fx:id="dreamTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                            <font>
+                                                                                <Font name="Arial Bold" size="14.0" />
+                                                                            </font>
+                                                                            <opaqueInsets>
+                                                                                <Insets />
+                                                                            </opaqueInsets>
+                                                                        </TextField>
+                                                                    </content>
                                                                 </TitledPane>
                                                             </panes>
                                                         </Accordion>
@@ -994,29 +973,19 @@
                                                                     <font>
                                                                         <Font name="Arial Bold" size="14.0" />
                                                                     </font>
-                                                                    <content>
-                                                                        <AnchorPane>
-                                                                            <children>
-                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                    <opaqueInsets>
-                                                                                        <Insets />
-                                                                                    </opaqueInsets>
-                                                                                </TextField>
-                                                                            </children>
-                                                                            <opaqueInsets>
-                                                                                <Insets />
-                                                                            </opaqueInsets>
-                                                                            <padding>
-                                                                                <Insets bottom="-5.0" />
-                                                                            </padding>
-                                                                        </AnchorPane>
-                                                                    </content>
                                                                     <padding>
                                                                         <Insets bottom="10.0" />
                                                                     </padding>
+                                                                    <content>
+                                                                        <TextField fx:id="averageSystolicTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                            <font>
+                                                                                <Font name="Arial Bold" size="14.0" />
+                                                                            </font>
+                                                                            <opaqueInsets>
+                                                                                <Insets />
+                                                                            </opaqueInsets>
+                                                                        </TextField>
+                                                                    </content>
                                                                 </TitledPane>
                                                                 <TitledPane expanded="false" layoutX="10.0" layoutY="51.0" prefWidth="360.0" styleClass="tp_color3" text="+ ДАД">
                                                                     <opaqueInsets>
@@ -1025,26 +994,19 @@
                                                                     <font>
                                                                         <Font name="Arial Bold" size="14.0" />
                                                                     </font>
-                                                                    <content>
-                                                                        <AnchorPane>
-                                                                            <children>
-                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                    <opaqueInsets>
-                                                                                        <Insets />
-                                                                                    </opaqueInsets>
-                                                                                </TextField>
-                                                                            </children>
-                                                                            <padding>
-                                                                                <Insets bottom="-5.0" />
-                                                                            </padding>
-                                                                        </AnchorPane>
-                                                                    </content>
                                                                     <padding>
                                                                         <Insets bottom="10.0" />
                                                                     </padding>
+                                                                    <content>
+                                                                        <TextField fx:id="averageDiastolicTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                            <font>
+                                                                                <Font name="Arial Bold" size="14.0" />
+                                                                            </font>
+                                                                            <opaqueInsets>
+                                                                                <Insets />
+                                                                            </opaqueInsets>
+                                                                        </TextField>
+                                                                    </content>
                                                                 </TitledPane>
                                                                 <TitledPane expanded="false" layoutX="10.0" layoutY="92.0" prefWidth="360.0" styleClass="tp_color3" text="+ ЧСС">
                                                                     <opaqueInsets>
@@ -1053,26 +1015,19 @@
                                                                     <font>
                                                                         <Font name="Arial Bold" size="14.0" />
                                                                     </font>
-                                                                    <content>
-                                                                        <AnchorPane>
-                                                                            <children>
-                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                    <opaqueInsets>
-                                                                                        <Insets />
-                                                                                    </opaqueInsets>
-                                                                                </TextField>
-                                                                            </children>
-                                                                            <padding>
-                                                                                <Insets bottom="-5.0" />
-                                                                            </padding>
-                                                                        </AnchorPane>
-                                                                    </content>
                                                                     <padding>
                                                                         <Insets bottom="10.0" />
                                                                     </padding>
+                                                                    <content>
+                                                                        <TextField fx:id="averageHeartRateTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                            <font>
+                                                                                <Font name="Arial Bold" size="14.0" />
+                                                                            </font>
+                                                                            <opaqueInsets>
+                                                                                <Insets />
+                                                                            </opaqueInsets>
+                                                                        </TextField>
+                                                                    </content>
                                                                 </TitledPane>
                                                                 <TitledPane expanded="false" layoutX="10.0" layoutY="10.0" prefWidth="360.0" styleClass="tp_color3" text="+ Общий холестерин">
                                                                     <opaqueInsets>
@@ -1081,26 +1036,19 @@
                                                                     <font>
                                                                         <Font name="Arial Bold" size="14.0" />
                                                                     </font>
-                                                                    <content>
-                                                                        <AnchorPane>
-                                                                            <children>
-                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                    <opaqueInsets>
-                                                                                        <Insets />
-                                                                                    </opaqueInsets>
-                                                                                </TextField>
-                                                                            </children>
-                                                                            <padding>
-                                                                                <Insets bottom="-5.0" />
-                                                                            </padding>
-                                                                        </AnchorPane>
-                                                                    </content>
                                                                     <padding>
                                                                         <Insets bottom="10.0" />
                                                                     </padding>
+                                                                    <content>
+                                                                        <TextField fx:id="totalCholesterolTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                            <font>
+                                                                                <Font name="Arial Bold" size="14.0" />
+                                                                            </font>
+                                                                            <opaqueInsets>
+                                                                                <Insets />
+                                                                            </opaqueInsets>
+                                                                        </TextField>
+                                                                    </content>
                                                                 </TitledPane>
                                                                 <TitledPane expanded="false" layoutX="10.0" layoutY="51.0" prefWidth="360.0" styleClass="tp_color3" text="+ ЛПВП">
                                                                     <opaqueInsets>
@@ -1109,26 +1057,19 @@
                                                                     <font>
                                                                         <Font name="Arial Bold" size="14.0" />
                                                                     </font>
-                                                                    <content>
-                                                                        <AnchorPane>
-                                                                            <children>
-                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                    <opaqueInsets>
-                                                                                        <Insets />
-                                                                                    </opaqueInsets>
-                                                                                </TextField>
-                                                                            </children>
-                                                                            <padding>
-                                                                                <Insets bottom="-5.0" />
-                                                                            </padding>
-                                                                        </AnchorPane>
-                                                                    </content>
                                                                     <padding>
                                                                         <Insets bottom="10.0" />
                                                                     </padding>
+                                                                    <content>
+                                                                        <TextField fx:id="hdlTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                            <font>
+                                                                                <Font name="Arial Bold" size="14.0" />
+                                                                            </font>
+                                                                            <opaqueInsets>
+                                                                                <Insets />
+                                                                            </opaqueInsets>
+                                                                        </TextField>
+                                                                    </content>
                                                                 </TitledPane>
                                                                 <TitledPane expanded="false" layoutX="10.0" layoutY="92.0" prefWidth="360.0" styleClass="tp_color3" text="+ ЛП(а)">
                                                                     <opaqueInsets>
@@ -1137,26 +1078,19 @@
                                                                     <font>
                                                                         <Font name="Arial Bold" size="14.0" />
                                                                     </font>
-                                                                    <content>
-                                                                        <AnchorPane>
-                                                                            <children>
-                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                    <opaqueInsets>
-                                                                                        <Insets />
-                                                                                    </opaqueInsets>
-                                                                                </TextField>
-                                                                            </children>
-                                                                            <padding>
-                                                                                <Insets bottom="-5.0" />
-                                                                            </padding>
-                                                                        </AnchorPane>
-                                                                    </content>
                                                                     <padding>
                                                                         <Insets bottom="10.0" />
                                                                     </padding>
+                                                                    <content>
+                                                                        <TextField fx:id="lpaTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                            <font>
+                                                                                <Font name="Arial Bold" size="14.0" />
+                                                                            </font>
+                                                                            <opaqueInsets>
+                                                                                <Insets />
+                                                                            </opaqueInsets>
+                                                                        </TextField>
+                                                                    </content>
                                                                 </TitledPane>
                                                                 <TitledPane expanded="false" layoutX="10.0" layoutY="320.0" prefWidth="360.0" styleClass="tp_color3" text="+ PROBNP">
                                                                     <opaqueInsets>
@@ -1165,26 +1099,19 @@
                                                                     <font>
                                                                         <Font name="Arial Bold" size="14.0" />
                                                                     </font>
-                                                                    <content>
-                                                                        <AnchorPane>
-                                                                            <children>
-                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                    <opaqueInsets>
-                                                                                        <Insets />
-                                                                                    </opaqueInsets>
-                                                                                </TextField>
-                                                                            </children>
-                                                                            <padding>
-                                                                                <Insets bottom="-5.0" />
-                                                                            </padding>
-                                                                        </AnchorPane>
-                                                                    </content>
                                                                     <padding>
                                                                         <Insets bottom="10.0" />
                                                                     </padding>
+                                                                    <content>
+                                                                        <TextField fx:id="probnpTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                            <font>
+                                                                                <Font name="Arial Bold" size="14.0" />
+                                                                            </font>
+                                                                            <opaqueInsets>
+                                                                                <Insets />
+                                                                            </opaqueInsets>
+                                                                        </TextField>
+                                                                    </content>
                                                                 </TitledPane>
                                                             </panes>
                                                         </Accordion>
@@ -1197,26 +1124,19 @@
                                                                     <font>
                                                                         <Font name="Arial Bold" size="14.0" />
                                                                     </font>
-                                                                    <content>
-                                                                        <AnchorPane>
-                                                                            <children>
-                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                    <opaqueInsets>
-                                                                                        <Insets />
-                                                                                    </opaqueInsets>
-                                                                                </TextField>
-                                                                            </children>
-                                                                            <padding>
-                                                                                <Insets bottom="-5.0" />
-                                                                            </padding>
-                                                                        </AnchorPane>
-                                                                    </content>
                                                                     <padding>
                                                                         <Insets bottom="10.0" />
                                                                     </padding>
+                                                                    <content>
+                                                                        <TextField fx:id="apobTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                            <font>
+                                                                                <Font name="Arial Bold" size="14.0" />
+                                                                            </font>
+                                                                            <opaqueInsets>
+                                                                                <Insets />
+                                                                            </opaqueInsets>
+                                                                        </TextField>
+                                                                    </content>
                                                                 </TitledPane>
                                                                 <TitledPane expanded="false" layoutX="10.0" layoutY="51.0" prefWidth="360.0" styleClass="tp_color3" text="+ Глюкоза">
                                                                     <opaqueInsets>
@@ -1225,26 +1145,19 @@
                                                                     <font>
                                                                         <Font name="Arial Bold" size="14.0" />
                                                                     </font>
-                                                                    <content>
-                                                                        <AnchorPane>
-                                                                            <children>
-                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                    <opaqueInsets>
-                                                                                        <Insets />
-                                                                                    </opaqueInsets>
-                                                                                </TextField>
-                                                                            </children>
-                                                                            <padding>
-                                                                                <Insets bottom="-5.0" />
-                                                                            </padding>
-                                                                        </AnchorPane>
-                                                                    </content>
                                                                     <padding>
                                                                         <Insets bottom="10.0" />
                                                                     </padding>
+                                                                    <content>
+                                                                        <TextField fx:id="glucoseTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                            <font>
+                                                                                <Font name="Arial Bold" size="14.0" />
+                                                                            </font>
+                                                                            <opaqueInsets>
+                                                                                <Insets />
+                                                                            </opaqueInsets>
+                                                                        </TextField>
+                                                                    </content>
                                                                 </TitledPane>
                                                                 <TitledPane expanded="false" layoutX="10.0" layoutY="92.0" prefWidth="360.0" styleClass="tp_color3" text="+ Креатинин">
                                                                     <opaqueInsets>
@@ -1253,26 +1166,19 @@
                                                                     <font>
                                                                         <Font name="Arial Bold" size="14.0" />
                                                                     </font>
-                                                                    <content>
-                                                                        <AnchorPane>
-                                                                            <children>
-                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                    <opaqueInsets>
-                                                                                        <Insets />
-                                                                                    </opaqueInsets>
-                                                                                </TextField>
-                                                                            </children>
-                                                                            <padding>
-                                                                                <Insets bottom="-5.0" />
-                                                                            </padding>
-                                                                        </AnchorPane>
-                                                                    </content>
                                                                     <padding>
                                                                         <Insets bottom="10.0" />
                                                                     </padding>
+                                                                    <content>
+                                                                        <TextField fx:id="creatinineTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                            <font>
+                                                                                <Font name="Arial Bold" size="14.0" />
+                                                                            </font>
+                                                                            <opaqueInsets>
+                                                                                <Insets />
+                                                                            </opaqueInsets>
+                                                                        </TextField>
+                                                                    </content>
                                                                 </TitledPane>
                                                                 <TitledPane expanded="false" layoutX="10.0" layoutY="10.0" prefWidth="360.0" styleClass="tp_color3" text="+ Мочевая кислота">
                                                                     <opaqueInsets>
@@ -1281,26 +1187,19 @@
                                                                     <font>
                                                                         <Font name="Arial Bold" size="14.0" />
                                                                     </font>
-                                                                    <content>
-                                                                        <AnchorPane>
-                                                                            <children>
-                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                    <opaqueInsets>
-                                                                                        <Insets />
-                                                                                    </opaqueInsets>
-                                                                                </TextField>
-                                                                            </children>
-                                                                            <padding>
-                                                                                <Insets bottom="-5.0" />
-                                                                            </padding>
-                                                                        </AnchorPane>
-                                                                    </content>
                                                                     <padding>
                                                                         <Insets bottom="10.0" />
                                                                     </padding>
+                                                                    <content>
+                                                                        <TextField fx:id="uricAcidcreatinineTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                            <font>
+                                                                                <Font name="Arial Bold" size="14.0" />
+                                                                            </font>
+                                                                            <opaqueInsets>
+                                                                                <Insets />
+                                                                            </opaqueInsets>
+                                                                        </TextField>
+                                                                    </content>
                                                                 </TitledPane>
                                                                 <TitledPane expanded="false" layoutX="10.0" layoutY="51.0" prefWidth="360.0" styleClass="tp_color3" text="+ С-реактивный белок">
                                                                     <opaqueInsets>
@@ -1309,26 +1208,19 @@
                                                                     <font>
                                                                         <Font name="Arial Bold" size="14.0" />
                                                                     </font>
-                                                                    <content>
-                                                                        <AnchorPane>
-                                                                            <children>
-                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                    <opaqueInsets>
-                                                                                        <Insets />
-                                                                                    </opaqueInsets>
-                                                                                </TextField>
-                                                                            </children>
-                                                                            <padding>
-                                                                                <Insets bottom="-5.0" />
-                                                                            </padding>
-                                                                        </AnchorPane>
-                                                                    </content>
                                                                     <padding>
                                                                         <Insets bottom="10.0" />
                                                                     </padding>
+                                                                    <content>
+                                                                        <TextField fx:id="crpTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                            <font>
+                                                                                <Font name="Arial Bold" size="14.0" />
+                                                                            </font>
+                                                                            <opaqueInsets>
+                                                                                <Insets />
+                                                                            </opaqueInsets>
+                                                                        </TextField>
+                                                                    </content>
                                                                 </TitledPane>
                                                                 <TitledPane expanded="false" layoutX="10.0" layoutY="92.0" prefWidth="360.0" styleClass="tp_color3" text="+ Инсулин">
                                                                     <opaqueInsets>
@@ -1337,26 +1229,19 @@
                                                                     <font>
                                                                         <Font name="Arial Bold" size="14.0" />
                                                                     </font>
-                                                                    <content>
-                                                                        <AnchorPane>
-                                                                            <children>
-                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                    <opaqueInsets>
-                                                                                        <Insets />
-                                                                                    </opaqueInsets>
-                                                                                </TextField>
-                                                                            </children>
-                                                                            <padding>
-                                                                                <Insets bottom="-5.0" />
-                                                                            </padding>
-                                                                        </AnchorPane>
-                                                                    </content>
                                                                     <padding>
                                                                         <Insets bottom="10.0" />
                                                                     </padding>
+                                                                    <content>
+                                                                        <TextField fx:id="insulinTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                            <font>
+                                                                                <Font name="Arial Bold" size="14.0" />
+                                                                            </font>
+                                                                            <opaqueInsets>
+                                                                                <Insets />
+                                                                            </opaqueInsets>
+                                                                        </TextField>
+                                                                    </content>
                                                                 </TitledPane>
                                                                 <TitledPane expanded="false" layoutX="10.0" layoutY="320.0" prefWidth="360.0" styleClass="tp_color3" text="+ ТТГ">
                                                                     <opaqueInsets>
@@ -1365,26 +1250,19 @@
                                                                     <font>
                                                                         <Font name="Arial Bold" size="14.0" />
                                                                     </font>
-                                                                    <content>
-                                                                        <AnchorPane>
-                                                                            <children>
-                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
-                                                                                    <font>
-                                                                                        <Font name="Arial Bold" size="14.0" />
-                                                                                    </font>
-                                                                                    <opaqueInsets>
-                                                                                        <Insets />
-                                                                                    </opaqueInsets>
-                                                                                </TextField>
-                                                                            </children>
-                                                                            <padding>
-                                                                                <Insets bottom="-5.0" />
-                                                                            </padding>
-                                                                        </AnchorPane>
-                                                                    </content>
                                                                     <padding>
                                                                         <Insets bottom="10.0" />
                                                                     </padding>
+                                                                    <content>
+                                                                        <TextField fx:id="tshTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                            <font>
+                                                                                <Font name="Arial Bold" size="14.0" />
+                                                                            </font>
+                                                                            <opaqueInsets>
+                                                                                <Insets />
+                                                                            </opaqueInsets>
+                                                                        </TextField>
+                                                                    </content>
                                                                 </TitledPane>
                                                             </panes>
                                                         </Accordion>
@@ -1414,14 +1292,14 @@
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                 </CheckBox>
-                                <CheckBox fx:id="allSameCheckBox" layoutX="25.0" layoutY="70.0" mnemonicParsing="false" style="-fx-text-fill: black;" text="Все похожие" textFill="WHITE">
+                                <CheckBox fx:id="allSimilarCheckBox" layoutX="25.0" layoutY="70.0" mnemonicParsing="false" style="-fx-text-fill: black;" text="Все похожие" textFill="WHITE">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                 </CheckBox>
                             </children>
                         </Pane>
-                        <Button layoutX="690.0" layoutY="630.0" mnemonicParsing="false" onAction="#handleBtnContinue" prefHeight="35.0" prefWidth="120.0" text="Продолжить">
+                        <Button fx:id="proceedButton" layoutX="690.0" layoutY="630.0" mnemonicParsing="false" onAction="#handleBtnContinue" prefHeight="35.0" prefWidth="120.0" text="Продолжить">
                             <font>
                                 <Font name="System Bold" size="12.0" />
                             </font>

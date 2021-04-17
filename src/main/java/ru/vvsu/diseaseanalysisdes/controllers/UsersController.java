@@ -42,7 +42,7 @@ public class UsersController implements Initializable {
             zasnutToggleGroup,vozderzhToggleGroup, restlessToggleGroup;
 
     @FXML private TextField waistTextField, hipTextField, dreamTextField;
-    @FXML private CheckBox statisticCheckBox, allSameCheckBox;
+    @FXML private CheckBox statisticCheckBox, allSimilarCheckBox;
 
     private ObservableList<Human> enterDataList;
     private ObservableList<Human> resultSearchList;
@@ -306,7 +306,7 @@ public class UsersController implements Initializable {
         enterDataList.add(user);
         if(!resultSearchList.isEmpty()){ resultSearchList.clear(); }
 
-        System.out.println(allSameCheckBox.isSelected() + " " + statisticCheckBox.isSelected());
+        System.out.println(allSimilarCheckBox.isSelected() + " " + statisticCheckBox.isSelected());
 
         algo.setPercent(5); // задаём начальный процент выборки
         Runnable searchEqualUser = () -> {
