@@ -17,6 +17,7 @@ public class Algo {
     private int rangeSelection;
     private int iWhichAnswer;
     private int iSelectMultiple;
+    private int iRangeIMB;
 
     private final Map<String,Integer> questionMap;
 
@@ -28,6 +29,7 @@ public class Algo {
         iWhichAnswer = 0;
         iSelectMultiple = 1;
         rangeSelection = 1;
+        iRangeIMB = 1;
         selections = new String[]{"waist","hips","age","walk","cigarettes",
         "average_systolic","average_diastolic","average_heart_rate","total_cholesterol","hdl","lpa",
         "apob","glucose","creatinine","uric_acid","crp","insulin","tsh","probnp"};
@@ -66,7 +68,7 @@ public class Algo {
     }
 
     private String getMinK(String val){
-        BigDecimal bigDecimal = new BigDecimal(val).multiply(BigDecimal.ONE.subtract(BigDecimal.valueOf(percent).divide(BigDecimal.valueOf(100),2,BigDecimal.ROUND_UP)));
+        BigDecimal bigDecimal = new BigDecimal(val).multiply(BigDecimal.ONE.subtract(BigDecimal.valueOf(percent).divide(BigDecimal.valueOf(100),4,BigDecimal.ROUND_UP)));
         if(bigDecimal.compareTo(BigDecimal.ONE) <= 0){
             return "1";
         }
@@ -74,7 +76,7 @@ public class Algo {
     }
 
     private String getMaxK(String val){
-        return new BigDecimal(val).multiply(BigDecimal.ONE.add(BigDecimal.valueOf(percent).divide(BigDecimal.valueOf(100),2,BigDecimal.ROUND_UP))).toString();
+        return new BigDecimal(val).multiply(BigDecimal.ONE.add(BigDecimal.valueOf(percent).divide(BigDecimal.valueOf(100),4,BigDecimal.ROUND_UP))).toString();
     }
 
 
@@ -153,12 +155,12 @@ public class Algo {
                         if(isNextSearch){
                             if(field.getName().equals("height") && strHeight.equals("")){
                                 if(!strWeight.equals("")){
-                                    if(rangeSelection >= 1){
+                                    if(iRangeIMB == 1){
                                         String str =  "imb >=" + getMinIMB(val,strWeight) + " and " + "imb <" + getMaxIMB(val,strWeight) + " and ";
                                         sb.append(str);
                                     }else{
                                         double p = percent;
-                                        percent = 2*rangeSelection;
+                                        percent = 13.51*(1+(iRangeIMB-2)*1.96);
                                         String str =  "imb >=" + getMinK(getMinIMB(val,strWeight)) + " and " + "imb <" + getMaxK(getMaxIMB(val,strWeight)) + " and ";
                                         sb.append(str);
                                         percent = p;
@@ -170,12 +172,13 @@ public class Algo {
                             }
                             else if (field.getName().equals("weight") && strWeight.equals("")){
                                 if(!strHeight.equals("")){
-                                    if(rangeSelection == 1) {
+                                    if(iRangeIMB == 1) {
                                         String str = "imb >=" + getMinIMB(strHeight, val) + " and " + "imb <" + getMaxIMB(strHeight, val) + " and ";
                                         sb.append(str);
-                                    }else{
+                                    }
+                                    else{
                                         double p = percent;
-                                        percent = 2*rangeSelection;
+                                        percent = 13.51*(1+(iRangeIMB-2)*1.96);
                                         String str =  "imb >=" + getMinK(getMinIMB(strHeight,val)) + " and " + "imb <" + getMaxK(getMaxIMB(strHeight,val)) + " and ";
                                         sb.append(str);
                                         percent = p;
@@ -205,8 +208,7 @@ public class Algo {
                                         iSelectMultiple++;
                                         if(iSelectMultiple > countAnswerOnQuestions){
                                             iSelectMultiple = 1;
-                                            //isWithoutSelection = false;
-                                            //isNextSearch = true;
+                                            iRangeIMB++;
                                         }
                                         questionMap.put("freq_meat",rangeSelection);
                                         questionMap.put("freq_fish",rangeSelection);
@@ -228,12 +230,13 @@ public class Algo {
                             else{
                                 if(field.getName().equals("height") && strHeight.equals("")){
                                     if(!strWeight.equals("")){
-                                        if(rangeSelection == 1){
+                                        if(iRangeIMB == 1){
                                             String str =  "imb >=" + getMinIMB(val,strWeight) + " and " + "imb <" + getMaxIMB(val,strWeight) + " and ";
                                             sb.append(str);
                                         }else{
+                                            //это пока отключено
                                             double p = percent;
-                                            percent = 2*rangeSelection;
+                                            percent = 13.51*(1+(iRangeIMB-2)*1.96);
                                             String str =  "imb >=" + getMinK(getMinIMB(val,strWeight)) + " and " + "imb <" + getMaxK(getMaxIMB(val,strWeight)) + " and ";
                                             sb.append(str);
                                             percent = p;
@@ -245,12 +248,13 @@ public class Algo {
                                 }
                                 else if (field.getName().equals("weight") && strWeight.equals("")){
                                     if(!strHeight.equals("")){
-                                        if(rangeSelection >= 1) {
+                                        if(iRangeIMB == 1) {
                                             String str = "imb >=" + getMinIMB(strHeight, val) + " and " + "imb <" + getMaxIMB(strHeight, val) + " and ";
                                             sb.append(str);
                                         }else{
+                                            //это пока отключено
                                             double p = percent;
-                                            percent = 5*rangeSelection;
+                                            percent = 13.51*(1+(iRangeIMB-2)*1.96);
                                             String str =  "imb >=" + getMinK(getMinIMB(strHeight,val)) + " and " + "imb <" + getMaxK(getMaxIMB(strHeight,val)) + " and ";
                                             sb.append(str);
                                             percent = p;
