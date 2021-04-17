@@ -18,7 +18,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="830.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.vvsu.diseaseanalysisdes.controllers.UsersController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="830.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.vvsu.diseaseanalysisdes.controllers.UsersController">
     <tabs>
         <Tab text="Ввод">
             <content>
@@ -897,7 +897,7 @@
                                                                     <content>
                                                                         <AnchorPane>
                                                                             <children>
-                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                                <TextField fx:id="waistTextField" layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
                                                                                     <font>
                                                                                         <Font name="Arial Bold" size="14.0" />
                                                                                     </font>
@@ -925,7 +925,7 @@
                                                                     <content>
                                                                         <AnchorPane>
                                                                             <children>
-                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                                <TextField fx:id="hipTextField" layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
                                                                                     <font>
                                                                                         <Font name="Arial Bold" size="14.0" />
                                                                                     </font>
@@ -953,7 +953,7 @@
                                                                     <content>
                                                                         <AnchorPane>
                                                                             <children>
-                                                                                <TextField layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                                                <TextField fx:id="dreamTextField" layoutY="14.0" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
                                                                                     <font>
                                                                                         <Font name="Arial Bold" size="14.0" />
                                                                                     </font>
@@ -1409,12 +1409,12 @@
                                         <Font name="System Bold" size="13.0" />
                                     </font>
                                 </Label>
-                                <CheckBox layoutX="25.0" layoutY="35.0" mnemonicParsing="false" style="-fx-text-fill: black;" text="Статистика" textFill="WHITE">
+                                <CheckBox fx:id="statisticCheckBox" layoutX="25.0" layoutY="35.0" mnemonicParsing="false" style="-fx-text-fill: black;" text="Статистика" textFill="WHITE">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                 </CheckBox>
-                                <CheckBox layoutX="25.0" layoutY="70.0" mnemonicParsing="false" style="-fx-text-fill: black;" text="Все похожие" textFill="WHITE">
+                                <CheckBox fx:id="allSameCheckBox" layoutX="25.0" layoutY="70.0" mnemonicParsing="false" style="-fx-text-fill: black;" text="Все похожие" textFill="WHITE">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
                                     </font>

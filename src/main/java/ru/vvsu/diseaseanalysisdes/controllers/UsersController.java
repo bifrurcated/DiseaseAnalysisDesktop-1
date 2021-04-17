@@ -1,7 +1,9 @@
 package ru.vvsu.diseaseanalysisdes.controllers;
 
+import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
+import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,7 +35,10 @@ public class UsersController implements Initializable {
     @FXML private TableView<Human> tableViewResultSearch;
     @FXML private ToggleGroup genderToggleGroup,vegesToggleGroup,sweetsToggleGroup,
             meatToggleGroup,fishToggleGroup,curdToggleGroup,cheeseToggleGroup,
-            zasnutToggleGroup,vozderzhToggleGroup;
+            zasnutToggleGroup,vozderzhToggleGroup, restlessToggleGroup;
+
+    @FXML private TextField waistTextField, hipTextField, dreamTextField;
+    @FXML private CheckBox statisticCheckBox, allSameCheckBox;
 
     private ObservableList<Human> enterDataList;
     private ObservableList<Human> resultSearchList;
@@ -148,6 +153,10 @@ public class UsersController implements Initializable {
         scaleMap.put("Несколько раз в неделю","3");
         scaleMap.put("Один или два раза в неделю","2");
         scaleMap.put("Редко","1");
+        scaleMap.put("Да","4");
+        scaleMap.put("Скорее да, чем нет","3");
+        scaleMap.put("Скорее нет, чем да","2");
+        scaleMap.put("Нет","1");
         //для каждой группы создаём своего слушателя
         genderToggleGroup.selectedToggleProperty().addListener(genderListener);
         vegesToggleGroup.selectedToggleProperty().addListener(vegesListener);
@@ -158,7 +167,12 @@ public class UsersController implements Initializable {
         cheeseToggleGroup.selectedToggleProperty().addListener(cheeseListener);
         zasnutToggleGroup.selectedToggleProperty().addListener(zasnutListener);
         vozderzhToggleGroup.selectedToggleProperty().addListener(vozderzhListener);
+        restlessToggleGroup.selectedToggleProperty().addListener(restlessListener);
 
+        //textfield listener
+        waistTextField.textProperty().addListener(waistListener);
+        hipTextField.textProperty().addListener(hipsListener);
+        dreamTextField.textProperty().addListener(dreamListener);
     }
 
     ChangeListener<Toggle> genderListener = (ov, old_toggle, new_toggle) -> {
@@ -215,6 +229,27 @@ public class UsersController implements Initializable {
         System.out.println( user.fall_asleep );
     };
 
+    ChangeListener<Toggle> restlessListener = (ov, old_toggle, new_toggle) -> {
+        RadioButton selectRadioButton = (RadioButton) new_toggle;
+        user.restless =scaleMap.get(selectRadioButton.getText());
+        System.out.println(user.restless);
+    };
+
+    ChangeListener<String> hipsListener = (ov, old_toggle, new_toggle) -> {
+        user.hips = new_toggle;
+        System.out.println(user.hips);
+    };
+
+    ChangeListener<String> waistListener = (ov, old_toggle, new_toggle) -> {
+        user.waist = new_toggle;
+        System.out.println(user.waist);
+    };
+
+    ChangeListener<String> dreamListener = (ov, old_toggle, new_toggle) -> {
+        user.sleep = new_toggle;
+        System.out.println(user.sleep);
+    };
+
     //Пример создание и загрузка сохранений
     /*  Human sad = new Human();
         sad.id = "142142";
@@ -263,6 +298,8 @@ public class UsersController implements Initializable {
         if(!enterDataList.isEmpty()){ enterDataList.clear(); }
         enterDataList.add(user);
         if(!resultSearchList.isEmpty()){ resultSearchList.clear(); }
+
+        System.out.println(allSameCheckBox.isSelected() + " " + statisticCheckBox.isSelected());
 
         algo.setPercent(5); // задаём начальный процент выборки
         Runnable searchEqualUser = () -> {
