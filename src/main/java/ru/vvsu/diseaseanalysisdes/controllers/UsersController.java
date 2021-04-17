@@ -65,8 +65,8 @@ public class UsersController implements Initializable {
         namesColumns.put("cigarettes","Сколько в среднем сигарет вы выкуриваете в день?");
         namesColumns.put("headaches","Головные боли бывают?");
         namesColumns.put("sleep","Длительность ежедневного сна?");
-        namesColumns.put("abstinence_from_sleep","Как часто вы испытывали трудности в том, чтобы воздерживаться от засыпания когда ситуация этого требует?");
-        namesColumns.put("fall_asleep","Насколько часто Вам было трудно заснуть в течение 30 мин после того как вы легли в постель?");
+        namesColumns.put("abstinence_from_sleep","Как часто вы испытывали трудности в том,\nчтобы воздерживаться от засыпания когда ситуация этого требует?");
+        namesColumns.put("fall_asleep","Насколько часто Вам было трудно заснуть в течение 30 мин\nпосле того как вы легли в постель?");
         namesColumns.put("restless","Я неусидчив");
         namesColumns.put("waist","Окружность талии");
         namesColumns.put("hips","Окружность бедер");
@@ -99,7 +99,6 @@ public class UsersController implements Initializable {
         tableViewEnterData.setItems(enterDataList);
         tableViewResultSearch.setItems(resultSearchList);
 
-
         Callback<TableColumn<Human, String>, TableCell<Human, String>> defaultCellFactory
                 = TextFieldTableCell.forTableColumn();
         namesColumns.forEach((key, val) -> {
@@ -109,6 +108,7 @@ public class UsersController implements Initializable {
                 tableColumnEnterData.setCellFactory(col -> {
                     TableCell<Human, String> cell = defaultCellFactory.call(col);
                     cell.setAlignment(Pos.CENTER);
+                    cell.setPrefHeight(60);
                     return cell ;
                 });
                 tableViewEnterData.getColumns().add(tableColumnEnterData);
@@ -140,6 +140,7 @@ public class UsersController implements Initializable {
         user.age = "28";
         user.weight = "60";
         user.sex = "1";
+        System.out.println(algo.getIndexMassBody(user.height, user.weight));
         //----------------\\
         scaleMap = new HashMap<>(25);
         scaleMap.put("Мужской","1");
@@ -264,38 +265,55 @@ public class UsersController implements Initializable {
         enterDataList.add(user);
         if(!resultSearchList.isEmpty()){ resultSearchList.clear(); }
 
-        algo.setPercent(5); // задаём начальный процент выборки
+        algo.setPercent(0); // задаём начальный процент выборки
         Runnable searchEqualUser = () -> {
-            int count = 0;
-            while (count < 1){
+            algo.setWithoutSelection(true);
+            int countSearch = 0;
+            while (countSearch < 1){
                 StringBuilder sb = algo.getQuerySelections(user); System.out.println(sb);
                 try{
-                    ResultSet resultSet = dataBase.getResultSet("SELECT * FROM med_card where "+sb+";");
-                    while (resultSet.next()) {
-                        Human human = new Human();
-                        Arrays.stream(human.getClass().getFields()).forEach(val -> {
-                            try {
-                                val.set(human,resultSet.getString(val.getName()));
-                            } catch (IllegalAccessException | SQLException e) {
-                                e.printStackTrace();
-                            }
-                        }); // каждой public переменной присваиваем значение из выборки
-                        resultSearchList.add(human);
-                        count++;
-                    }
-                    if(count < 1){
-                        algo.setPercent(algo.getPercent()+1); //увеличиваем процент выборки
-                        if(algo.getPercent() == 30){
-                            break; // порог на всякий случай
+                    ResultSet resultSet = dataBase.getResultSet(
+                            "SELECT *,10000*weight/(height*height) as imb FROM med_card where "+sb+";");
+                    if(algo.isWithoutSelection()){
+                        int countFound = 0;
+                        while (resultSet.next()) {
+                            countFound++;
+                        }
+                        if(countFound > 0){
+                            algo.setWithoutSelection(false);
+                            System.out.println("yes = "+countFound);
+                        }else{
+                            algo.setNextSearch(false);
+                            System.out.println("no");
                         }
                     }
-                    if(count > 2){
-                        probabilityMap = algo.getProbabilityHealthy(resultSearchList);
-                        System.out.println(probabilityMap);
+                    else{
+                        while (resultSet.next()) {
+                            Human human = new Human();
+                            Arrays.stream(human.getClass().getFields()).forEach(val -> {
+                                try {
+                                    val.set(human,resultSet.getString(val.getName()));
+                                } catch (IllegalAccessException | SQLException e) {
+                                    e.printStackTrace();
+                                }
+                            }); // каждой public переменной присваиваем значение из выборки
+                            resultSearchList.add(human);
+                            countSearch++;
+                            System.out.println("countSearch = "+countSearch);
+                        }
+                        if(countSearch < 1){
+                            algo.setPercent(algo.getPercent()+1); //увеличиваем процент выборки
+                            if(algo.getPercent() == 20){
+                                break; // порог на всякий случай
+                            }
+                        }
+                        if(countSearch > 2){
+                            probabilityMap = algo.getProbabilityHealthy(resultSearchList);
+                            System.out.println(probabilityMap);
+                        }
                     }
                     resultSet.close();
                     resultSet.getStatement().close();
-
                 } catch (SQLException sqlException){
                     sqlException.printStackTrace();
                 }
