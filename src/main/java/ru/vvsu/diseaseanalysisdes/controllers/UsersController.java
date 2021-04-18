@@ -241,8 +241,8 @@ public class UsersController implements Initializable {
 
     ChangeListener<Toggle> restlessListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
-        user.headaches = scaleMap.get(selectRadioButton.getText());
-        System.out.println( user.headaches );
+        user.restless = scaleMap.get(selectRadioButton.getText());
+        System.out.println( user.restless );
     };
 
     public void createFileSave(Serializable userData) {
@@ -289,20 +289,24 @@ public class UsersController implements Initializable {
         algo.setPercent(0); // задаём начальный процент выборки
         Runnable searchEqualUser = () -> {
             algo.setWithoutSelection(true);
+            algo.setSaveQuery(null);
             int countSearch = 0;
-            while (countSearch < 1){
+            int countFound = 0;
+            int max = 1;
+            while (countSearch < max){
                 StringBuilder sb = algo.getQuerySelections(user); System.out.println(sb);
                 try{
                     ResultSet resultSet = dataBase.getResultSet(
                             "SELECT *,10000*weight/(height*height) as imb FROM med_card where "+sb+";");
                     if(algo.isWithoutSelection()){
-                        int countFound = 0;
                         while (resultSet.next()) {
                             countFound++;
                         }
                         if(countFound > 0){
                             algo.setWithoutSelection(false);
+                            algo.setSaveQuery(sb.toString());
                             System.out.println("yes = "+countFound);
+                            max = (int)Math.ceil(countFound/4f);
                         }else{
                             algo.setNextSearch(false);
                             System.out.println("no");
@@ -322,15 +326,14 @@ public class UsersController implements Initializable {
                             countSearch++;
                             System.out.println("countSearch = "+countSearch);
                         }
-                        if(countSearch < 1){
+                        if(countSearch < max){
+                            resultSearchList.clear();
+                            countSearch = 0;
+                            //System.out.println("countSearch = "+countSearch);
                             algo.setPercent(algo.getPercent()+1); //увеличиваем процент выборки
                             if(algo.getPercent() == 500){
                                 break; // порог на всякий случай
                             }
-                        }
-                        if(countSearch > 2){
-                            probabilityMap = algo.getProbabilityHealthy(resultSearchList);
-                            System.out.println(probabilityMap);
                         }
                     }
                     resultSet.close();
@@ -339,12 +342,16 @@ public class UsersController implements Initializable {
                     sqlException.printStackTrace();
                 }
             }
+            if(countSearch > 2){
+                probabilityMap = algo.getProbabilityHealthy(resultSearchList);
+                System.out.println(probabilityMap);
+            }
             System.out.println("percent = "+algo.getPercent());
             autoResizeColumns(tableViewEnterData);
             autoResizeColumns(tableViewResultSearch);
             selectionModel.select(tabResult);
             try {
-                Thread.sleep(100L);
+                Thread.sleep(400L);
                 tableViewResultSearch.refresh();
             } catch (InterruptedException exception) {
                 exception.printStackTrace();
@@ -393,7 +400,13 @@ public class UsersController implements Initializable {
 
     public void handleBtnLoad(ActionEvent actionEvent) {
         Optional<Human> optionalHuman = Optional.ofNullable((Human) openFileSave());
-        optionalHuman.ifPresent(human -> user = human);
+        optionalHuman.ifPresent(human -> {
+            try {
+                user = (Human) human.clone();
+            } catch (CloneNotSupportedException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     public void onSelectionChangedResult(Event event) {

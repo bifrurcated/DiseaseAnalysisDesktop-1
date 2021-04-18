@@ -5,10 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class Human implements Serializable {
+public class Human implements Serializable,Cloneable {
     private static final long serialVersionUID = 1L;
-    private final Map<String,String> countScaleMap;
-    private final Map<String,String> diseasesScaleMap;
+    private Map<String,String> countScaleMap;
+    private Map<String,String> countScaleMapSleep;
+    private Map<String,String> countScaleMapRestless;
+    private Map<String,String> diseasesScaleMap;
 
     public String
             height,
@@ -64,6 +66,16 @@ public class Human implements Serializable {
         countScaleMap.put("2","Один или два раза в неделю");
         countScaleMap.put("3","Несколько раз в неделю");
         countScaleMap.put("4","Каждый день");
+        countScaleMapSleep = new HashMap<>(5);
+        countScaleMapSleep.put("4","Очень часто");
+        countScaleMapSleep.put("3","Довольно часто");
+        countScaleMapSleep.put("2","Довольно редко");
+        countScaleMapSleep.put("1","Очень редко");
+        countScaleMapRestless = new HashMap<>(5);
+        countScaleMapRestless.put("3","Верно");
+        countScaleMapRestless.put("2","Скорее да, чем нет");
+        countScaleMapRestless.put("1","Скорее нет, чем да");
+        countScaleMapRestless.put("0","Неверно");
         diseasesScaleMap = new HashMap<>( 4);
         diseasesScaleMap.put("1","Нет");
         diseasesScaleMap.put("2","Есть, но не доставляет особых проблем");
@@ -333,7 +345,7 @@ public class Human implements Serializable {
     }
 
     public String getFall_asleep() {
-        return countScaleMap.get(fall_asleep);
+        return countScaleMapSleep.get(fall_asleep);
     }
 
     public void setFall_asleep(String fall_asleep) {
@@ -341,7 +353,7 @@ public class Human implements Serializable {
     }
 
     public String getAbstinence_from_sleep() {
-        return countScaleMap.get(abstinence_from_sleep);
+        return countScaleMapSleep.get(abstinence_from_sleep);
     }
 
     public void setAbstinence_from_sleep(String abstinence_from_sleep) {
@@ -427,11 +439,35 @@ public class Human implements Serializable {
     }
 
     public String getRestless() {
-        return restless;
+        return countScaleMapRestless.get(restless);
     }
 
     public void setRestless(String restless) {
         this.restless = restless;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        countScaleMap = new HashMap<>(5);
+        countScaleMap.put("1","Редко");
+        countScaleMap.put("2","Один или два раза в неделю");
+        countScaleMap.put("3","Несколько раз в неделю");
+        countScaleMap.put("4","Каждый день");
+        countScaleMapSleep = new HashMap<>(5);
+        countScaleMapSleep.put("4","Очень часто");
+        countScaleMapSleep.put("3","Довольно часто");
+        countScaleMapSleep.put("2","Довольно редко");
+        countScaleMapSleep.put("1","Очень редко");
+        countScaleMapRestless = new HashMap<>(5);
+        countScaleMapRestless.put("3","Верно");
+        countScaleMapRestless.put("2","Скорее да, чем нет");
+        countScaleMapRestless.put("1","Скорее нет, чем да");
+        countScaleMapRestless.put("0","Неверно");
+        diseasesScaleMap = new HashMap<>( 4);
+        diseasesScaleMap.put("1","Нет");
+        diseasesScaleMap.put("2","Есть, но не доставляет особых проблем");
+        diseasesScaleMap.put("3","Есть в интенсивной фазе");
+        return super.clone();
     }
 
     @Override

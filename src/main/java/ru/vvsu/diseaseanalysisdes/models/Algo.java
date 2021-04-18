@@ -3,10 +3,7 @@ package ru.vvsu.diseaseanalysisdes.models;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Algo {
     private double percent; //value from 0 to 100
@@ -18,6 +15,8 @@ public class Algo {
     private int iWhichAnswer;
     private int iSelectMultiple;
     private int iRangeIMB;
+    private String saveQuery;
+    private boolean isDontAdd;
 
     private final Map<String,Integer> questionMap;
 
@@ -30,6 +29,7 @@ public class Algo {
         iSelectMultiple = 1;
         rangeSelection = 1;
         iRangeIMB = 1;
+
         selections = new String[]{"waist","hips","age","walk","cigarettes",
         "average_systolic","average_diastolic","average_heart_rate","total_cholesterol","hdl","lpa",
         "apob","glucose","creatinine","uric_acid","crp","insulin","tsh","probnp"};
@@ -65,6 +65,13 @@ public class Algo {
     }
     public void setNextSearch(boolean nextSearch) {
         isNextSearch = nextSearch;
+    }
+
+    public String getSaveQuery() {
+        return saveQuery;
+    }
+    public void setSaveQuery(String saveQuery) {
+        this.saveQuery = saveQuery;
     }
 
     private String getMinK(String val){
@@ -120,6 +127,7 @@ public class Algo {
     public StringBuilder getQuerySelections(Serializable user){
         StringBuilder sb = new StringBuilder();
         int countSelectColumn = 0;
+        boolean isAppend = true;
         String strHeight = "", strWeight = "";
         for(Field field: user.getClass().getFields()){
             try {
@@ -130,7 +138,7 @@ public class Algo {
                         for (String sel: selections) {
                             if(field.getName().equals(sel)){
                                 String str;
-                                if(val.equals("") || val.equals("0")){
+                                if(val.equals("")){
                                     str = field.getName()+" is null and ";
                                 }
                                 else {
@@ -146,95 +154,23 @@ public class Algo {
                     else {
                         for (String sel: selections) {
                             if (field.getName().equals(sel)) {
+                                if(val.equals("")){
+                                    sb.append(field.getName()).append(" is null and ");
+                                }
                                 isSelections = true;
                                 break;
                             }
                         }
                     }
-                    if(!isSelections){
-                        if(isNextSearch){
-                            if(field.getName().equals("height") && strHeight.equals("")){
-                                if(!strWeight.equals("")){
-                                    if(iRangeIMB == 1){
-                                        String str =  "imb >=" + getMinIMB(val,strWeight) + " and " + "imb <" + getMaxIMB(val,strWeight) + " and ";
-                                        sb.append(str);
-                                    }else{
-                                        double p = percent;
-                                        percent = 13.51*(1+(iRangeIMB-2)*1.96);
-                                        String str =  "imb >=" + getMinK(getMinIMB(val,strWeight)) + " and " + "imb <" + getMaxK(getMaxIMB(val,strWeight)) + " and ";
-                                        sb.append(str);
-                                        percent = p;
-                                    }
-                                }
-                                else {
-                                    strHeight=val;
-                                }
-                            }
-                            else if (field.getName().equals("weight") && strWeight.equals("")){
-                                if(!strHeight.equals("")){
-                                    if(iRangeIMB == 1) {
-                                        String str = "imb >=" + getMinIMB(strHeight, val) + " and " + "imb <" + getMaxIMB(strHeight, val) + " and ";
-                                        sb.append(str);
-                                    }
-                                    else{
-                                        double p = percent;
-                                        percent = 13.51*(1+(iRangeIMB-2)*1.96);
-                                        String str =  "imb >=" + getMinK(getMinIMB(strHeight,val)) + " and " + "imb <" + getMaxK(getMaxIMB(strHeight,val)) + " and ";
-                                        sb.append(str);
-                                        percent = p;
-                                    }
-                                }
-                                else{
-                                    strWeight=val;
-                                }
-                            }
-                            else {
-                                String str = field.getName() + "=" + val + " and ";
-                                sb.append(str);
-                            }
-                        }
-                        else{
-                            if(questionMap.containsKey(field.getName()) && questionMap.get(field.getName()) == rangeSelection){
-                                String str = field.getName() + ">=" + getMinVal(val) + " and " + field.getName() + "<=" + getMaxVal(val) + " and ";
-                                sb.append(str);
-                                questionMap.put(field.getName(),rangeSelection+1);
-                                iWhichAnswer++;
-                                int countAnswerOnQuestions = getCountAnswerOnQuestions(user);
-                                if(iWhichAnswer == countAnswerOnQuestions){
-                                    iWhichAnswer = 0;
-                                    rangeSelection++;
-                                    if(rangeSelection > 4){
-                                        rangeSelection = 1;
-                                        iSelectMultiple++;
-                                        if(iSelectMultiple > countAnswerOnQuestions){
-                                            iSelectMultiple = 1;
-                                            iRangeIMB++;
-                                        }
-                                        questionMap.put("freq_meat",rangeSelection);
-                                        questionMap.put("freq_fish",rangeSelection);
-                                        questionMap.put("freq_vegatables",rangeSelection);
-                                        questionMap.put("freq_sweets",rangeSelection);
-                                        questionMap.put("freq_cottage_cheese",rangeSelection);
-                                        questionMap.put("freq_cheese",rangeSelection);
-                                        questionMap.put("fall_asleep",rangeSelection);
-                                        questionMap.put("abstinence_from_sleep",rangeSelection);
-                                    }
-                                }
-                                countSelectColumn++;
-                                if(countSelectColumn == iSelectMultiple){
-                                    isNextSearch = true;
-                                    System.out.println("isNextSearch = "+isNextSearch);
-                                    System.out.println("str = "+str);
-                                }
-                            }
-                            else{
+                    if(!isSelections && isAppend){
+                        if(saveQuery == null){
+                            if(isNextSearch){
                                 if(field.getName().equals("height") && strHeight.equals("")){
                                     if(!strWeight.equals("")){
                                         if(iRangeIMB == 1){
                                             String str =  "imb >=" + getMinIMB(val,strWeight) + " and " + "imb <" + getMaxIMB(val,strWeight) + " and ";
                                             sb.append(str);
                                         }else{
-                                            //это пока отключено
                                             double p = percent;
                                             percent = 13.51*(1+(iRangeIMB-2)*1.96);
                                             String str =  "imb >=" + getMinK(getMinIMB(val,strWeight)) + " and " + "imb <" + getMaxK(getMaxIMB(val,strWeight)) + " and ";
@@ -251,8 +187,8 @@ public class Algo {
                                         if(iRangeIMB == 1) {
                                             String str = "imb >=" + getMinIMB(strHeight, val) + " and " + "imb <" + getMaxIMB(strHeight, val) + " and ";
                                             sb.append(str);
-                                        }else{
-                                            //это пока отключено
+                                        }
+                                        else{
                                             double p = percent;
                                             percent = 13.51*(1+(iRangeIMB-2)*1.96);
                                             String str =  "imb >=" + getMinK(getMinIMB(strHeight,val)) + " and " + "imb <" + getMaxK(getMaxIMB(strHeight,val)) + " and ";
@@ -268,8 +204,89 @@ public class Algo {
                                     String str = field.getName() + "=" + val + " and ";
                                     sb.append(str);
                                 }
-
                             }
+                            else{
+                                if(questionMap.containsKey(field.getName()) && questionMap.get(field.getName()) == rangeSelection){
+                                    String str = field.getName() + ">=" + getMinVal(val) + " and " + field.getName() + "<=" + getMaxVal(val) + " and ";
+                                    sb.append(str);
+                                    questionMap.put(field.getName(),rangeSelection+1);
+                                    iWhichAnswer++;
+                                    int countAnswerOnQuestions = getCountAnswerOnQuestions(user);
+                                    if(iWhichAnswer == countAnswerOnQuestions){
+                                        iWhichAnswer = 0;
+                                        rangeSelection++;
+                                        if(rangeSelection > 4){
+                                            //isWithoutSelection = false;
+                                            rangeSelection = 1;
+                                            iSelectMultiple++;
+                                            if(iSelectMultiple > countAnswerOnQuestions){
+                                                iSelectMultiple = 1;
+                                                iRangeIMB++;
+                                            }
+                                            questionMap.put("freq_meat",rangeSelection);
+                                            questionMap.put("freq_fish",rangeSelection);
+                                            questionMap.put("freq_vegatables",rangeSelection);
+                                            questionMap.put("freq_sweets",rangeSelection);
+                                            questionMap.put("freq_cottage_cheese",rangeSelection);
+                                            questionMap.put("freq_cheese",rangeSelection);
+                                            questionMap.put("fall_asleep",rangeSelection);
+                                            questionMap.put("abstinence_from_sleep",rangeSelection);
+                                        }
+                                    }
+                                    countSelectColumn++;
+                                    if(countSelectColumn == iSelectMultiple){
+                                        isNextSearch = true;
+                                        System.out.println("isNextSearch = "+isNextSearch);
+                                        System.out.println("str = "+str);
+                                    }
+                                }
+                                else{
+                                    if(field.getName().equals("height") && strHeight.equals("")){
+                                        if(!strWeight.equals("")){
+                                            if(iRangeIMB == 1){
+                                                String str =  "imb >=" + getMinIMB(val,strWeight) + " and " + "imb <" + getMaxIMB(val,strWeight) + " and ";
+                                                sb.append(str);
+                                            }else{
+                                                //это пока отключено
+                                                double p = percent;
+                                                percent = 13.51*(1+(iRangeIMB-2)*1.96);
+                                                String str =  "imb >=" + getMinK(getMinIMB(val,strWeight)) + " and " + "imb <" + getMaxK(getMaxIMB(val,strWeight)) + " and ";
+                                                sb.append(str);
+                                                percent = p;
+                                            }
+                                        }
+                                        else {
+                                            strHeight=val;
+                                        }
+                                    }
+                                    else if (field.getName().equals("weight") && strWeight.equals("")){
+                                        if(!strHeight.equals("")){
+                                            if(iRangeIMB == 1) {
+                                                String str = "imb >=" + getMinIMB(strHeight, val) + " and " + "imb <" + getMaxIMB(strHeight, val) + " and ";
+                                                sb.append(str);
+                                            }else{
+                                                //это пока отключено
+                                                double p = percent;
+                                                percent = 13.51*(1+(iRangeIMB-2)*1.96);
+                                                String str =  "imb >=" + getMinK(getMinIMB(strHeight,val)) + " and " + "imb <" + getMaxK(getMaxIMB(strHeight,val)) + " and ";
+                                                sb.append(str);
+                                                percent = p;
+                                            }
+                                        }
+                                        else{
+                                            strWeight=val;
+                                        }
+                                    }
+                                    else {
+                                        String str = field.getName() + "=" + val + " and ";
+                                        sb.append(str);
+                                    }
+                                }
+                            }
+                        }
+                        else{
+                            sb.append(saveQuery).append(" and ");
+                            isAppend = false;
                         }
                     }
                 }
