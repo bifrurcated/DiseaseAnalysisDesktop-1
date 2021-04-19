@@ -5,7 +5,7 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.*;
 
-public class Algo {
+public class Algo{
     private double percent; //value from 0 to 100
     private final String[] selections;
     private final String[] diseases;
@@ -60,11 +60,8 @@ public class Algo {
         isWithoutSelection = withoutSelection;
     }
 
-    public boolean isNextSearch() {
-        return isNextSearch;
-    }
-    public void setNextSearch(boolean nextSearch) {
-        isNextSearch = nextSearch;
+    public void nextSearch(int countSearch) {
+        isNextSearch = countSearch > 0;
     }
 
     public String getSaveQuery() {

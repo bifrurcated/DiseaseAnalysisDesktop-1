@@ -17,6 +17,7 @@ import javafx.util.Callback;
 import ru.vvsu.diseaseanalysisdes.helpers.FileHelper;
 import ru.vvsu.diseaseanalysisdes.managers.SQLiteManager;
 import ru.vvsu.diseaseanalysisdes.models.Algo;
+import ru.vvsu.diseaseanalysisdes.models.AlgoSearch;
 import ru.vvsu.diseaseanalysisdes.models.Human;
 
 import java.io.File;
@@ -287,6 +288,171 @@ public class UsersController implements Initializable {
         if(!resultSearchList.isEmpty()){ resultSearchList.clear(); }
 
         algo.setPercent(0); // задаём начальный процент выборки
+        AlgoSearch algoSearch = new AlgoSearch();
+        algoSearch.setPercent(0);
+        Runnable searchEqualUserTest = () -> {
+            StringBuilder sb1 = new StringBuilder();
+            int countFound = 0;
+            while (countFound < 1){
+                sb1 = algoSearch.getQueryNonSelections(user);
+                System.out.println(sb1);
+                try{
+                    ResultSet resultSet = dataBase.getResultSet(
+                            "SELECT *,10000*weight/(height*height) as imb FROM med_card where "+sb1+";");
+                    while (resultSet.next()) {
+                        countFound++;
+                    }
+                    System.out.println(countFound);
+                    algoSearch.nextSearch(countFound);
+                    resultSet.close();
+                    resultSet.getStatement().close();
+                } catch (SQLException sqlException){
+                    sqlException.printStackTrace();
+                }
+            }
+
+            int max = (int)Math.ceil(countFound/4f);
+            while (resultSearchList.size() < max){
+                StringBuilder sb2;
+                if(countFound > 1){
+                    sb2 = algoSearch.getQuerySelections(user);
+                    sb2.append(" and ").append(sb1);
+                    System.out.println(sb2);
+                } else {
+                    sb2 = sb1;
+                }
+                try{
+                    ResultSet resultSet = dataBase.getResultSet(
+                            "SELECT *,10000*weight/(height*height) as imb FROM med_card where "+sb2+";");
+                    while (resultSet.next()) {
+                        Human human = new Human();
+                        Arrays.stream(human.getClass().getFields()).forEach(val -> {
+                            try {
+                                val.set(human,resultSet.getString(val.getName()));
+                            } catch (IllegalAccessException | SQLException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                        resultSearchList.add(human);
+                    }
+                    if(resultSearchList.size() < max){
+                        algoSearch.setPercent(algoSearch.getPercent()+1); //увеличиваем процент выборки
+                        if(algoSearch.getPercent() >= 50){
+                            break; // порог на всякий случай
+                        }
+                        resultSearchList.clear();
+                    }
+                    resultSet.close();
+                    resultSet.getStatement().close();
+                } catch (SQLException sqlException){
+                    sqlException.printStackTrace();
+                }
+            }
+            System.out.println("percent = "+algoSearch.getPercent());
+            if(resultSearchList.size() > 2){
+                probabilityMap = algo.getProbabilityHealthy(resultSearchList);
+                System.out.println(probabilityMap);
+            }
+            autoResizeColumns(tableViewEnterData);
+            autoResizeColumns(tableViewResultSearch);
+            selectionModel.select(tabResult);
+            try {
+                Thread.sleep(400L);
+                tableViewResultSearch.refresh();
+            } catch (InterruptedException exception) {
+                exception.printStackTrace();
+            }
+        };
+        Runnable searchEqualUser = () -> {
+            algo.setWithoutSelection(true);
+            algo.setSaveQuery(null);
+            int countSearch = 0;
+            int countFound = 0;
+            int max = 1;
+            while (countSearch < max){
+                StringBuilder sb = algo.getQuerySelections(user); System.out.println(sb);
+                try{
+                    ResultSet resultSet = dataBase.getResultSet(
+                            "SELECT *,10000*weight/(height*height) as imb FROM med_card where "+sb+";");
+                    if(algo.isWithoutSelection()){
+                        while (resultSet.next()) {
+                            Human human = new Human();
+                            Arrays.stream(human.getClass().getFields()).forEach(val -> {
+                                try {
+                                    val.set(human,resultSet.getString(val.getName()));
+                                } catch (IllegalAccessException | SQLException e) {
+                                    e.printStackTrace();
+                                }
+                            });
+                            resultSearchList.add(human);
+                            countFound++;
+                        }
+                        if(countFound > 0){
+                            algo.setWithoutSelection(false);
+                            algo.setSaveQuery(sb.toString());
+                            System.out.println("yes = "+countFound);
+                            max = (int)Math.ceil(countFound/4f);
+                        }else{
+                            algo.nextSearch(countFound);
+                            System.out.println("no");
+                        }
+                    }
+                    else{
+                        while (resultSet.next()) {
+                            Human human = new Human();
+                            Arrays.stream(human.getClass().getFields()).forEach(val -> {
+                                try {
+                                    val.set(human,resultSet.getString(val.getName()));
+                                } catch (IllegalAccessException | SQLException e) {
+                                    e.printStackTrace();
+                                }
+                            }); // каждой public переменной присваиваем значение из выборки
+                            resultSearchList.add(human);
+                            countSearch++;
+                            System.out.println("countSearch = "+countSearch);
+                        }
+                        if(countSearch < max){
+                            resultSearchList.clear();
+                            countSearch = 0;
+                            //System.out.println("countSearch = "+countSearch);
+                            algo.setPercent(algo.getPercent()+1); //увеличиваем процент выборки
+                            if(algo.getPercent() == 500){
+                                break; // порог на всякий случай
+                            }
+                        }
+                    }
+                    resultSet.close();
+                    resultSet.getStatement().close();
+                } catch (SQLException sqlException){
+                    sqlException.printStackTrace();
+                }
+            }
+            if(countSearch > 2){
+                probabilityMap = algo.getProbabilityHealthy(resultSearchList);
+                System.out.println(probabilityMap);
+            }
+            System.out.println("percent = "+algo.getPercent());
+            autoResizeColumns(tableViewEnterData);
+            autoResizeColumns(tableViewResultSearch);
+            selectionModel.select(tabResult);
+            try {
+                Thread.sleep(400L);
+                tableViewResultSearch.refresh();
+            } catch (InterruptedException exception) {
+                exception.printStackTrace();
+            }
+        };
+        Thread thread = new Thread(searchEqualUserTest);
+        thread.setDaemon(true);
+        thread.start();
+    }
+
+    /*public void handleBtnContinue(ActionEvent actionEvent) {
+        if(!enterDataList.isEmpty()){ enterDataList.clear(); }
+        enterDataList.add(user);
+        if(!resultSearchList.isEmpty()){ resultSearchList.clear(); }
+
+        algo.setPercent(0); // задаём начальный процент выборки
         Runnable searchEqualUser = () -> {
             algo.setWithoutSelection(true);
             algo.setSaveQuery(null);
@@ -360,7 +526,7 @@ public class UsersController implements Initializable {
         Thread thread = new Thread(searchEqualUser);
         thread.setDaemon(true);
         thread.start();
-    }
+    }*/
 
     public static void autoResizeColumns( TableView<?> table )
     {
