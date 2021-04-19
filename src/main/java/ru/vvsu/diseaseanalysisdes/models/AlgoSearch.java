@@ -4,9 +4,10 @@ package ru.vvsu.diseaseanalysisdes.models;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
-import java.util.*;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class AlgoSearch{
     private double percent; //value from 0 to 100

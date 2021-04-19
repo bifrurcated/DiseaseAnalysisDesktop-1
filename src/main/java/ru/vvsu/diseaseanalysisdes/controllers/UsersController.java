@@ -42,6 +42,7 @@ public class UsersController implements Initializable {
     private ObservableList<Human> resultSearchList;
     private Human user;
     private Algo algo;
+    private AlgoSearch algoSearch;
     private Map<String, Double> probabilityMap;
     private Map<String,String> scaleMap;
     private SingleSelectionModel<Tab> selectionModel;
@@ -137,6 +138,7 @@ public class UsersController implements Initializable {
         });
 
         probabilityMap = new HashMap<>(9);
+        algoSearch = new AlgoSearch();
         algo = new Algo();
         user = new Human();
 
@@ -288,7 +290,6 @@ public class UsersController implements Initializable {
         if(!resultSearchList.isEmpty()){ resultSearchList.clear(); }
 
         algo.setPercent(0); // задаём начальный процент выборки
-        AlgoSearch algoSearch = new AlgoSearch();
         algoSearch.setPercent(0);
         Runnable searchEqualUserTest = () -> {
             StringBuilder sb1 = new StringBuilder();
