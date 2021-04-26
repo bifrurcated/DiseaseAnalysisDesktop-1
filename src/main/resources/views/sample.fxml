@@ -788,7 +788,7 @@
                                                                         <Insets bottom="10.0" />
                                                                     </padding>
                                                    <content>
-                                                      <TextField fx:id="sleepTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
+                                                      <TextField fx:id="dreamTextField" prefHeight="30.0" prefWidth="350.0" promptText="  Значение">
                                                          <font>
                                                             <Font name="Arial Bold" size="14.0" />
                                                          </font>
@@ -1140,7 +1140,7 @@
                                         <Font name="System Bold" size="12.0" />
                                     </font>
                                 </CheckBox>
-                                <CheckBox fx:id="allSameCheckBox" layoutX="25.0" layoutY="70.0" mnemonicParsing="false" style="-fx-text-fill: black;" text="Все похожие" textFill="WHITE">
+                                <CheckBox fx:id="allSimilarCheckBox" layoutX="25.0" layoutY="70.0" mnemonicParsing="false" style="-fx-text-fill: black;" text="Все похожие" textFill="WHITE">
                                     <font>
                                         <Font name="System Bold" size="12.0" />
                                     </font>
@@ -1165,7 +1165,7 @@
                     </children>
                 </AnchorPane>
             </content></Tab>
-        <Tab fx:id="tabResult" onSelectionChanged="#onSelectionChangedResult" text="Результат">
+        <Tab fx:id="tabResult" text="Результат">
             <content>
                 <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(rgb(241, 182, 177), rgb(197, 137, 160), rgb(153, 94, 143), rgb(109, 52, 125), rgb(62, 7, 107));">
                     <children>

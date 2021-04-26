@@ -1,35 +1,42 @@
 package ru.vvsu.diseaseanalysisdes.controllers;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import ru.vvsu.diseaseanalysisdes.helpers.FileHelper;
 import ru.vvsu.diseaseanalysisdes.managers.SQLiteManager;
-import ru.vvsu.diseaseanalysisdes.models.Algo;
 import ru.vvsu.diseaseanalysisdes.models.AlgoSearch;
 import ru.vvsu.diseaseanalysisdes.models.Human;
 
 import java.io.File;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class UsersController implements Initializable {
     private final SQLiteManager dataBase;
+    @FXML private Button proceedButton;
     @FXML private Tab tabResult;
 
     @FXML private TableView<Human> tableViewEnterData;
@@ -38,10 +45,20 @@ public class UsersController implements Initializable {
             meatToggleGroup,fishToggleGroup,curdToggleGroup,cheeseToggleGroup,
             zasnutToggleGroup,vozderzhToggleGroup,headachesToggleGroup,restlessToggleGroup;
 
+    @FXML private TextField waistTextField, hipTextField, dreamTextField,
+            ageTextField, heightTextField, weightTextField, walkTextField,
+            exerciseStressTextField, exerciseStressOnWorkTextField, cigarettesTextField,
+            averageSystolicTextField, averageDiastolicTextField, averageHeartRateTextField,
+            totalCholesterolTextField, hdlTextField, lpaTextField, probnpTextField, apobTextField,
+            glucoseTextField, creatinineTextField, uricAcidcreatinineTextField, crpTextField, insulinTextField,
+            tshTextField;
+    @FXML private CheckBox statisticCheckBox, allSimilarCheckBox;
+
+    private static final Pattern pattern = Pattern.compile("[\\d]+[\\.]?[\\d]*");
+
     private ObservableList<Human> enterDataList;
     private ObservableList<Human> resultSearchList;
     private Human user;
-    private Algo algo;
     private AlgoSearch algoSearch;
     private Map<String, Double> probabilityMap;
     private Map<String,String> scaleMap;
@@ -103,6 +120,10 @@ public class UsersController implements Initializable {
         resultSearchList = FXCollections.observableArrayList();
         tableViewEnterData.setItems(enterDataList);
         tableViewResultSearch.setItems(resultSearchList);
+        Platform.runLater(() -> {
+            tableViewResultSearch.getColumns().get(tableViewResultSearch.getColumns().size()-1).setVisible(false);
+            tableViewResultSearch.getColumns().get(tableViewResultSearch.getColumns().size()-1).setVisible(true);
+        });
         selectionModel = tabResult.getTabPane().getSelectionModel();
 
         Callback<TableColumn<Human, String>, TableCell<Human, String>> defaultCellFactory
@@ -139,16 +160,10 @@ public class UsersController implements Initializable {
 
         probabilityMap = new HashMap<>(9);
         algoSearch = new AlgoSearch();
-        algo = new Algo();
         user = new Human();
 
-        //для теста
-        user.height = "177";
-        user.age = "20";
-        user.weight = "60";
         user.sex = "1";
         user.cigarettes = "";
-        System.out.println(algo.getIndexMassBody(user.height, user.weight));
         //----------------\\
         scaleMap = new HashMap<>(25);
         scaleMap.put("Мужской","1");
@@ -180,7 +195,177 @@ public class UsersController implements Initializable {
         vozderzhToggleGroup.selectedToggleProperty().addListener(vozderzhListener);
         headachesToggleGroup.selectedToggleProperty().addListener(headachesListener);
         restlessToggleGroup.selectedToggleProperty().addListener(restlessListener);
+
+        //textfield listener
+        waistTextField.textProperty().addListener(waistListener);
+        hipTextField.textProperty().addListener(hipsListener);
+        dreamTextField.textProperty().addListener(dreamListener);
+        ageTextField.textProperty().addListener(ageListener);
+        heightTextField.textProperty().addListener(heightListener);
+        weightTextField.textProperty().addListener(weightListener);
+        walkTextField.textProperty().addListener(walkListener);
+        exerciseStressTextField.textProperty().addListener(exerciseStressListener);
+        exerciseStressOnWorkTextField.textProperty().addListener(exerciseStressOnWorkListener);
+        cigarettesTextField.textProperty().addListener(cigarettesListener);
+        averageSystolicTextField.textProperty().addListener(averageSystolicListener);
+        averageDiastolicTextField.textProperty().addListener(averageDiastolicListener);
+        averageHeartRateTextField.textProperty().addListener(averageHeartRateListener);
+        totalCholesterolTextField.textProperty().addListener(totalCholesterolListener);
+        hdlTextField.textProperty().addListener(hdlListener);
+        lpaTextField.textProperty().addListener(lpaListener);
+        probnpTextField.textProperty().addListener(probnpListener);
+        apobTextField.textProperty().addListener(apobListener);
+        glucoseTextField.textProperty().addListener(glucoseListener);
+        creatinineTextField.textProperty().addListener(creatinineListener);
+        uricAcidcreatinineTextField.textProperty().addListener(uricAcidcreatinineListener);
+        crpTextField.textProperty().addListener(crpListener);
+        insulinTextField.textProperty().addListener(insulinListener);
+        tshTextField.textProperty().addListener(tshListener);
     }
+
+    ChangeListener<String> tshListener = (ov, old_toggle, new_toggle) -> {
+        user.tsh = readString(new_toggle);
+        tshTextField.setText(user.tsh);
+        System.out.println(user.tsh);
+    };
+
+    ChangeListener<String> insulinListener = (ov, old_toggle, new_toggle) -> {
+        user.insulin = readString(new_toggle);
+        insulinTextField.setText(user.insulin);
+        System.out.println(user.insulin);
+    };
+
+    ChangeListener<String> crpListener = (ov, old_toggle, new_toggle) -> {
+        user.crp = readString(new_toggle);
+        crpTextField.setText(user.crp);
+        System.out.println(user.crp);
+    };
+
+    ChangeListener<String> uricAcidcreatinineListener = (ov, old_toggle, new_toggle) -> {
+        user.uric_acid = readString(new_toggle);
+        uricAcidcreatinineTextField.setText(user.uric_acid);
+        System.out.println(user.uric_acid);
+    };
+
+    ChangeListener<String> creatinineListener = (ov, old_toggle, new_toggle) -> {
+        user.creatinine = readString(new_toggle);
+        creatinineTextField.setText(user.creatinine);
+        System.out.println(user.creatinine);
+    };
+
+    ChangeListener<String> glucoseListener = (ov, old_toggle, new_toggle) -> {
+        user.glucose = readString(new_toggle);
+        glucoseTextField.setText(user.glucose);
+        System.out.println(user.glucose);
+    };
+
+    ChangeListener<String> apobListener = (ov, old_toggle, new_toggle) -> {
+        user.apob = readString(new_toggle);
+        apobTextField.setText(user.apob);
+        System.out.println(user.apob);
+    };
+
+    ChangeListener<String> probnpListener = (ov, old_toggle, new_toggle) -> {
+        user.probnp = readString(new_toggle);
+        probnpTextField.setText(user.probnp);
+        System.out.println(user.probnp);
+    };
+
+    ChangeListener<String> lpaListener = (ov, old_toggle, new_toggle) -> {
+        user.lpa = readString(new_toggle);
+        lpaTextField.setText(user.lpa);
+        System.out.println(user.lpa);
+    };
+
+    ChangeListener<String> hdlListener = (ov, old_toggle, new_toggle) -> {
+        user.hdl = readString(new_toggle);
+        hdlTextField.setText(user.hdl);
+        System.out.println(user.hdl);
+    };
+
+    ChangeListener<String> totalCholesterolListener = (ov, old_toggle, new_toggle) -> {
+        user.total_cholesterol = readString(new_toggle);
+        totalCholesterolTextField.setText(user.total_cholesterol);
+        System.out.println(user.total_cholesterol);
+    };
+
+    ChangeListener<String> averageHeartRateListener = (ov, old_toggle, new_toggle) -> {
+        user.average_heart_rate = readString(new_toggle);
+        averageHeartRateTextField.setText(user.average_heart_rate);
+        System.out.println(user.average_heart_rate);
+    };
+
+    ChangeListener<String> averageDiastolicListener = (ov, old_toggle, new_toggle) -> {
+        user.average_diastolic = readString(new_toggle);
+        averageDiastolicTextField.setText(user.average_diastolic);
+        System.out.println(user.average_diastolic);
+    };
+
+    ChangeListener<String> averageSystolicListener = (ov, old_toggle, new_toggle) -> {
+        user.average_systolic = readString(new_toggle);
+        averageSystolicTextField.setText(user.average_systolic);
+        System.out.println(user.average_systolic);
+    };
+
+    ChangeListener<String> cigarettesListener = (ov, old_toggle, new_toggle) -> {
+        user.cigarettes = readString(new_toggle);
+        cigarettesTextField.setText(user.cigarettes);
+        System.out.println(user.cigarettes);
+    };
+
+    ChangeListener<String> exerciseStressOnWorkListener = (ov, old_toggle, new_toggle) -> {
+        user.exercise_stress_on_work = readString(new_toggle);
+        exerciseStressOnWorkTextField.setText(user.exercise_stress_on_work);
+        System.out.println(user.exercise_stress_on_work);
+    };
+
+    ChangeListener<String> exerciseStressListener = (ov, old_toggle, new_toggle) -> {
+        user.exercise_stress = readString(new_toggle);
+        exerciseStressTextField.setText(user.exercise_stress);
+        System.out.println(user.exercise_stress);
+    };
+
+    ChangeListener<String> walkListener = (ov, old_toggle, new_toggle) -> {
+        user.walk = readString(new_toggle);
+        walkTextField.setText(user.walk);
+        System.out.println(user.walk);
+    };
+
+    ChangeListener<String> weightListener = (ov, old_toggle, new_toggle) -> {
+        user.weight = readString(new_toggle);
+        weightTextField.setText(user.weight);
+        System.out.println(user.weight);
+    };
+
+    ChangeListener<String> heightListener = (ov, old_toggle, new_toggle) -> {
+        user.height = readString(new_toggle);
+        heightTextField.setText(user.height);
+        System.out.println(user.height);
+    };
+
+    ChangeListener<String> ageListener = (ov, old_toggle, new_toggle) -> {
+        user.age = readString(new_toggle);
+        ageTextField.setText(user.age);
+        System.out.println(user.age);
+    };
+
+    ChangeListener<String> hipsListener = (ov, old_toggle, new_toggle) -> {
+        user.hips = readString(new_toggle);
+        hipTextField.setText(user.hips);
+        System.out.println(user.hips);
+    };
+
+    ChangeListener<String> waistListener = (ov, old_toggle, new_toggle) -> {
+        user.waist = readString(new_toggle);
+        waistTextField.setText(user.waist);
+        System.out.println(user.waist);
+    };
+
+    ChangeListener<String> dreamListener = (ov, old_toggle, new_toggle) -> {
+        user.sleep = readString(new_toggle);
+        dreamTextField.setText(user.sleep);
+        System.out.println(user.sleep);
+    };
 
     ChangeListener<Toggle> genderListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
@@ -248,6 +433,17 @@ public class UsersController implements Initializable {
         System.out.println( user.restless );
     };
 
+    public static String readString(String s) {
+        if(s != null){
+            Matcher matcher = pattern.matcher(s);
+            if(matcher.matches()) {
+                return s;
+            }
+            return "";
+        }
+        return null;
+    }
+
     public void createFileSave(Serializable userData) {
         FileChooser configFileChooser = new FileChooser();
         configFileChooser.setTitle("Сохранить");
@@ -284,61 +480,99 @@ public class UsersController implements Initializable {
         return null;
     }
 
+    private void errors(String descriptionError, Button parentError){
+        Stage stage = (Stage) parentError.getScene().getWindow();
+        Label secondLabel = new Label(descriptionError);
+
+        StackPane secondaryLayout = new StackPane();
+        secondaryLayout.getChildren().add(secondLabel);
+
+        Scene secondScene = new Scene(secondaryLayout, 300, 100);
+
+        Stage newWindow = new Stage();
+        newWindow.setResizable(false);
+        newWindow.setTitle("Error");
+        newWindow.setScene(secondScene);
+        newWindow.initModality(Modality.WINDOW_MODAL);
+        newWindow.initOwner(stage);
+        newWindow.setX(stage.getX() + 300);
+        newWindow.setY(stage.getY() + 300);
+        newWindow.show();
+    }
+
+    private boolean checkInputData(){
+        if(user.height == null || user.height.equals("")){
+            String textError = "Поле `Рост` не заполнено!";
+            errors(textError, proceedButton);
+            return false;
+        }
+        else if(user.weight == null || user.weight.equals("")){
+            String textError = "Поле `Вес` не заполнено!";
+            errors(textError, proceedButton);
+            return false;
+        }
+        return true;
+    }
+
     public void handleBtnContinue(ActionEvent actionEvent) {
+        if(!checkInputData()){
+            return;
+        }
         if(!enterDataList.isEmpty()){ enterDataList.clear(); }
         enterDataList.add(user);
         if(!resultSearchList.isEmpty()){ resultSearchList.clear(); }
-
-        algo.setPercent(0); // задаём начальный процент выборки
-        algoSearch.setPercent(0);
-        Runnable searchEqualUserTest = () -> {
+        proceedButton.setDisable(true);
+        algoSearch.setPercent(0);// задаём начальный процент выборки
+        Runnable searchEqualUser2 = () -> {
             StringBuilder sb1 = new StringBuilder();
             int countFound = 0;
             while (countFound < 1){
                 sb1 = algoSearch.getQueryNonSelections(user);
-                System.out.println(sb1);
                 try{
                     ResultSet resultSet = dataBase.getResultSet(
                             "SELECT *,10000*weight/(height*height) as imb FROM med_card where "+sb1+";");
                     while (resultSet.next()) {
                         countFound++;
                     }
-                    System.out.println(countFound);
                     algoSearch.nextSearch(countFound);
+                    //System.out.println(sb1);
+                    //System.out.println("nextSearch = "+algoSearch.isNextSearch());
                     resultSet.close();
                     resultSet.getStatement().close();
                 } catch (SQLException sqlException){
                     sqlException.printStackTrace();
                 }
             }
-
-            int max = (int)Math.ceil(countFound/4f);
+            System.out.println("countFound = "+countFound);
+            System.out.println("sb1 = "+sb1);
+            int max = (int)Math.ceil(countFound/3f);
+            System.out.println("max = "+max);
             while (resultSearchList.size() < max){
                 StringBuilder sb2;
-                if(countFound > 1){
+                if(countFound > 2){
                     sb2 = algoSearch.getQuerySelections(user);
                     sb2.append(" and ").append(sb1);
-                    System.out.println(sb2);
                 } else {
                     sb2 = sb1;
                 }
+                System.out.println("sb2 = "+sb2);
                 try{
                     ResultSet resultSet = dataBase.getResultSet(
                             "SELECT *,10000*weight/(height*height) as imb FROM med_card where "+sb2+";");
                     while (resultSet.next()) {
                         Human human = new Human();
-                        Arrays.stream(human.getClass().getFields()).forEach(val -> {
+                        for(Field field: human.getClass().getFields()){
                             try {
-                                val.set(human,resultSet.getString(val.getName()));
+                                field.set(human,resultSet.getString(field.getName()));
                             } catch (IllegalAccessException | SQLException e) {
                                 e.printStackTrace();
                             }
-                        });
+                        }
                         resultSearchList.add(human);
                     }
                     if(resultSearchList.size() < max){
                         algoSearch.setPercent(algoSearch.getPercent()+1); //увеличиваем процент выборки
-                        if(algoSearch.getPercent() >= 50){
+                        if(algoSearch.getPercent() >= 500){
                             break; // порог на всякий случай
                         }
                         resultSearchList.clear();
@@ -351,183 +585,16 @@ public class UsersController implements Initializable {
             }
             System.out.println("percent = "+algoSearch.getPercent());
             if(resultSearchList.size() > 2){
-                probabilityMap = algo.getProbabilityHealthy(resultSearchList);
+                probabilityMap = algoSearch.getProbabilityHealthy(resultSearchList);
                 System.out.println(probabilityMap);
             }
             autoResizeColumns(tableViewEnterData);
             autoResizeColumns(tableViewResultSearch);
             selectionModel.select(tabResult);
-            try {
-                Thread.sleep(400L);
-                tableViewResultSearch.refresh();
-            } catch (InterruptedException exception) {
-                exception.printStackTrace();
-            }
+            proceedButton.setDisable(false);
         };
-        Runnable searchEqualUser = () -> {
-            algo.setWithoutSelection(true);
-            algo.setSaveQuery(null);
-            int countSearch = 0;
-            int countFound = 0;
-            int max = 1;
-            while (countSearch < max){
-                StringBuilder sb = algo.getQuerySelections(user); System.out.println(sb);
-                try{
-                    ResultSet resultSet = dataBase.getResultSet(
-                            "SELECT *,10000*weight/(height*height) as imb FROM med_card where "+sb+";");
-                    if(algo.isWithoutSelection()){
-                        while (resultSet.next()) {
-                            Human human = new Human();
-                            Arrays.stream(human.getClass().getFields()).forEach(val -> {
-                                try {
-                                    val.set(human,resultSet.getString(val.getName()));
-                                } catch (IllegalAccessException | SQLException e) {
-                                    e.printStackTrace();
-                                }
-                            });
-                            resultSearchList.add(human);
-                            countFound++;
-                        }
-                        if(countFound > 0){
-                            algo.setWithoutSelection(false);
-                            algo.setSaveQuery(sb.toString());
-                            System.out.println("yes = "+countFound);
-                            max = (int)Math.ceil(countFound/4f);
-                        }else{
-                            algo.nextSearch(countFound);
-                            System.out.println("no");
-                        }
-                    }
-                    else{
-                        while (resultSet.next()) {
-                            Human human = new Human();
-                            Arrays.stream(human.getClass().getFields()).forEach(val -> {
-                                try {
-                                    val.set(human,resultSet.getString(val.getName()));
-                                } catch (IllegalAccessException | SQLException e) {
-                                    e.printStackTrace();
-                                }
-                            }); // каждой public переменной присваиваем значение из выборки
-                            resultSearchList.add(human);
-                            countSearch++;
-                            System.out.println("countSearch = "+countSearch);
-                        }
-                        if(countSearch < max){
-                            resultSearchList.clear();
-                            countSearch = 0;
-                            //System.out.println("countSearch = "+countSearch);
-                            algo.setPercent(algo.getPercent()+1); //увеличиваем процент выборки
-                            if(algo.getPercent() == 500){
-                                break; // порог на всякий случай
-                            }
-                        }
-                    }
-                    resultSet.close();
-                    resultSet.getStatement().close();
-                } catch (SQLException sqlException){
-                    sqlException.printStackTrace();
-                }
-            }
-            if(countSearch > 2){
-                probabilityMap = algo.getProbabilityHealthy(resultSearchList);
-                System.out.println(probabilityMap);
-            }
-            System.out.println("percent = "+algo.getPercent());
-            autoResizeColumns(tableViewEnterData);
-            autoResizeColumns(tableViewResultSearch);
-            selectionModel.select(tabResult);
-            try {
-                Thread.sleep(400L);
-                tableViewResultSearch.refresh();
-            } catch (InterruptedException exception) {
-                exception.printStackTrace();
-            }
-        };
-        Thread thread = new Thread(searchEqualUserTest);
-        thread.setDaemon(true);
-        thread.start();
+        Platform.runLater(searchEqualUser2);
     }
-
-    /*public void handleBtnContinue(ActionEvent actionEvent) {
-        if(!enterDataList.isEmpty()){ enterDataList.clear(); }
-        enterDataList.add(user);
-        if(!resultSearchList.isEmpty()){ resultSearchList.clear(); }
-
-        algo.setPercent(0); // задаём начальный процент выборки
-        Runnable searchEqualUser = () -> {
-            algo.setWithoutSelection(true);
-            algo.setSaveQuery(null);
-            int countSearch = 0;
-            int countFound = 0;
-            int max = 1;
-            while (countSearch < max){
-                StringBuilder sb = algo.getQuerySelections(user); System.out.println(sb);
-                try{
-                    ResultSet resultSet = dataBase.getResultSet(
-                            "SELECT *,10000*weight/(height*height) as imb FROM med_card where "+sb+";");
-                    if(algo.isWithoutSelection()){
-                        while (resultSet.next()) {
-                            countFound++;
-                        }
-                        if(countFound > 0){
-                            algo.setWithoutSelection(false);
-                            algo.setSaveQuery(sb.toString());
-                            System.out.println("yes = "+countFound);
-                            max = (int)Math.ceil(countFound/4f);
-                        }else{
-                            algo.setNextSearch(false);
-                            System.out.println("no");
-                        }
-                    }
-                    else{
-                        while (resultSet.next()) {
-                            Human human = new Human();
-                            Arrays.stream(human.getClass().getFields()).forEach(val -> {
-                                try {
-                                    val.set(human,resultSet.getString(val.getName()));
-                                } catch (IllegalAccessException | SQLException e) {
-                                    e.printStackTrace();
-                                }
-                            }); // каждой public переменной присваиваем значение из выборки
-                            resultSearchList.add(human);
-                            countSearch++;
-                            System.out.println("countSearch = "+countSearch);
-                        }
-                        if(countSearch < max){
-                            resultSearchList.clear();
-                            countSearch = 0;
-                            //System.out.println("countSearch = "+countSearch);
-                            algo.setPercent(algo.getPercent()+1); //увеличиваем процент выборки
-                            if(algo.getPercent() == 500){
-                                break; // порог на всякий случай
-                            }
-                        }
-                    }
-                    resultSet.close();
-                    resultSet.getStatement().close();
-                } catch (SQLException sqlException){
-                    sqlException.printStackTrace();
-                }
-            }
-            if(countSearch > 2){
-                probabilityMap = algo.getProbabilityHealthy(resultSearchList);
-                System.out.println(probabilityMap);
-            }
-            System.out.println("percent = "+algo.getPercent());
-            autoResizeColumns(tableViewEnterData);
-            autoResizeColumns(tableViewResultSearch);
-            selectionModel.select(tabResult);
-            try {
-                Thread.sleep(400L);
-                tableViewResultSearch.refresh();
-            } catch (InterruptedException exception) {
-                exception.printStackTrace();
-            }
-        };
-        Thread thread = new Thread(searchEqualUser);
-        thread.setDaemon(true);
-        thread.start();
-    }*/
 
     public static void autoResizeColumns( TableView<?> table )
     {
@@ -558,10 +625,6 @@ public class UsersController implements Initializable {
     }
 
     public void handleBtnSave(ActionEvent actionEvent) {
-        tableViewEnterData.getColumns().get(0).setVisible(false);
-        tableViewEnterData.getColumns().get(0).setVisible(true);
-        tableViewResultSearch.getColumns().get(0).setVisible(false);
-        tableViewResultSearch.getColumns().get(0).setVisible(true);
         createFileSave(user);
     }
 
@@ -570,14 +633,73 @@ public class UsersController implements Initializable {
         optionalHuman.ifPresent(human -> {
             try {
                 user = (Human) human.clone();
+                Platform.runLater(() -> {
+                    if(user.sex != null){
+                        genderToggleGroup.selectToggle(genderToggleGroup.getToggles().get(Integer.parseInt(user.sex)-1));
+                    }
+                    if(user.freq_vegatables != null){
+                        vegesToggleGroup.selectToggle(vegesToggleGroup.getToggles().get(4-Integer.parseInt(user.freq_vegatables)));
+                    }
+                    if(user.freq_sweets != null){
+                        sweetsToggleGroup.selectToggle(sweetsToggleGroup.getToggles().get(4-Integer.parseInt(user.freq_sweets)));
+                    }
+                    if(user.freq_meat != null){
+                        meatToggleGroup.selectToggle(meatToggleGroup.getToggles().get(4-Integer.parseInt(user.freq_meat)));
+                    }
+                    if(user.freq_fish != null){
+                        fishToggleGroup.selectToggle(fishToggleGroup.getToggles().get(4-Integer.parseInt(user.freq_fish)));
+                    }
+                    if(user.freq_cottage_cheese != null){
+                        curdToggleGroup.selectToggle(curdToggleGroup.getToggles().get(4-Integer.parseInt(user.freq_cottage_cheese)));
+                    }
+                    if(user.freq_cheese != null){
+                        cheeseToggleGroup.selectToggle(cheeseToggleGroup.getToggles().get(4-Integer.parseInt(user.freq_cheese)));
+                    }
+                    if(user.fall_asleep != null){
+                        zasnutToggleGroup.selectToggle(zasnutToggleGroup.getToggles().get(4-Integer.parseInt(user.fall_asleep)));
+                    }
+                    if(user.abstinence_from_sleep != null){
+                        vozderzhToggleGroup.selectToggle(vozderzhToggleGroup.getToggles().get(4-Integer.parseInt(user.abstinence_from_sleep)));
+                    }
+                    if(user.headaches != null){
+                        headachesToggleGroup.selectToggle(headachesToggleGroup.getToggles().get(2-Integer.parseInt(user.headaches)));
+                    }
+                    if(user.restless != null){
+                        restlessToggleGroup.selectToggle(restlessToggleGroup.getToggles().get(3-Integer.parseInt(user.restless)));
+                    }
+
+                    waistTextField.setText(user.waist);
+                    hipTextField.setText(user.hips);
+                    dreamTextField.setText(user.sleep);
+                    ageTextField.setText(user.age);
+                    heightTextField.setText(user.height);
+                    weightTextField.setText(user.weight);
+                    walkTextField.setText(user.walk);
+                    exerciseStressTextField.setText(user.exercise_stress);
+                    exerciseStressOnWorkTextField.setText(user.exercise_stress_on_work);
+                    cigarettesTextField.setText(user.cigarettes);
+                    averageSystolicTextField.setText(user.average_systolic);
+                    averageDiastolicTextField.setText(user.average_diastolic);
+                    averageHeartRateTextField.setText(user.average_heart_rate);
+                    totalCholesterolTextField.setText(user.total_cholesterol);
+                    hdlTextField.setText(user.hdl);
+                    lpaTextField.setText(user.lpa);
+                    probnpTextField.setText(user.probnp);
+                    apobTextField.setText(user.apob);
+                    glucoseTextField.setText(user.glucose);
+                    creatinineTextField.setText(user.creatinine);
+                    uricAcidcreatinineTextField.setText(user.uric_acid);
+                    crpTextField.setText(user.crp);
+                    insulinTextField.setText(user.insulin);
+                    tshTextField.setText(user.tsh);
+                });
+
+                //genderToggleGroup.selectToggle(toggle);
+
+
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
             }
         });
-    }
-
-    public void onSelectionChangedResult(Event event) {
-        tableViewEnterData.refresh();
-        tableViewResultSearch.refresh();
     }
 }

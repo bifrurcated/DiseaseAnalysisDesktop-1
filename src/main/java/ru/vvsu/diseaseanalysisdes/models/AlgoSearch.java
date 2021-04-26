@@ -4,10 +4,8 @@ package ru.vvsu.diseaseanalysisdes.models;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.IntStream;
 
 public class AlgoSearch{
     private double percent; //value from 0 to 100
@@ -15,19 +13,22 @@ public class AlgoSearch{
     private final String[] diseases;
     private boolean isNextSearch;
     private int rangeSelection;
-    private int iWhichAnswer;
     private int iSelectMultiple;
     private int iRangeIMB;
+    private int variation;
+    private int[] arr;
 
     private final Map<String,Integer> questionMap;
+    private final List<String> list;
 
     public AlgoSearch (){ this(0); }
     public AlgoSearch (double percent){
         this.percent=percent;
+        arr = null;
         isNextSearch=true;
-        iWhichAnswer = 0;
         iSelectMultiple = 1;
         rangeSelection = 1;
+        variation = 1;
         iRangeIMB = 1;
         diseases = new String[]{"osteochondrosis","rheumatoid_arthritis","stroke","myocardial_infarction",
                 "coronary_heart_disease","arrhythmia","kidney_disease","thyroid_disease"};
@@ -35,7 +36,8 @@ public class AlgoSearch{
                 "average_systolic","average_diastolic","average_heart_rate","total_cholesterol","hdl","lpa",
                 "apob","glucose","creatinine","uric_acid","crp","insulin","tsh","probnp"};
         questionMap = new HashMap<>(9);
-        initializeMap(rangeSelection);
+        list = new ArrayList<>();
+        initializeMap(1);
     }
 
     private void initializeMap(int defaultValue){
@@ -61,6 +63,15 @@ public class AlgoSearch{
     }
     public void nextSearch(int countSearch) {
         isNextSearch = countSearch > 0;
+        if(isNextSearch){
+            iSelectMultiple = 1;
+            rangeSelection = 1;
+            iRangeIMB = 1;
+            variation = 1;
+            initializeMap(rangeSelection);
+            list.clear();
+            arr = null;
+        }
     }
 
     private String getMinK(String val){
@@ -96,25 +107,66 @@ public class AlgoSearch{
         return String.valueOf(max);
     }
 
-    private int getCountAnswerOnQuestions(Serializable user){
-        int count = 0;
+    private void setListAnswerOnQuestions(Serializable user){
         for(Field field: user.getClass().getFields()){
             try {
                 String val = (String) field.get(user);
                 if(val != null){
                     if(questionMap.containsKey(field.getName())){
-                        count++;
+                        list.add(field.getName());
                     }
                 }
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
-        return count;
+    }
+
+    public int getFactorial(int f) {
+        if (f <= 1) {
+            return 1;
+        }
+        else {
+            return IntStream.rangeClosed(2, f).reduce((x, y) -> x * y).orElse(0);
+        }
+    }
+
+    public int getCombinations(int n, int m){
+        if(n < m){
+            throw new NoSuchElementException("Error n < m");
+        }
+        return getFactorial(n)/getFactorial(n-m)/getFactorial(m);
+    }
+
+    private int[] generateCombinations(int[] arr, int M, int N)
+    {
+        if (arr == null)
+        {
+            arr = new int[M];
+            for (int i = 0; i < M; i++)
+                arr[i] = i + 1;
+            return arr;
+        }
+        for (int i = M - 1; i >= 0; i--)
+            if (arr[i] < N - M + i + 1)
+            {
+                arr[i]++;
+                for (int j = i; j < M - 1; j++)
+                    arr[j + 1] = arr[j] + 1;
+                return arr;
+            }
+        return null;
     }
 
     public StringBuilder getQueryNonSelections(Serializable user){
         StringBuilder sb = new StringBuilder();
+        if(arr==null){
+            if(list.isEmpty()){
+                setListAnswerOnQuestions(user);
+                System.out.println(list);
+            }
+            arr = generateCombinations(arr, iSelectMultiple, list.size());
+        }
         int countSelectColumn = 0;
         String strHeight = "", strWeight = "";
         for(Field field: user.getClass().getFields()){
@@ -122,7 +174,32 @@ public class AlgoSearch{
                 String val = (String) field.get(user);
                 if(val != null){
                     if(Arrays.stream(selections).noneMatch(n -> n.equals(field.getName()))) {
-                        if (isNextSearch) {
+                        if(!isNextSearch && list.contains(field.getName()) &&
+                            field.getName().equals(list.get(Objects.requireNonNull(arr)[countSelectColumn]-1))){
+                            String str = field.getName() + ">=" + getMinVal(val) + " and "
+                                    + field.getName() + "<=" + getMaxVal(val) + " and ";
+                            sb.append(str);
+                            countSelectColumn++;
+                            if (countSelectColumn == iSelectMultiple) {
+                                arr = generateCombinations(arr, iSelectMultiple, list.size());
+                                isNextSearch = true;
+                                variation++;
+                                if(variation > getCombinations(list.size(),iSelectMultiple)){
+                                    arr = null;
+                                    variation=1;
+                                    rangeSelection++;
+                                    if (rangeSelection == 4) {
+                                        rangeSelection = 1;
+                                        iSelectMultiple++;
+                                        if (iSelectMultiple > list.size()) {
+                                            iSelectMultiple = 1;
+                                            iRangeIMB++;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else {
                             if (field.getName().equals("height") && strHeight.equals("")) {
                                 if (!strWeight.equals("")) {
                                     if (iRangeIMB == 1) {
@@ -160,73 +237,8 @@ public class AlgoSearch{
                                 sb.append(str);
                             }
                         }
-                        else {
-                            if (questionMap.containsKey(field.getName()) && questionMap.get(field.getName()) == rangeSelection) {
-                                String str = field.getName() + ">=" + getMinVal(val) + " and " + field.getName() + "<=" + getMaxVal(val) + " and ";
-                                sb.append(str);
-                                questionMap.put(field.getName(), rangeSelection + 1);
-                                iWhichAnswer++;
-                                int countAnswerOnQuestions = getCountAnswerOnQuestions(user);
-                                if (iWhichAnswer == countAnswerOnQuestions) {
-                                    iWhichAnswer = 0;
-                                    rangeSelection++;
-                                    if (rangeSelection > 4) {
-                                        rangeSelection = 1;
-                                        iSelectMultiple++;
-                                        if (iSelectMultiple > countAnswerOnQuestions) {
-                                            iSelectMultiple = 1;
-                                            iRangeIMB++;
-                                        }
-                                        initializeMap(rangeSelection);
-                                    }
-                                }
-                                countSelectColumn++;
-                                if (countSelectColumn == iSelectMultiple) {
-                                    isNextSearch = true;
-                                    System.out.println("isNextSearch = " + isNextSearch);
-                                    System.out.println("str = " + str);
-                                }
-                            }
-                            else {
-                                if (field.getName().equals("height") && strHeight.equals("")) {
-                                    if (!strWeight.equals("")) {
-                                        if (iRangeIMB == 1) {
-                                            String str = "imb >=" + getMinIMB(val, strWeight) + " and " + "imb <" + getMaxIMB(val, strWeight) + " and ";
-                                            sb.append(str);
-                                        } else {
-                                            double p = percent;
-                                            percent = 13.51 * (1 + (iRangeIMB - 2) * 1.96);
-                                            String str = "imb >=" + getMinK(getMinIMB(val, strWeight)) + " and " + "imb <" + getMaxK(getMaxIMB(val, strWeight)) + " and ";
-                                            sb.append(str);
-                                            percent = p;
-                                        }
-                                    } else {
-                                        strHeight = val;
-                                    }
-                                }
-                                else if (field.getName().equals("weight") && strWeight.equals("")) {
-                                    if (!strHeight.equals("")) {
-                                        if (iRangeIMB == 1) {
-                                            String str = "imb >=" + getMinIMB(strHeight, val) + " and " + "imb <" + getMaxIMB(strHeight, val) + " and ";
-                                            sb.append(str);
-                                        } else {
-                                            double p = percent;
-                                            percent = 13.51 * (1 + (iRangeIMB - 2) * 1.96);
-                                            String str = "imb >=" + getMinK(getMinIMB(strHeight, val)) + " and " + "imb <" + getMaxK(getMaxIMB(strHeight, val)) + " and ";
-                                            sb.append(str);
-                                            percent = p;
-                                        }
-                                    } else {
-                                        strWeight = val;
-                                    }
-                                }
-                                else {
-                                    String str = field.getName() + "=" + val + " and ";
-                                    sb.append(str);
-                                }
-                            }
-                        }
-                    } else if (val.equals("")) {
+                    }
+                    else if (val.equals("")) {
                         sb.append(field.getName()).append(" is null and ");
                     }
                 }
@@ -248,7 +260,19 @@ public class AlgoSearch{
                             if(percent==0){
                                 sb.append(field.getName()).append("=").append(val).append(" and ");
                             } else {
-                                String str = field.getName()+">="+getMinK(val)+" and "+field.getName()+"<="+getMaxK(val)+" and ";
+                                String str = "";
+                                if(field.getName().equals("age")){
+                                    if (Double.parseDouble(getMinK(val)) <= 23 && Double.parseDouble(getMaxK(val)) <= 23){
+                                        str = field.getName()+"=23 and ";
+                                    }else if(Double.parseDouble(getMinK(val)) <= 23){
+                                        str = field.getName()+">=23 and "+field.getName()+"<="+getMaxK(val)+" and ";
+                                    }else if (Double.parseDouble(getMaxK(val)) <= 23){
+                                        str = field.getName()+">="+getMinK(val)+" and "+field.getName()+"<=23 and ";
+                                    }
+                                }
+                                else {
+                                    str = field.getName()+">="+getMinK(val)+" and "+field.getName()+"<="+getMaxK(val)+" and ";
+                                }
                                 sb.append(str);
                             }
                     }
