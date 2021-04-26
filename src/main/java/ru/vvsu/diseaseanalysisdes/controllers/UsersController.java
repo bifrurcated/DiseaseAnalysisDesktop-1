@@ -633,70 +633,64 @@ public class UsersController implements Initializable {
         optionalHuman.ifPresent(human -> {
             try {
                 user = (Human) human.clone();
-                Platform.runLater(() -> {
-                    if(user.sex != null){
-                        genderToggleGroup.selectToggle(genderToggleGroup.getToggles().get(Integer.parseInt(user.sex)-1));
-                    }
-                    if(user.freq_vegatables != null){
-                        vegesToggleGroup.selectToggle(vegesToggleGroup.getToggles().get(4-Integer.parseInt(user.freq_vegatables)));
-                    }
-                    if(user.freq_sweets != null){
-                        sweetsToggleGroup.selectToggle(sweetsToggleGroup.getToggles().get(4-Integer.parseInt(user.freq_sweets)));
-                    }
-                    if(user.freq_meat != null){
-                        meatToggleGroup.selectToggle(meatToggleGroup.getToggles().get(4-Integer.parseInt(user.freq_meat)));
-                    }
-                    if(user.freq_fish != null){
-                        fishToggleGroup.selectToggle(fishToggleGroup.getToggles().get(4-Integer.parseInt(user.freq_fish)));
-                    }
-                    if(user.freq_cottage_cheese != null){
-                        curdToggleGroup.selectToggle(curdToggleGroup.getToggles().get(4-Integer.parseInt(user.freq_cottage_cheese)));
-                    }
-                    if(user.freq_cheese != null){
-                        cheeseToggleGroup.selectToggle(cheeseToggleGroup.getToggles().get(4-Integer.parseInt(user.freq_cheese)));
-                    }
-                    if(user.fall_asleep != null){
-                        zasnutToggleGroup.selectToggle(zasnutToggleGroup.getToggles().get(4-Integer.parseInt(user.fall_asleep)));
-                    }
-                    if(user.abstinence_from_sleep != null){
-                        vozderzhToggleGroup.selectToggle(vozderzhToggleGroup.getToggles().get(4-Integer.parseInt(user.abstinence_from_sleep)));
-                    }
-                    if(user.headaches != null){
-                        headachesToggleGroup.selectToggle(headachesToggleGroup.getToggles().get(2-Integer.parseInt(user.headaches)));
-                    }
-                    if(user.restless != null){
-                        restlessToggleGroup.selectToggle(restlessToggleGroup.getToggles().get(3-Integer.parseInt(user.restless)));
-                    }
+                if(user.sex != null){
+                    genderToggleGroup.selectToggle(genderToggleGroup.getToggles().get(Integer.parseInt(user.sex)-1));
+                }
+                if(user.freq_vegatables != null){
+                    vegesToggleGroup.selectToggle(vegesToggleGroup.getToggles().get(4-Integer.parseInt(user.freq_vegatables)));
+                }
+                if(user.freq_sweets != null){
+                    sweetsToggleGroup.selectToggle(sweetsToggleGroup.getToggles().get(4-Integer.parseInt(user.freq_sweets)));
+                }
+                if(user.freq_meat != null){
+                    meatToggleGroup.selectToggle(meatToggleGroup.getToggles().get(4-Integer.parseInt(user.freq_meat)));
+                }
+                if(user.freq_fish != null){
+                    fishToggleGroup.selectToggle(fishToggleGroup.getToggles().get(4-Integer.parseInt(user.freq_fish)));
+                }
+                if(user.freq_cottage_cheese != null){
+                    curdToggleGroup.selectToggle(curdToggleGroup.getToggles().get(4-Integer.parseInt(user.freq_cottage_cheese)));
+                }
+                if(user.freq_cheese != null){
+                    cheeseToggleGroup.selectToggle(cheeseToggleGroup.getToggles().get(4-Integer.parseInt(user.freq_cheese)));
+                }
+                if(user.fall_asleep != null){
+                    zasnutToggleGroup.selectToggle(zasnutToggleGroup.getToggles().get(4-Integer.parseInt(user.fall_asleep)));
+                }
+                if(user.abstinence_from_sleep != null){
+                    vozderzhToggleGroup.selectToggle(vozderzhToggleGroup.getToggles().get(4-Integer.parseInt(user.abstinence_from_sleep)));
+                }
+                if(user.headaches != null){
+                    headachesToggleGroup.selectToggle(headachesToggleGroup.getToggles().get(2-Integer.parseInt(user.headaches)));
+                }
+                if(user.restless != null){
+                    restlessToggleGroup.selectToggle(restlessToggleGroup.getToggles().get(3-Integer.parseInt(user.restless)));
+                }
 
-                    waistTextField.setText(user.waist);
-                    hipTextField.setText(user.hips);
-                    dreamTextField.setText(user.sleep);
-                    ageTextField.setText(user.age);
-                    heightTextField.setText(user.height);
-                    weightTextField.setText(user.weight);
-                    walkTextField.setText(user.walk);
-                    exerciseStressTextField.setText(user.exercise_stress);
-                    exerciseStressOnWorkTextField.setText(user.exercise_stress_on_work);
-                    cigarettesTextField.setText(user.cigarettes);
-                    averageSystolicTextField.setText(user.average_systolic);
-                    averageDiastolicTextField.setText(user.average_diastolic);
-                    averageHeartRateTextField.setText(user.average_heart_rate);
-                    totalCholesterolTextField.setText(user.total_cholesterol);
-                    hdlTextField.setText(user.hdl);
-                    lpaTextField.setText(user.lpa);
-                    probnpTextField.setText(user.probnp);
-                    apobTextField.setText(user.apob);
-                    glucoseTextField.setText(user.glucose);
-                    creatinineTextField.setText(user.creatinine);
-                    uricAcidcreatinineTextField.setText(user.uric_acid);
-                    crpTextField.setText(user.crp);
-                    insulinTextField.setText(user.insulin);
-                    tshTextField.setText(user.tsh);
-                });
-
-                //genderToggleGroup.selectToggle(toggle);
-
-
+                waistTextField.setText(user.waist);
+                hipTextField.setText(user.hips);
+                dreamTextField.setText(user.sleep);
+                ageTextField.setText(user.age);
+                heightTextField.setText(user.height);
+                weightTextField.setText(user.weight);
+                walkTextField.setText(user.walk);
+                exerciseStressTextField.setText(user.exercise_stress);
+                exerciseStressOnWorkTextField.setText(user.exercise_stress_on_work);
+                cigarettesTextField.setText(user.cigarettes);
+                averageSystolicTextField.setText(user.average_systolic);
+                averageDiastolicTextField.setText(user.average_diastolic);
+                averageHeartRateTextField.setText(user.average_heart_rate);
+                totalCholesterolTextField.setText(user.total_cholesterol);
+                hdlTextField.setText(user.hdl);
+                lpaTextField.setText(user.lpa);
+                probnpTextField.setText(user.probnp);
+                apobTextField.setText(user.apob);
+                glucoseTextField.setText(user.glucose);
+                creatinineTextField.setText(user.creatinine);
+                uricAcidcreatinineTextField.setText(user.uric_acid);
+                crpTextField.setText(user.crp);
+                insulinTextField.setText(user.insulin);
+                tshTextField.setText(user.tsh);
             } catch (CloneNotSupportedException e) {
                 e.printStackTrace();
             }
