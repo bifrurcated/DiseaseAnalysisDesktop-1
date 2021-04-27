@@ -49,6 +49,8 @@ public class AlgoSearch{
         questionMap.put("freq_cheese",defaultValue);
         questionMap.put("fall_asleep",defaultValue);
         questionMap.put("abstinence_from_sleep",defaultValue);
+        questionMap.put("exercise_stress_on_work",defaultValue);
+        questionMap.put("exercise_stress",defaultValue);
     }
 
     public double getPercent(){
@@ -167,7 +169,7 @@ public class AlgoSearch{
             }
             arr = generateCombinations(arr, iSelectMultiple, list.size());
         }
-        boolean isVladValue = true;
+        //boolean isVladValue = true;
         int countSelectColumn = 0;
         String strHeight = "", strWeight = "";
         for(Field field: user.getClass().getFields()){
@@ -199,7 +201,7 @@ public class AlgoSearch{
                                     }
                                 }
                             }
-                            isVladValue = false;
+                            //isVladValue = false;
                         }
                         else {
                             if (field.getName().equals("height") && strHeight.equals("")) {
@@ -248,10 +250,10 @@ public class AlgoSearch{
                 e.printStackTrace();
             }
         }
-        if(isVladValue){
+        /*if(isVladValue){
             iRangeIMB++;
             System.out.println("iRangeIMB = "+iRangeIMB);
-        }
+        }*/
         sb.delete(sb.length()-5,sb.length());
         return sb;
     }
