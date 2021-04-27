@@ -88,6 +88,28 @@ public class AlgoSearch{
         return new BigDecimal(val).multiply(BigDecimal.ONE.add(BigDecimal.valueOf(percent).divide(BigDecimal.valueOf(100),4,BigDecimal.ROUND_UP))).toString();
     }
 
+    public String getMax10Val(String val){
+        int max = Integer.parseInt(val);
+        if(max > 1){
+            max += rangeSelection-1;
+        }else{
+            max += rangeSelection;
+        }
+        if(max > 10){max = 10;}
+        return String.valueOf(max);
+    }
+
+    public String getMax6Val(String val){
+        int max = Integer.parseInt(val);
+        if(max > 1){
+            max += rangeSelection-1;
+        }else{
+            max += rangeSelection;
+        }
+        if(max > 5){max = 9;}
+        return String.valueOf(max);
+    }
+
 
     private String getMinVal(String val){
         int min = Integer.parseInt(val);
@@ -171,6 +193,7 @@ public class AlgoSearch{
         }
         //boolean isVladValue = true;
         int countSelectColumn = 0;
+        int maxRange = 4;
         String strHeight = "", strWeight = "";
         for(Field field: user.getClass().getFields()){
             try {
@@ -179,8 +202,23 @@ public class AlgoSearch{
                     if(Arrays.stream(selections).noneMatch(n -> n.equals(field.getName()))) {
                         if(!isNextSearch && list.contains(field.getName()) &&
                             field.getName().equals(list.get(Objects.requireNonNull(arr)[countSelectColumn]-1))){
-                            String str = field.getName() + ">=" + getMinVal(val) + " and "
-                                    + field.getName() + "<=" + getMaxVal(val) + " and ";
+                            String str;
+                            if(field.getName().equals("exercise_stress_on_work")){
+                                str = field.getName() + ">=" + getMinVal(val) + " and "
+                                        + field.getName() + "<=" + getMax6Val(val) + " and ";
+                                if(maxRange != 10){
+                                    maxRange=6;
+                                }
+                            }
+                            else if(field.getName().equals("exercise_stress")){
+                                str = field.getName() + ">=" + getMinVal(val) + " and "
+                                        + field.getName() + "<=" + getMax10Val(val) + " and ";
+                                maxRange=10;
+                            }
+                            else{
+                                str = field.getName() + ">=" + getMinVal(val) + " and "
+                                        + field.getName() + "<=" + getMaxVal(val) + " and ";
+                            }
                             sb.append(str);
                             countSelectColumn++;
                             if (countSelectColumn == iSelectMultiple) {
@@ -191,7 +229,7 @@ public class AlgoSearch{
                                     arr = null;
                                     variation=1;
                                     rangeSelection++;
-                                    if (rangeSelection == 4) {
+                                    if (rangeSelection == maxRange) {
                                         rangeSelection = 1;
                                         iSelectMultiple++;
                                         if (iSelectMultiple > list.size()) {
@@ -254,7 +292,9 @@ public class AlgoSearch{
             iRangeIMB++;
             System.out.println("iRangeIMB = "+iRangeIMB);
         }*/
-        sb.delete(sb.length()-5,sb.length());
+        if(sb.length() != 0) {
+            sb.delete(sb.length() - 5, sb.length());
+        }
         return sb;
     }
 
@@ -289,7 +329,9 @@ public class AlgoSearch{
                 e.printStackTrace();
             }
         }
-        sb.delete(sb.length()-5,sb.length());
+        if(sb.length() != 0) {
+            sb.delete(sb.length() - 5, sb.length());
+        }
         return sb;
     }
 
