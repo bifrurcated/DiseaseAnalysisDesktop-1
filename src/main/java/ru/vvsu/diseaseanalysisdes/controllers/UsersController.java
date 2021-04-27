@@ -523,6 +523,16 @@ public class UsersController implements Initializable {
         if(!resultSearchList.isEmpty()){ resultSearchList.clear(); }
         proceedButton.setDisable(true);
         algoSearch.setPercent(0);// задаём начальный процент выборки
+        //System.out.println("imb = "+algoSearch.getIndexMassBody("180","180"));
+        //System.out.println("minIMB = "+algoSearch.getMinIMB("180","180"));
+        //double p = algoSearch.getPercent();
+        //int iRangeIMB = 2;
+        //algoSearch.setPercent(13.51 * (1 + (iRangeIMB - 2) * 1.96));
+        //System.out.println("percent = "+algoSearch.getPercent());
+        //System.out.println("minK = "+algoSearch.getMinK(algoSearch.getMinIMB("180","180")));
+        /*if(iRangeIMB==2)
+            return;*/
+
         Runnable searchEqualUser2 = () -> {
             StringBuilder sb1 = new StringBuilder();
             int countFound = 0;
@@ -535,8 +545,8 @@ public class UsersController implements Initializable {
                         countFound++;
                     }
                     algoSearch.nextSearch(countFound);
-                    //System.out.println(sb1);
-                    //System.out.println("nextSearch = "+algoSearch.isNextSearch());
+                    System.out.println(sb1);
+                    System.out.println("nextSearch = "+algoSearch.isNextSearch());
                     resultSet.close();
                     resultSet.getStatement().close();
                 } catch (SQLException sqlException){

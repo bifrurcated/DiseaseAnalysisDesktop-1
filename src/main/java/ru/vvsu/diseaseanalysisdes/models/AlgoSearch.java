@@ -167,6 +167,7 @@ public class AlgoSearch{
             }
             arr = generateCombinations(arr, iSelectMultiple, list.size());
         }
+        boolean isVladValue = true;
         int countSelectColumn = 0;
         String strHeight = "", strWeight = "";
         for(Field field: user.getClass().getFields()){
@@ -198,6 +199,7 @@ public class AlgoSearch{
                                     }
                                 }
                             }
+                            isVladValue = false;
                         }
                         else {
                             if (field.getName().equals("height") && strHeight.equals("")) {
@@ -245,6 +247,10 @@ public class AlgoSearch{
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
+        }
+        if(isVladValue){
+            iRangeIMB++;
+            System.out.println("iRangeIMB = "+iRangeIMB);
         }
         sb.delete(sb.length()-5,sb.length());
         return sb;
