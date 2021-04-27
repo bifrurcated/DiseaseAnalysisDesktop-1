@@ -558,12 +558,17 @@ public class UsersController implements Initializable {
             int max = (int)Math.ceil(countFound/3f);
             System.out.println("max = "+max);
             while (resultSearchList.size() < max){
-                StringBuilder sb2;
+                StringBuilder sb2 = new StringBuilder();
                 if(countFound > 2){
                     sb2 = algoSearch.getQuerySelections(user);
-                    sb2.append(" and ").append(sb1);
+                    if(sb2.length() == 0){
+                        sb2.append(sb1);
+                    }
+                    else {
+                        sb2.append(" and ").append(sb1);
+                    }
                 } else {
-                    sb2 = sb1;
+                    sb2.append(sb1);
                 }
                 System.out.println("sb2 = "+sb2);
                 try{

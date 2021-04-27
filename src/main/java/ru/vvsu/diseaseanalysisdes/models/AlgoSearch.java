@@ -88,23 +88,37 @@ public class AlgoSearch{
         return new BigDecimal(val).multiply(BigDecimal.ONE.add(BigDecimal.valueOf(percent).divide(BigDecimal.valueOf(100),4,BigDecimal.ROUND_UP))).toString();
     }
 
+    public String getMin10Val(String val){
+        int min = Integer.parseInt(val);
+        if(min > 1){
+            min -= rangeSelection*3;
+        }
+        if(min < 1){min = 1;}
+        return String.valueOf(min);
+    }
+
     public String getMax10Val(String val){
         int max = Integer.parseInt(val);
         if(max > 1){
-            max += rangeSelection-1;
-        }else{
-            max += rangeSelection;
+            max += rangeSelection*3;
         }
         if(max > 10){max = 10;}
         return String.valueOf(max);
     }
 
+    public String getMin6Val(String val){
+        int min = Integer.parseInt(val);
+        if(min > 1){
+            min -= rangeSelection*1.5;
+        }
+        if(min < 1){min = 1;}
+        return String.valueOf(min);
+    }
+
     public String getMax6Val(String val){
         int max = Integer.parseInt(val);
         if(max > 1){
-            max += rangeSelection-1;
-        }else{
-            max += rangeSelection;
+            max += rangeSelection*1.5;
         }
         if(max > 5){max = 9;}
         return String.valueOf(max);
@@ -193,7 +207,6 @@ public class AlgoSearch{
         }
         //boolean isVladValue = true;
         int countSelectColumn = 0;
-        int maxRange = 4;
         String strHeight = "", strWeight = "";
         for(Field field: user.getClass().getFields()){
             try {
@@ -204,16 +217,12 @@ public class AlgoSearch{
                             field.getName().equals(list.get(Objects.requireNonNull(arr)[countSelectColumn]-1))){
                             String str;
                             if(field.getName().equals("exercise_stress_on_work")){
-                                str = field.getName() + ">=" + getMinVal(val) + " and "
+                                str = field.getName() + ">=" + getMin6Val(val) + " and "
                                         + field.getName() + "<=" + getMax6Val(val) + " and ";
-                                if(maxRange != 10){
-                                    maxRange=6;
-                                }
                             }
                             else if(field.getName().equals("exercise_stress")){
-                                str = field.getName() + ">=" + getMinVal(val) + " and "
+                                str = field.getName() + ">=" + getMin10Val(val) + " and "
                                         + field.getName() + "<=" + getMax10Val(val) + " and ";
-                                maxRange=10;
                             }
                             else{
                                 str = field.getName() + ">=" + getMinVal(val) + " and "
@@ -229,7 +238,7 @@ public class AlgoSearch{
                                     arr = null;
                                     variation=1;
                                     rangeSelection++;
-                                    if (rangeSelection == maxRange) {
+                                    if (rangeSelection == 4) {
                                         rangeSelection = 1;
                                         iSelectMultiple++;
                                         if (iSelectMultiple > list.size()) {
