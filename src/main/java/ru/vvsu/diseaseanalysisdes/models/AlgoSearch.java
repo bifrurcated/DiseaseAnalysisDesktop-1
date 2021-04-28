@@ -205,14 +205,13 @@ public class AlgoSearch{
             }
             arr = generateCombinations(arr, iSelectMultiple, list.size());
         }
-        //boolean isVladValue = true;
         int countSelectColumn = 0;
         String strHeight = "", strWeight = "";
         for(Field field: user.getClass().getFields()){
             try {
                 String val = (String) field.get(user);
                 if(val != null){
-                    if(Arrays.stream(selections).noneMatch(n -> n.equals(field.getName()))) {
+                    if(!val.equals("") && Arrays.stream(selections).noneMatch(n -> n.equals(field.getName()))) {
                         if(!isNextSearch && list.contains(field.getName()) &&
                             field.getName().equals(list.get(Objects.requireNonNull(arr)[countSelectColumn]-1))){
                             String str;
@@ -248,7 +247,6 @@ public class AlgoSearch{
                                     }
                                 }
                             }
-                            //isVladValue = false;
                         }
                         else {
                             if (field.getName().equals("height") && strHeight.equals("")) {
@@ -289,7 +287,7 @@ public class AlgoSearch{
                             }
                         }
                     }
-                    else if (val.equals("")) {
+                    else if (field.getName().equals("cigarettes") && val.equals("")) {
                         sb.append(field.getName()).append(" is null and ");
                     }
                 }
@@ -297,10 +295,6 @@ public class AlgoSearch{
                 e.printStackTrace();
             }
         }
-        /*if(isVladValue){
-            iRangeIMB++;
-            System.out.println("iRangeIMB = "+iRangeIMB);
-        }*/
         if(sb.length() != 0) {
             sb.delete(sb.length() - 5, sb.length());
         }
@@ -317,7 +311,7 @@ public class AlgoSearch{
                             if(percent==0){
                                 sb.append(field.getName()).append("=").append(val).append(" and ");
                             } else {
-                                String str = "";
+                                String str;
                                 if(field.getName().equals("age")){
                                     if (Double.parseDouble(getMinK(val)) <= 23 && Double.parseDouble(getMaxK(val)) <= 23){
                                         str = field.getName()+"=23 and ";
@@ -325,6 +319,8 @@ public class AlgoSearch{
                                         str = field.getName()+">=23 and "+field.getName()+"<="+getMaxK(val)+" and ";
                                     }else if (Double.parseDouble(getMaxK(val)) <= 23){
                                         str = field.getName()+">="+getMinK(val)+" and "+field.getName()+"<=23 and ";
+                                    }else{
+                                        str = field.getName()+">="+getMinK(val)+" and "+field.getName()+"<="+getMaxK(val)+" and ";
                                     }
                                 }
                                 else {

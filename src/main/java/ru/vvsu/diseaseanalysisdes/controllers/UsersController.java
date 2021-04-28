@@ -523,16 +523,6 @@ public class UsersController implements Initializable {
         if(!resultSearchList.isEmpty()){ resultSearchList.clear(); }
         proceedButton.setDisable(true);
         algoSearch.setPercent(0);// задаём начальный процент выборки
-        //System.out.println("imb = "+algoSearch.getIndexMassBody("180","180"));
-        //System.out.println("minIMB = "+algoSearch.getMinIMB("180","180"));
-        //double p = algoSearch.getPercent();
-        //int iRangeIMB = 2;
-        //algoSearch.setPercent(13.51 * (1 + (iRangeIMB - 2) * 1.96));
-        //System.out.println("percent = "+algoSearch.getPercent());
-        //System.out.println("minK = "+algoSearch.getMinK(algoSearch.getMinIMB("180","180")));
-        /*if(iRangeIMB==2)
-            return;*/
-
         Runnable searchEqualUser2 = () -> {
             StringBuilder sb1 = new StringBuilder();
             int countFound = 0;
@@ -570,6 +560,7 @@ public class UsersController implements Initializable {
                 } else {
                     sb2.append(sb1);
                 }
+                System.out.println("size = "+resultSearchList.size());
                 System.out.println("sb2 = "+sb2);
                 try{
                     ResultSet resultSet = dataBase.getResultSet(
@@ -583,14 +574,16 @@ public class UsersController implements Initializable {
                                 e.printStackTrace();
                             }
                         }
-                        resultSearchList.add(human);
+                        if(!resultSearchList.contains(human)){
+                            resultSearchList.add(human);
+                        }
                     }
                     if(resultSearchList.size() < max){
                         algoSearch.setPercent(algoSearch.getPercent()+1); //увеличиваем процент выборки
                         if(algoSearch.getPercent() >= 500){
                             break; // порог на всякий случай
                         }
-                        resultSearchList.clear();
+                        //resultSearchList.clear();
                     }
                     resultSet.close();
                     resultSet.getStatement().close();
@@ -608,6 +601,90 @@ public class UsersController implements Initializable {
             selectionModel.select(tabResult);
             proceedButton.setDisable(false);
         };
+        //Platform.runLater(searchEqualUser2);
+
+        //Algo algo = new Algo();
+        //algo.setPercent(15);
+        /*Runnable searchEqualUser = () -> {
+            StringBuilder sb1 = new StringBuilder();
+            int countFound = 0;
+            while (countFound < 1){
+                sb1 = algo.getQuerySelections(user);
+                try{
+                    ResultSet resultSet = dataBase.getResultSet(
+                            "SELECT *,10000*weight/(height*height) as imb FROM med_card where "+sb1+";");
+                    while (resultSet.next()) {
+                        countFound++;
+                    }
+                    System.out.println(sb1);
+                    if(countFound < 1){
+                        algo.setPercent(algo.getPercent()+1); //увеличиваем процент выборки
+                        if(algo.getPercent() >= 500){
+                            break; // порог на всякий случай
+                        }
+                    }
+                    resultSet.close();
+                    resultSet.getStatement().close();
+                } catch (SQLException sqlException){
+                    sqlException.printStackTrace();
+                }
+            }
+            System.out.println("countFound = "+countFound);
+            System.out.println("sb1 = "+sb1);
+            if(sb1.length()!=0){
+                return;
+            }
+            int max = (int)Math.ceil(countFound/3f);
+            System.out.println("max = "+max);
+            while (resultSearchList.size() < max){
+                StringBuilder sb2 = new StringBuilder();
+                if(countFound > 2){
+                    sb2 = algo.getQueryNonSelections(user);
+                    if(sb2.length() == 0){
+                        sb2.append(sb1);
+                    }
+                    else {
+                        sb2.append(" and ").append(sb1);
+                    }
+                } else {
+                    sb2.append(sb1);
+                }
+                System.out.println("sb2 = "+sb2);
+                try{
+                    ResultSet resultSet = dataBase.getResultSet(
+                            "SELECT *,10000*weight/(height*height) as imb FROM med_card where "+sb2+";");
+                    while (resultSet.next()) {
+                        Human human = new Human();
+                        for(Field field: human.getClass().getFields()){
+                            try {
+                                field.set(human,resultSet.getString(field.getName()));
+                            } catch (IllegalAccessException | SQLException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        if(!resultSearchList.contains(human)) {
+                            resultSearchList.add(human);
+                        }
+                    }
+                    algo.nextSearch(resultSearchList.size());
+                    System.out.println(sb1);
+                    System.out.println("nextSearch = "+algo.isNextSearch());
+                    resultSet.close();
+                    resultSet.getStatement().close();
+                } catch (SQLException sqlException){
+                    sqlException.printStackTrace();
+                }
+            }
+            System.out.println("percent = "+algo.getPercent());
+            if(resultSearchList.size() > 2){
+                probabilityMap = algo.getProbabilityHealthy(resultSearchList);
+                System.out.println(probabilityMap);
+            }
+            autoResizeColumns(tableViewEnterData);
+            autoResizeColumns(tableViewResultSearch);
+            selectionModel.select(tabResult);
+            proceedButton.setDisable(false);
+        };*/
         Platform.runLater(searchEqualUser2);
     }
 
