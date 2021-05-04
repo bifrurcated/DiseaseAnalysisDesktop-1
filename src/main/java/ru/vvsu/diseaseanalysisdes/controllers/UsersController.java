@@ -1,9 +1,8 @@
 package ru.vvsu.diseaseanalysisdes.controllers;
 
-import javafx.beans.InvalidationListener;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
-import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,7 +32,13 @@ import java.util.regex.Pattern;
 public class UsersController implements Initializable {
     private final SQLiteManager dataBase;
 
-    private static Pattern pattern = Pattern.compile("[\\d]+[\\.]?[\\d]*");
+    private static Pattern pattern;
+    private static Pattern onlyNumbersPattern;
+
+    static {
+        pattern = Pattern.compile("[\\d]+[\\.]?[\\d]*");
+        onlyNumbersPattern = Pattern.compile("[1-10]");
+    }
 
     @FXML private TableView<Human> tableViewEnterData;
     @FXML private TableView<Human> tableViewResultSearch;
@@ -240,20 +245,31 @@ public class UsersController implements Initializable {
     };
 
     ChangeListener<String> hipsListener = (ov, old_toggle, new_toggle) -> {
-        user.hips = readString(new_toggle);
-        hipTextField.setText(user.hips);
+        user.hips = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        //hipTextField.setText(user.hips);
+        Platform.runLater(() -> {
+            checkEmptyInput(user.hips, hipTextField);
+        });
         System.out.println(user.hips);
     };
 
     ChangeListener<String> waistListener = (ov, old_toggle, new_toggle) -> {
-        user.waist = readString(new_toggle);
-        waistTextField.setText(user.waist);
+        user.waist = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        Platform.runLater(() -> {
+            checkEmptyInput(user.waist, waistTextField);
+        });
         System.out.println(user.waist);
     };
 
     ChangeListener<String> dreamListener = (ov, old_toggle, new_toggle) -> {
-        user.sleep = readString(new_toggle);
-        dreamTextField.setText(user.sleep);
+        //user.sleep = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        //todo this is example, old code upper
+        createNumbersPattern(10);
+        user.sleep = readString(new_toggle, ValueType.ONLY_NUMBERS);
+        Platform.runLater(() -> {
+            checkEmptyInput(user.sleep, dreamTextField);
+        });
+        //todo example end
         System.out.println(user.sleep);
     };
 
@@ -381,12 +397,45 @@ public class UsersController implements Initializable {
         } );
     }
 
-    public static String readString(String s) {
-        Matcher matcher = pattern.matcher(s);
-        if(matcher.matches()) {
-            return s;
+    public static String readString(String s, ValueType type) {
+        Matcher matcher;
+        switch (type) {
+            case ONLY_NUMBERS:
+                matcher = onlyNumbersPattern.matcher(s);
+                if(matcher.matches()) {
+                    return s;
+                }
+                break;
+            case DOUBLE_DIGEST:
+                matcher = pattern.matcher(s);
+                if(matcher.matches()) {
+                    return s;
+                }
+                break;
         }
         return "";
+    }
+
+    private static void createNumbersPattern(int endPosition) {
+        String p;
+        if(endPosition < 10) {
+            p = "[" + 1 + "-" + endPosition + "]";
+        } else {
+            p = "[" + 1 +"-9][0" + "-" + String.valueOf(endPosition).toCharArray()[1] + "]*";
+        }
+        onlyNumbersPattern = Pattern.compile(p);
+    }
+
+    private static void checkEmptyInput(String s, TextField textField) {
+        if(s.equals("")) {
+            textField.clear();
+        }
+    }
+
+    private enum ValueType {
+
+        ONLY_NUMBERS, DOUBLE_DIGEST
+
     }
 
 }
