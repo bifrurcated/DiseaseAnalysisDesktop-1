@@ -54,7 +54,13 @@ public class UsersController implements Initializable {
             tshTextField;
     @FXML private CheckBox statisticCheckBox, allSimilarCheckBox;
 
-    private static final Pattern pattern = Pattern.compile("[\\d]+[\\.]?[\\d]*");
+    private static Pattern pattern;
+    private static Pattern onlyNumbersPattern;
+
+    static {
+        pattern = Pattern.compile("[\\d]+[\\.]?[\\d]*");
+        onlyNumbersPattern = Pattern.compile("[1-10]");
+    }
 
     private ObservableList<Human> enterDataList;
     private ObservableList<Human> resultSearchList;
@@ -224,146 +230,268 @@ public class UsersController implements Initializable {
     }
 
     ChangeListener<String> tshListener = (ov, old_toggle, new_toggle) -> {
-        user.tsh = readString(new_toggle);
-        tshTextField.setText(user.tsh);
+        user.tsh = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyInput(user.tsh, tshTextField);
+            }
+        });
         System.out.println(user.tsh);
     };
 
     ChangeListener<String> insulinListener = (ov, old_toggle, new_toggle) -> {
-        user.insulin = readString(new_toggle);
-        insulinTextField.setText(user.insulin);
+        user.insulin = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyInput(user.insulin, insulinTextField);
+            }
+        });
         System.out.println(user.insulin);
     };
 
     ChangeListener<String> crpListener = (ov, old_toggle, new_toggle) -> {
-        user.crp = readString(new_toggle);
-        crpTextField.setText(user.crp);
+        user.crp = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyInput(user.crp, crpTextField);
+            }
+        });
         System.out.println(user.crp);
     };
 
     ChangeListener<String> uricAcidcreatinineListener = (ov, old_toggle, new_toggle) -> {
-        user.uric_acid = readString(new_toggle);
-        uricAcidcreatinineTextField.setText(user.uric_acid);
+        user.uric_acid = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyInput(user.uric_acid, uricAcidcreatinineTextField);
+            }
+        });
         System.out.println(user.uric_acid);
     };
 
     ChangeListener<String> creatinineListener = (ov, old_toggle, new_toggle) -> {
-        user.creatinine = readString(new_toggle);
-        creatinineTextField.setText(user.creatinine);
+        user.creatinine = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyInput(user.creatinine, creatinineTextField);
+            }
+        });
         System.out.println(user.creatinine);
     };
 
     ChangeListener<String> glucoseListener = (ov, old_toggle, new_toggle) -> {
-        user.glucose = readString(new_toggle);
-        glucoseTextField.setText(user.glucose);
+        user.glucose = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyInput(user.glucose, glucoseTextField);
+            }
+        });
         System.out.println(user.glucose);
     };
 
     ChangeListener<String> apobListener = (ov, old_toggle, new_toggle) -> {
-        user.apob = readString(new_toggle);
-        apobTextField.setText(user.apob);
+        user.apob = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyInput(user.apob, apobTextField);
+            }
+        });
         System.out.println(user.apob);
     };
 
     ChangeListener<String> probnpListener = (ov, old_toggle, new_toggle) -> {
-        user.probnp = readString(new_toggle);
-        probnpTextField.setText(user.probnp);
+        user.probnp = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyInput(user.probnp, probnpTextField);
+            }
+        });
         System.out.println(user.probnp);
     };
 
     ChangeListener<String> lpaListener = (ov, old_toggle, new_toggle) -> {
-        user.lpa = readString(new_toggle);
-        lpaTextField.setText(user.lpa);
+        user.lpa = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyInput(user.lpa, lpaTextField);
+            }
+        });
         System.out.println(user.lpa);
     };
 
     ChangeListener<String> hdlListener = (ov, old_toggle, new_toggle) -> {
-        user.hdl = readString(new_toggle);
-        hdlTextField.setText(user.hdl);
+        user.hdl = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyInput(user.hdl, hdlTextField);
+            }
+        });
         System.out.println(user.hdl);
     };
 
     ChangeListener<String> totalCholesterolListener = (ov, old_toggle, new_toggle) -> {
-        user.total_cholesterol = readString(new_toggle);
-        totalCholesterolTextField.setText(user.total_cholesterol);
+        user.total_cholesterol = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyInput(user.total_cholesterol, totalCholesterolTextField);
+            }
+        });
         System.out.println(user.total_cholesterol);
     };
 
     ChangeListener<String> averageHeartRateListener = (ov, old_toggle, new_toggle) -> {
-        user.average_heart_rate = readString(new_toggle);
-        averageHeartRateTextField.setText(user.average_heart_rate);
+        user.average_heart_rate = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyInput(user.average_heart_rate, averageHeartRateTextField);
+            }
+        });
         System.out.println(user.average_heart_rate);
     };
 
     ChangeListener<String> averageDiastolicListener = (ov, old_toggle, new_toggle) -> {
-        user.average_diastolic = readString(new_toggle);
-        averageDiastolicTextField.setText(user.average_diastolic);
+        user.average_diastolic = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyInput(user.average_diastolic, averageDiastolicTextField);
+            }
+        });
         System.out.println(user.average_diastolic);
     };
 
     ChangeListener<String> averageSystolicListener = (ov, old_toggle, new_toggle) -> {
-        user.average_systolic = readString(new_toggle);
-        averageSystolicTextField.setText(user.average_systolic);
+        user.average_systolic = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyInput(user.average_systolic, averageSystolicTextField);
+            }
+        });
         System.out.println(user.average_systolic);
     };
 
     ChangeListener<String> cigarettesListener = (ov, old_toggle, new_toggle) -> {
-        user.cigarettes = readString(new_toggle);
-        cigarettesTextField.setText(user.cigarettes);
+        user.cigarettes = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyInput(user.cigarettes, cigarettesTextField);
+            }
+        });
         System.out.println(user.cigarettes);
     };
 
     ChangeListener<String> exerciseStressOnWorkListener = (ov, old_toggle, new_toggle) -> {
-        user.exercise_stress_on_work = readString(new_toggle);
-        exerciseStressOnWorkTextField.setText(user.exercise_stress_on_work);
+        createNumbersPattern(6);
+        user.exercise_stress_on_work = readString(new_toggle, ValueType.ONLY_NUMBERS);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyInput(user.exercise_stress_on_work, exerciseStressOnWorkTextField);
+            }
+        });
         System.out.println(user.exercise_stress_on_work);
     };
 
     ChangeListener<String> exerciseStressListener = (ov, old_toggle, new_toggle) -> {
-        user.exercise_stress = readString(new_toggle);
-        exerciseStressTextField.setText(user.exercise_stress);
+        createNumbersPattern(10);
+        user.exercise_stress = readString(new_toggle, ValueType.ONLY_NUMBERS);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyInput(user.exercise_stress, exerciseStressTextField);
+            }
+        });
         System.out.println(user.exercise_stress);
     };
 
     ChangeListener<String> walkListener = (ov, old_toggle, new_toggle) -> {
-        user.walk = readString(new_toggle);
-        walkTextField.setText(user.walk);
+        user.walk = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyInput(user.walk, walkTextField);
+            }
+        });
         System.out.println(user.walk);
     };
 
     ChangeListener<String> weightListener = (ov, old_toggle, new_toggle) -> {
-        user.weight = readString(new_toggle);
-        weightTextField.setText(user.weight);
+        user.weight = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyInput(user.weight, weightTextField);
+            }
+        });
         System.out.println(user.weight);
     };
 
     ChangeListener<String> heightListener = (ov, old_toggle, new_toggle) -> {
-        user.height = readString(new_toggle);
-        heightTextField.setText(user.height);
+        user.height = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyInput(user.height, heightTextField);
+            }
+        });
         System.out.println(user.height);
     };
 
     ChangeListener<String> ageListener = (ov, old_toggle, new_toggle) -> {
-        user.age = readString(new_toggle);
-        ageTextField.setText(user.age);
+        user.age = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyInput(user.age, ageTextField);
+            }
+        });
         System.out.println(user.age);
     };
 
     ChangeListener<String> hipsListener = (ov, old_toggle, new_toggle) -> {
-        user.hips = readString(new_toggle);
-        hipTextField.setText(user.hips);
+        user.hips = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyInput(user.hips, hipTextField);
+            }
+        });
         System.out.println(user.hips);
     };
 
     ChangeListener<String> waistListener = (ov, old_toggle, new_toggle) -> {
-        user.waist = readString(new_toggle);
-        waistTextField.setText(user.waist);
+        user.waist = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyInput(user.waist, waistTextField);
+            }
+        });
         System.out.println(user.waist);
     };
 
     ChangeListener<String> dreamListener = (ov, old_toggle, new_toggle) -> {
-        user.sleep = readString(new_toggle);
-        dreamTextField.setText(user.sleep);
+        user.sleep = readString(new_toggle, ValueType.DOUBLE_DIGEST);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                checkEmptyInput(user.sleep, dreamTextField);
+            }
+        });
         System.out.println(user.sleep);
     };
 
@@ -432,17 +560,6 @@ public class UsersController implements Initializable {
         user.restless = scaleMap.get(selectRadioButton.getText());
         System.out.println( user.restless );
     };
-
-    public static String readString(String s) {
-        if(s != null){
-            Matcher matcher = pattern.matcher(s);
-            if(matcher.matches()) {
-                return s;
-            }
-            return "";
-        }
-        return null;
-    }
 
     public void createFileSave(Serializable userData) {
         FileChooser configFileChooser = new FileChooser();
@@ -787,5 +904,46 @@ public class UsersController implements Initializable {
                 e.printStackTrace();
             }
         });
+    }
+
+    public static String readString(String s, ValueType type) {
+        Matcher matcher;
+        switch (type) {
+            case ONLY_NUMBERS:
+                matcher = onlyNumbersPattern.matcher(s);
+                if(matcher.matches()) {
+                    return s;
+                }
+                break;
+            case DOUBLE_DIGEST:
+                matcher = pattern.matcher(s);
+                if(matcher.matches()) {
+                    return s;
+                }
+                break;
+        }
+        return "";
+    }
+
+    private static void createNumbersPattern(int endPosition) {
+        String p;
+        if(endPosition < 10) {
+            p = "[" + 1 + "-" + endPosition + "]";
+        } else {
+            p = "[" + 1 +"-9][0" + "-" + String.valueOf(endPosition).toCharArray()[1] + "]*";
+        }
+        onlyNumbersPattern = Pattern.compile(p);
+    }
+
+    private static void checkEmptyInput(String s, TextField textField) {
+        if(s.equals("")) {
+            textField.clear();
+        }
+    }
+
+    private enum ValueType {
+
+        ONLY_NUMBERS, DOUBLE_DIGEST
+
     }
 }
