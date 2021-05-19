@@ -15,8 +15,10 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("/views/sample.fxml"));
         primaryStage.setTitle("Disease Analysis Tool");
-        primaryStage.setScene(new Scene(root, 830, 700));
-        primaryStage.setResizable(false);
+        primaryStage.setScene(new Scene(root, 840, 710));
+
+        primaryStage.setMinWidth(450); primaryStage.setMinHeight(250);
+//        primaryStage.setResizable(false);
         primaryStage.show();
     }
 
