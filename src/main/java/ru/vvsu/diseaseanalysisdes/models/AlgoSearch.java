@@ -370,9 +370,9 @@ public class AlgoSearch{
                                                 if(value.equals("2")){
                                                     double i;
                                                     if(map.containsKey(str)){
-                                                        i = 0.5+map.get(str);
+                                                        i = 0.7+map.get(str);
                                                     }else{
-                                                        i = 0.5;
+                                                        i = 0.7;
                                                     }
                                                     map.put(str,i);
                                                 }

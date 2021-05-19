@@ -99,7 +99,7 @@
                                              <children>
                                                 <Accordion cacheShape="false" centerShape="false" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="380.0" scaleShape="false" style="-fx-background-color: transparent;">
                                                    <panes>
-                                                      <TitledPane expanded="false" prefWidth="400.0" styleClass="tp_color1" text="+ Как часто вы употребляете мясо?">
+                                                      <TitledPane fx:id="titlePane1" expanded="false" prefWidth="400.0" styleClass="tp_color1" text="+ Как часто вы употребляете мясо?">
                                                          <opaqueInsets>
                                                             <Insets />
                                                          </opaqueInsets>
@@ -1164,7 +1164,7 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Button>
-                        <Button fx:id="resetButton" layoutX="410.0" layoutY="620.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: rgb(255, 99, 99);" text="Сброс">
+                        <Button fx:id="resetButton" layoutX="410.0" layoutY="620.0" mnemonicParsing="false" onAction="#handleBtnReset" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: rgb(255, 99, 99);" text="Сброс">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>

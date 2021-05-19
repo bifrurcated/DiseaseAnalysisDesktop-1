@@ -497,67 +497,111 @@ public class UsersController implements Initializable {
 
     ChangeListener<Toggle> genderListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
-        user.sex = scaleMap.get(selectRadioButton.getText());
+        if(selectRadioButton != null) {
+            user.sex = scaleMap.get(selectRadioButton.getText());
+        } else {
+            user.sex = null;
+        }
         System.out.println( user.sex );
     };
 
     ChangeListener<Toggle> meatListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
-        user.freq_meat = scaleMap.get(selectRadioButton.getText());
+        if(selectRadioButton != null) {
+            user.freq_meat = scaleMap.get(selectRadioButton.getText());
+        } else {
+            user.freq_meat = null;
+        }
         System.out.println( user.freq_meat );
     };
 
     ChangeListener<Toggle> fishListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
-        user.freq_fish = scaleMap.get(selectRadioButton.getText());
+        if(selectRadioButton != null) {
+            user.freq_fish = scaleMap.get(selectRadioButton.getText());
+        } else {
+            user.freq_fish = null;
+        }
         System.out.println( user.freq_fish );
     };
 
     ChangeListener<Toggle> vegesListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
-        user.freq_vegatables = scaleMap.get(selectRadioButton.getText());
+        if(selectRadioButton != null) {
+            user.freq_vegatables = scaleMap.get(selectRadioButton.getText());
+        } else {
+            user.freq_vegatables = null;
+        }
         System.out.println( user.freq_vegatables );
     };
 
     ChangeListener<Toggle> sweetsListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
-        user.freq_sweets = scaleMap.get(selectRadioButton.getText());
+        if(selectRadioButton != null) {
+            user.freq_sweets = scaleMap.get(selectRadioButton.getText());
+        } else {
+            user.freq_sweets = null;
+        }
         System.out.println( user.freq_sweets );
     };
 
     ChangeListener<Toggle> curdListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
-        user.freq_cottage_cheese = scaleMap.get(selectRadioButton.getText());
+        if(selectRadioButton != null) {
+            user.freq_cottage_cheese = scaleMap.get(selectRadioButton.getText());
+        } else {
+            user.freq_cottage_cheese = null;
+        }
         System.out.println( user.freq_cottage_cheese );
     };
 
     ChangeListener<Toggle> cheeseListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
-        user.freq_cheese = scaleMap.get(selectRadioButton.getText());
+        if(selectRadioButton != null) {
+            user.freq_cheese = scaleMap.get(selectRadioButton.getText());
+        } else {
+            user.freq_cheese = null;
+        }
         System.out.println( user.freq_cheese );
     };
 
     ChangeListener<Toggle> headachesListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
-        user.headaches = scaleMap.get(selectRadioButton.getText());
+        if(selectRadioButton != null) {
+            user.headaches = scaleMap.get(selectRadioButton.getText());
+        } else {
+            user.headaches = null;
+        }
         System.out.println( user.headaches );
     };
 
     ChangeListener<Toggle> vozderzhListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
-        user.abstinence_from_sleep = scaleMap.get(selectRadioButton.getText());
+        if(selectRadioButton != null) {
+            user.abstinence_from_sleep = scaleMap.get(selectRadioButton.getText());
+        } else {
+            user.abstinence_from_sleep = null;
+        }
         System.out.println( user.abstinence_from_sleep );
     };
 
     ChangeListener<Toggle> zasnutListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
-        user.fall_asleep = scaleMap.get(selectRadioButton.getText());
+        if(selectRadioButton != null) {
+            user.fall_asleep = scaleMap.get(selectRadioButton.getText());
+        } else {
+            user.fall_asleep = null;
+        }
         System.out.println( user.fall_asleep );
     };
 
     ChangeListener<Toggle> restlessListener = (ov, old_toggle, new_toggle) -> {
         RadioButton selectRadioButton = (RadioButton) new_toggle;
-        user.restless = scaleMap.get(selectRadioButton.getText());
+        if(selectRadioButton != null) {
+            user.restless = scaleMap.get(selectRadioButton.getText());
+        } else {
+            user.restless = null;
+        }
         System.out.println( user.restless );
     };
 
@@ -830,6 +874,50 @@ public class UsersController implements Initializable {
             //set the new max-widht with some extra space
             column.setPrefWidth( max + 50.0d );
         } );
+    }
+
+    public void handleBtnReset(ActionEvent actionEvent) {
+        genderToggleGroup.getToggles().get(0).setSelected(true);
+        headachesToggleGroup.getToggles().get(0).setSelected(false);
+        headachesToggleGroup.getToggles().get(1).setSelected(false);
+        for (int i = 0; i < 4; i++) {
+            if(meatToggleGroup.getToggles().get(i).isSelected())
+            {
+                meatToggleGroup.getToggles().get(i).setSelected(false);
+            }
+            if(fishToggleGroup.getToggles().get(i).isSelected())
+            {
+                fishToggleGroup.getToggles().get(i).setSelected(false);
+            }
+            if(vegesToggleGroup.getToggles().get(i).isSelected())
+            {
+                vegesToggleGroup.getToggles().get(i).setSelected(false);
+            }
+            if(sweetsToggleGroup.getToggles().get(i).isSelected())
+            {
+                sweetsToggleGroup.getToggles().get(i).setSelected(false);
+            }
+            if(curdToggleGroup.getToggles().get(i).isSelected())
+            {
+                curdToggleGroup.getToggles().get(i).setSelected(false);
+            }
+            if(cheeseToggleGroup.getToggles().get(i).isSelected())
+            {
+                cheeseToggleGroup.getToggles().get(i).setSelected(false);
+            }
+            if(zasnutToggleGroup.getToggles().get(i).isSelected())
+            {
+                zasnutToggleGroup.getToggles().get(i).setSelected(false);
+            }
+            if(vozderzhToggleGroup.getToggles().get(i).isSelected())
+            {
+                vozderzhToggleGroup.getToggles().get(i).setSelected(false);
+            }
+            if(restlessToggleGroup.getToggles().get(i).isSelected())
+            {
+                restlessToggleGroup.getToggles().get(i).setSelected(false);
+            }
+        }
     }
 
     public void handleBtnSave(ActionEvent actionEvent) {
