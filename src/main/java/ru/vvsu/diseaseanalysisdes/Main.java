@@ -16,7 +16,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/views/sample.fxml"));
         primaryStage.setTitle("Disease Analysis Tool");
         primaryStage.setScene(new Scene(root, 830, 700));
-        primaryStage.setResizable(false);
+        primaryStage.setResizable(true);
         primaryStage.show();
     }
 

@@ -670,6 +670,7 @@ public class UsersController implements Initializable {
                     sb2 = algoSearch.getQuerySelections(user);
                     if(sb2.length() == 0){
                         sb2.append(sb1);
+                        max=countFound;
                     }
                     else {
                         sb2.append(" and ").append(sb1);
@@ -691,16 +692,14 @@ public class UsersController implements Initializable {
                                 e.printStackTrace();
                             }
                         }
-                        if(!resultSearchList.contains(human)){
-                            resultSearchList.add(human);
-                        }
+                        resultSearchList.add(human);
                     }
                     if(resultSearchList.size() < max){
                         algoSearch.setPercent(algoSearch.getPercent()+1); //увеличиваем процент выборки
                         if(algoSearch.getPercent() >= 500){
                             break; // порог на всякий случай
                         }
-                        //resultSearchList.clear();
+                        resultSearchList.clear();
                     }
                     resultSet.close();
                     resultSet.getStatement().close();

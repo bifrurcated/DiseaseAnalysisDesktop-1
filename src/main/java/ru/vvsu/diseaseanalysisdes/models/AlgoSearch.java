@@ -347,7 +347,8 @@ public class AlgoSearch{
     }
 
     public Map<String, Double> getProbabilityHealthy(List<Human> list){
-        Map<String,Integer> map = new HashMap<>(18);
+        Map<String,Double> map = new HashMap<>(10);
+        Map<String,Integer> mapCount = new HashMap<>(10);
         if(list.size() > 2) {
             list.forEach(human ->
                     Arrays.stream(human.getClass().getFields())
@@ -357,23 +358,33 @@ public class AlgoSearch{
                                         try {
                                             String value = (String)var.get(human);
                                             if(value != null){
-                                                if(value.equals("1")){
-                                                    int i;
-                                                    if(map.containsKey(str+"1")){
-                                                        i = 1+map.get(str+"1");
-                                                    }else{
-                                                        i = 1;
-                                                    }
-                                                    map.put(str+"1",i); //количество здоровых
+                                                if(mapCount.containsKey(str))
+                                                {
+                                                    mapCount.put(str,mapCount.get(str)+1);
                                                 }
-                                                else if(value.equals("2") || value.equals("3")){
-                                                    int i;
-                                                    if(map.containsKey(str+"23")){
-                                                        i = 1+map.get(str+"23");
+                                                else
+                                                {
+                                                    mapCount.put(str,1);
+                                                }
+
+                                                if(value.equals("2")){
+                                                    double i;
+                                                    if(map.containsKey(str)){
+                                                        i = 0.5+map.get(str);
+                                                    }else{
+                                                        i = 0.5;
+                                                    }
+                                                    map.put(str,i);
+                                                }
+                                                else if(value.equals("3"))
+                                                {
+                                                    double i;
+                                                    if(map.containsKey(str)){
+                                                        i = 1+map.get(str);
                                                     }else{
                                                         i = 1;
                                                     }
-                                                    map.put(str+"23",i); //количество больных
+                                                    map.put(str,i);
                                                 }
                                             }
                                         } catch (IllegalAccessException e) {
@@ -385,16 +396,12 @@ public class AlgoSearch{
             );
             Map<String,Double> probabilityMap = new HashMap<>(9);
             for (String dis: diseases) {
-                System.out.println(dis+"23");
-                int countHealthy = 0, countDisease = 0;
-                if(map.containsKey(dis+"1")){
-                    countHealthy = map.get(dis+"1");
+                System.out.println(dis);
+                BigDecimal decimal = BigDecimal.ZERO;
+                if(map.containsKey(dis))
+                {
+                    decimal = BigDecimal.valueOf(map.get(dis)).multiply(BigDecimal.valueOf(100)).divide(BigDecimal.valueOf(mapCount.get(dis)),2,BigDecimal.ROUND_FLOOR);
                 }
-                if(map.containsKey(dis+"23")){
-                    countDisease = map.get(dis+"23");
-                }
-                int totalCount = countHealthy+countDisease;
-                BigDecimal decimal = BigDecimal.valueOf(countHealthy).divide(BigDecimal.valueOf(totalCount),2,BigDecimal.ROUND_UP);
                 probabilityMap.put(dis,decimal.doubleValue());
             }
             return probabilityMap;
