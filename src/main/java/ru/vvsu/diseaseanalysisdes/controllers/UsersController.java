@@ -616,8 +616,7 @@ public class UsersController implements Initializable {
         );
         File configFile = configFileChooser.showSaveDialog(null);
         if(configFile!=null){
-            System.out.println(configFile.getName());
-            Thread serializeThread = new Thread(() -> FileHelper.serialize(userData, configFile.getName()));
+            Thread serializeThread = new Thread(() -> FileHelper.serialize(userData, configFile.getAbsolutePath()));
             serializeThread.start();
             System.out.println(configFile.getParent());
         }
@@ -634,9 +633,7 @@ public class UsersController implements Initializable {
         );
         File configFile = configFileChooser.showOpenDialog(null);
         if(configFile!=null){
-            System.out.println(configFile.getName());
-            System.out.println(configFile.getParent());
-            return FileHelper.deserialize(configFile.getName());
+            return FileHelper.deserialize(configFile.getAbsolutePath());
         }
         return null;
     }

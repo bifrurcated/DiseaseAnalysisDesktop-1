@@ -62,9 +62,9 @@ public class FileHelper {
         //todo something
     }
 
-    public static void serialize(Serializable object, String fileName) {
+    public static void serialize(Serializable object, String path) {
         try (
-                FileOutputStream outputStream = new FileOutputStream(getDir() + File.separator + fileName);
+                FileOutputStream outputStream = new FileOutputStream(path);
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)
             )
         {
@@ -74,9 +74,9 @@ public class FileHelper {
         }
     }
 
-    public static Object deserialize(String fileName) {
+    public static Object deserialize(String path) {
         try(
-                FileInputStream fileInputStream = new FileInputStream(getDir() + File.separator + fileName);
+                FileInputStream fileInputStream = new FileInputStream(path);
                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)
             )
         {
