@@ -202,7 +202,6 @@ public class AlgoSearch{
         if(arr==null){
             if(list.isEmpty()){
                 setListAnswerOnQuestions(user);
-                System.out.println(list);
             }
             arr = generateCombinations(arr, iSelectMultiple, list.size());
         }
@@ -422,7 +421,6 @@ public class AlgoSearch{
             );
             Map<String,String> probabilityMap = new HashMap<>(9);
             for (String dis: diseases) {
-                System.out.println(dis);
                 BigDecimal decimal = BigDecimal.ZERO;
                 if(map.containsKey(dis))
                 {

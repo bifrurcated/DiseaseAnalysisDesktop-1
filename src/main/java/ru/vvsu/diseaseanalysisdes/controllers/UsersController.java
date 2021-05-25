@@ -4,7 +4,6 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -37,6 +36,11 @@ import java.util.regex.Pattern;
 
 public class UsersController implements Initializable {
     private final SQLiteManager dataBase;
+
+    @FXML private TitledPane titlePaneAssleep;
+    @FXML private TitledPane titlePaneFromSleep;
+    @FXML private TitledPane titlePaneCigarettes;
+
     @FXML private Tab tabAnalys;
     @FXML private Tab tabParameters;
     @FXML private Tab tabQuestions;
@@ -65,12 +69,12 @@ public class UsersController implements Initializable {
             tshTextField;
     @FXML private CheckBox statisticCheckBox, allSimilarCheckBox;
 
-    private static Pattern pattern;
+    private static final Pattern pattern;
     private static Pattern onlyNumbersPattern;
 
     static {
-        pattern = Pattern.compile("[\\d]+[\\.]?[\\d]*");
-        onlyNumbersPattern = Pattern.compile("[1-10]");
+        pattern = Pattern.compile("[\\d]+[.]?[\\d]*");
+        onlyNumbersPattern = Pattern.compile("[0-9]|10");
     }
 
     private ObservableList<Human> enterDataList;
@@ -135,6 +139,10 @@ public class UsersController implements Initializable {
         namesColumns.put("kidney_disease","Заболевания почек");
         namesColumns.put("thyroid_disease","Заболевания щитовидной железы");
         namesColumns.put("id","Идентификатор");
+
+        titlePaneCigarettes.setText("+ Сколько в среднем сигарет вы выкуриваете в день?");
+        titlePaneAssleep.setText("+ Насколько часто вам было трудно заснуть\nв течение 30 мин после того как вы легли в постель?");
+        titlePaneFromSleep.setText("+ Как часто вы испытывали трудности в том,\nчтобы воздерживаться от засыпания когда ситуация\nэтого требует?");
 
         textLabelStatistics = labelStatistics.getText();
         textLabelIMB = labelIMB.getText();
@@ -287,7 +295,6 @@ public class UsersController implements Initializable {
                 checkEmptyInput(user.tsh, tshTextField);
             }
         });
-        System.out.println(user.tsh);
     };
 
     ChangeListener<String> insulinListener = (ov, old_toggle, new_toggle) -> {
@@ -298,7 +305,6 @@ public class UsersController implements Initializable {
                 checkEmptyInput(user.insulin, insulinTextField);
             }
         });
-        System.out.println(user.insulin);
     };
 
     ChangeListener<String> crpListener = (ov, old_toggle, new_toggle) -> {
@@ -309,7 +315,6 @@ public class UsersController implements Initializable {
                 checkEmptyInput(user.crp, crpTextField);
             }
         });
-        System.out.println(user.crp);
     };
 
     ChangeListener<String> uricAcidcreatinineListener = (ov, old_toggle, new_toggle) -> {
@@ -320,7 +325,6 @@ public class UsersController implements Initializable {
                 checkEmptyInput(user.uric_acid, uricAcidcreatinineTextField);
             }
         });
-        System.out.println(user.uric_acid);
     };
 
     ChangeListener<String> creatinineListener = (ov, old_toggle, new_toggle) -> {
@@ -331,7 +335,6 @@ public class UsersController implements Initializable {
                 checkEmptyInput(user.creatinine, creatinineTextField);
             }
         });
-        System.out.println(user.creatinine);
     };
 
     ChangeListener<String> glucoseListener = (ov, old_toggle, new_toggle) -> {
@@ -342,7 +345,6 @@ public class UsersController implements Initializable {
                 checkEmptyInput(user.glucose, glucoseTextField);
             }
         });
-        System.out.println(user.glucose);
     };
 
     ChangeListener<String> apobListener = (ov, old_toggle, new_toggle) -> {
@@ -353,7 +355,6 @@ public class UsersController implements Initializable {
                 checkEmptyInput(user.apob, apobTextField);
             }
         });
-        System.out.println(user.apob);
     };
 
     ChangeListener<String> probnpListener = (ov, old_toggle, new_toggle) -> {
@@ -364,7 +365,6 @@ public class UsersController implements Initializable {
                 checkEmptyInput(user.probnp, probnpTextField);
             }
         });
-        System.out.println(user.probnp);
     };
 
     ChangeListener<String> lpaListener = (ov, old_toggle, new_toggle) -> {
@@ -375,7 +375,6 @@ public class UsersController implements Initializable {
                 checkEmptyInput(user.lpa, lpaTextField);
             }
         });
-        System.out.println(user.lpa);
     };
 
     ChangeListener<String> hdlListener = (ov, old_toggle, new_toggle) -> {
@@ -386,7 +385,6 @@ public class UsersController implements Initializable {
                 checkEmptyInput(user.hdl, hdlTextField);
             }
         });
-        System.out.println(user.hdl);
     };
 
     ChangeListener<String> totalCholesterolListener = (ov, old_toggle, new_toggle) -> {
@@ -397,7 +395,6 @@ public class UsersController implements Initializable {
                 checkEmptyInput(user.total_cholesterol, totalCholesterolTextField);
             }
         });
-        System.out.println(user.total_cholesterol);
     };
 
     ChangeListener<String> averageHeartRateListener = (ov, old_toggle, new_toggle) -> {
@@ -408,7 +405,6 @@ public class UsersController implements Initializable {
                 checkEmptyInput(user.average_heart_rate, averageHeartRateTextField);
             }
         });
-        System.out.println(user.average_heart_rate);
     };
 
     ChangeListener<String> averageDiastolicListener = (ov, old_toggle, new_toggle) -> {
@@ -419,7 +415,6 @@ public class UsersController implements Initializable {
                 checkEmptyInput(user.average_diastolic, averageDiastolicTextField);
             }
         });
-        System.out.println(user.average_diastolic);
     };
 
     ChangeListener<String> averageSystolicListener = (ov, old_toggle, new_toggle) -> {
@@ -430,7 +425,6 @@ public class UsersController implements Initializable {
                 checkEmptyInput(user.average_systolic, averageSystolicTextField);
             }
         });
-        System.out.println(user.average_systolic);
     };
 
     ChangeListener<String> cigarettesListener = (ov, old_toggle, new_toggle) -> {
@@ -441,7 +435,6 @@ public class UsersController implements Initializable {
                 checkEmptyInput(user.cigarettes, cigarettesTextField);
             }
         });
-        System.out.println(user.cigarettes);
     };
 
     ChangeListener<String> exerciseStressOnWorkListener = (ov, old_toggle, new_toggle) -> {
@@ -453,7 +446,6 @@ public class UsersController implements Initializable {
                 checkEmptyInput(user.exercise_stress_on_work, exerciseStressOnWorkTextField);
             }
         });
-        System.out.println(user.exercise_stress_on_work);
     };
 
     ChangeListener<String> exerciseStressListener = (ov, old_toggle, new_toggle) -> {
@@ -465,7 +457,6 @@ public class UsersController implements Initializable {
                 checkEmptyInput(user.exercise_stress, exerciseStressTextField);
             }
         });
-        System.out.println(user.exercise_stress);
     };
 
     ChangeListener<String> walkListener = (ov, old_toggle, new_toggle) -> {
@@ -476,7 +467,6 @@ public class UsersController implements Initializable {
                 checkEmptyInput(user.walk, walkTextField);
             }
         });
-        System.out.println(user.walk);
     };
 
     ChangeListener<String> weightListener = (ov, old_toggle, new_toggle) -> {
@@ -487,7 +477,6 @@ public class UsersController implements Initializable {
                 checkEmptyInput(user.weight, weightTextField);
             }
         });
-        System.out.println(user.weight);
     };
 
     ChangeListener<String> heightListener = (ov, old_toggle, new_toggle) -> {
@@ -498,7 +487,6 @@ public class UsersController implements Initializable {
                 checkEmptyInput(user.height, heightTextField);
             }
         });
-        System.out.println(user.height);
     };
 
     ChangeListener<String> ageListener = (ov, old_toggle, new_toggle) -> {
@@ -509,7 +497,6 @@ public class UsersController implements Initializable {
                 checkEmptyInput(user.age, ageTextField);
             }
         });
-        System.out.println(user.age);
     };
 
     ChangeListener<String> hipsListener = (ov, old_toggle, new_toggle) -> {
@@ -520,7 +507,6 @@ public class UsersController implements Initializable {
                 checkEmptyInput(user.hips, hipTextField);
             }
         });
-        System.out.println(user.hips);
     };
 
     ChangeListener<String> waistListener = (ov, old_toggle, new_toggle) -> {
@@ -531,7 +517,6 @@ public class UsersController implements Initializable {
                 checkEmptyInput(user.waist, waistTextField);
             }
         });
-        System.out.println(user.waist);
     };
 
     ChangeListener<String> dreamListener = (ov, old_toggle, new_toggle) -> {
@@ -542,7 +527,6 @@ public class UsersController implements Initializable {
                 checkEmptyInput(user.sleep, dreamTextField);
             }
         });
-        System.out.println(user.sleep);
     };
 
     ChangeListener<Toggle> genderListener = (ov, old_toggle, new_toggle) -> {
@@ -552,7 +536,6 @@ public class UsersController implements Initializable {
         } else {
             user.sex = null;
         }
-        System.out.println( user.sex );
     };
 
     ChangeListener<Toggle> meatListener = (ov, old_toggle, new_toggle) -> {
@@ -562,7 +545,6 @@ public class UsersController implements Initializable {
         } else {
             user.freq_meat = null;
         }
-        System.out.println( user.freq_meat );
     };
 
     ChangeListener<Toggle> fishListener = (ov, old_toggle, new_toggle) -> {
@@ -572,7 +554,6 @@ public class UsersController implements Initializable {
         } else {
             user.freq_fish = null;
         }
-        System.out.println( user.freq_fish );
     };
 
     ChangeListener<Toggle> vegesListener = (ov, old_toggle, new_toggle) -> {
@@ -582,7 +563,6 @@ public class UsersController implements Initializable {
         } else {
             user.freq_vegatables = null;
         }
-        System.out.println( user.freq_vegatables );
     };
 
     ChangeListener<Toggle> sweetsListener = (ov, old_toggle, new_toggle) -> {
@@ -592,7 +572,6 @@ public class UsersController implements Initializable {
         } else {
             user.freq_sweets = null;
         }
-        System.out.println( user.freq_sweets );
     };
 
     ChangeListener<Toggle> curdListener = (ov, old_toggle, new_toggle) -> {
@@ -602,7 +581,6 @@ public class UsersController implements Initializable {
         } else {
             user.freq_cottage_cheese = null;
         }
-        System.out.println( user.freq_cottage_cheese );
     };
 
     ChangeListener<Toggle> cheeseListener = (ov, old_toggle, new_toggle) -> {
@@ -612,7 +590,6 @@ public class UsersController implements Initializable {
         } else {
             user.freq_cheese = null;
         }
-        System.out.println( user.freq_cheese );
     };
 
     ChangeListener<Toggle> headachesListener = (ov, old_toggle, new_toggle) -> {
@@ -622,7 +599,6 @@ public class UsersController implements Initializable {
         } else {
             user.headaches = null;
         }
-        System.out.println( user.headaches );
     };
 
     ChangeListener<Toggle> vozderzhListener = (ov, old_toggle, new_toggle) -> {
@@ -632,7 +608,6 @@ public class UsersController implements Initializable {
         } else {
             user.abstinence_from_sleep = null;
         }
-        System.out.println( user.abstinence_from_sleep );
     };
 
     ChangeListener<Toggle> zasnutListener = (ov, old_toggle, new_toggle) -> {
@@ -642,7 +617,6 @@ public class UsersController implements Initializable {
         } else {
             user.fall_asleep = null;
         }
-        System.out.println( user.fall_asleep );
     };
 
     ChangeListener<Toggle> restlessListener = (ov, old_toggle, new_toggle) -> {
@@ -652,7 +626,6 @@ public class UsersController implements Initializable {
         } else {
             user.restless = null;
         }
-        System.out.println( user.restless );
     };
 
     public void createFileSave(Serializable userData) {
@@ -668,7 +641,6 @@ public class UsersController implements Initializable {
         if(configFile!=null){
             Thread serializeThread = new Thread(() -> FileHelper.serialize(userData, configFile.getAbsolutePath()));
             serializeThread.start();
-            System.out.println(configFile.getParent());
         }
     }
     public Object openFileSave() {
@@ -728,7 +700,7 @@ public class UsersController implements Initializable {
         return true;
     }
 
-    public void handleBtnContinue(ActionEvent actionEvent) {
+    public void handleBtnContinue() {
         if(!checkInputData()){
             return;
         }
@@ -750,18 +722,13 @@ public class UsersController implements Initializable {
                         countFound++;
                     }
                     algoSearch.nextSearch(countFound);
-                    System.out.println(sb1);
-                    System.out.println("nextSearch = "+algoSearch.isNextSearch());
                     resultSet.close();
                     resultSet.getStatement().close();
                 } catch (SQLException sqlException){
                     sqlException.printStackTrace();
                 }
             }
-            System.out.println("countFound = "+countFound);
-            System.out.println("sb1 = "+sb1);
             int max = (int)Math.ceil(countFound/3f);
-            System.out.println("max = "+max);
             while (resultSearchList.size() < max){
                 StringBuilder sb2 = new StringBuilder();
                 if(countFound > 2){
@@ -776,8 +743,6 @@ public class UsersController implements Initializable {
                 } else {
                     sb2.append(sb1);
                 }
-                System.out.println("size = "+resultSearchList.size());
-                System.out.println("sb2 = "+sb2);
                 try{
                     ResultSet resultSet = dataBase.getResultSet(
                             "SELECT *,10000*weight/(height*height) as imb FROM med_card where "+sb2+";");
@@ -805,8 +770,6 @@ public class UsersController implements Initializable {
                     sqlException.printStackTrace();
                 }
             }
-            System.out.println("percent = "+algoSearch.getPercent());
-            System.out.println("tableViewStatistics = "+tableViewStatistics.isDisable());
             if(resultSearchList.size() > 2 && statisticCheckBox.isSelected()){
                 if(!allSimilarCheckBox.isSelected()){
                     labelStatistics.setLayoutY(layoutLabelEnterDataY);
@@ -855,7 +818,6 @@ public class UsersController implements Initializable {
                     }
                 });
                 statisticsList.add(statisticsDiseases);
-                //System.out.println(probabilityMap);
                 autoResizeColumns(tableViewStatistics);
             }
             else{
@@ -894,90 +856,6 @@ public class UsersController implements Initializable {
             selectionModel.select(tabResult);
             proceedButton.setDisable(false);
         };
-        //Platform.runLater(searchEqualUser2);
-
-        //Algo algo = new Algo();
-        //algo.setPercent(15);
-        /*Runnable searchEqualUser = () -> {
-            StringBuilder sb1 = new StringBuilder();
-            int countFound = 0;
-            while (countFound < 1){
-                sb1 = algo.getQuerySelections(user);
-                try{
-                    ResultSet resultSet = dataBase.getResultSet(
-                            "SELECT *,10000*weight/(height*height) as imb FROM med_card where "+sb1+";");
-                    while (resultSet.next()) {
-                        countFound++;
-                    }
-                    System.out.println(sb1);
-                    if(countFound < 1){
-                        algo.setPercent(algo.getPercent()+1); //увеличиваем процент выборки
-                        if(algo.getPercent() >= 500){
-                            break; // порог на всякий случай
-                        }
-                    }
-                    resultSet.close();
-                    resultSet.getStatement().close();
-                } catch (SQLException sqlException){
-                    sqlException.printStackTrace();
-                }
-            }
-            System.out.println("countFound = "+countFound);
-            System.out.println("sb1 = "+sb1);
-            if(sb1.length()!=0){
-                return;
-            }
-            int max = (int)Math.ceil(countFound/3f);
-            System.out.println("max = "+max);
-            while (resultSearchList.size() < max){
-                StringBuilder sb2 = new StringBuilder();
-                if(countFound > 2){
-                    sb2 = algo.getQueryNonSelections(user);
-                    if(sb2.length() == 0){
-                        sb2.append(sb1);
-                    }
-                    else {
-                        sb2.append(" and ").append(sb1);
-                    }
-                } else {
-                    sb2.append(sb1);
-                }
-                System.out.println("sb2 = "+sb2);
-                try{
-                    ResultSet resultSet = dataBase.getResultSet(
-                            "SELECT *,10000*weight/(height*height) as imb FROM med_card where "+sb2+";");
-                    while (resultSet.next()) {
-                        Human human = new Human();
-                        for(Field field: human.getClass().getFields()){
-                            try {
-                                field.set(human,resultSet.getString(field.getName()));
-                            } catch (IllegalAccessException | SQLException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        if(!resultSearchList.contains(human)) {
-                            resultSearchList.add(human);
-                        }
-                    }
-                    algo.nextSearch(resultSearchList.size());
-                    System.out.println(sb1);
-                    System.out.println("nextSearch = "+algo.isNextSearch());
-                    resultSet.close();
-                    resultSet.getStatement().close();
-                } catch (SQLException sqlException){
-                    sqlException.printStackTrace();
-                }
-            }
-            System.out.println("percent = "+algo.getPercent());
-            if(resultSearchList.size() > 2){
-                probabilityMap = algo.getProbabilityHealthy(resultSearchList);
-                System.out.println(probabilityMap);
-            }
-            autoResizeColumns(tableViewEnterData);
-            autoResizeColumns(tableViewResultSearch);
-            selectionModel.select(tabResult);
-            proceedButton.setDisable(false);
-        };*/
         Platform.runLater(searchEqualUser2);
     }
 
@@ -1009,91 +887,92 @@ public class UsersController implements Initializable {
         } );
     }
 
-    public void handleBtnReset(ActionEvent actionEvent) {
+    public void handleBtnReset() {
         genderToggleGroup.getToggles().get(0).setSelected(true);
         headachesToggleGroup.getToggles().get(0).setSelected(false);
         headachesToggleGroup.getToggles().get(1).setSelected(false);
-
-        if(tabQuestions.isSelected())
-        {
-            System.out.println("tabQuestions");
-        }else if(tabParameters.isSelected())
-        {
-            System.out.println("tabParameters");
-        }else if(tabAnalys.isSelected())
-        {
-            System.out.println("tabAnalys");
-        }
-        for (int i = 0; i < 4; i++) {
-            if(meatToggleGroup.getToggles().get(i).isSelected())
-            {
-                meatToggleGroup.getToggles().get(i).setSelected(false);
-            }
-            if(fishToggleGroup.getToggles().get(i).isSelected())
-            {
-                fishToggleGroup.getToggles().get(i).setSelected(false);
-            }
-            if(vegesToggleGroup.getToggles().get(i).isSelected())
-            {
-                vegesToggleGroup.getToggles().get(i).setSelected(false);
-            }
-            if(sweetsToggleGroup.getToggles().get(i).isSelected())
-            {
-                sweetsToggleGroup.getToggles().get(i).setSelected(false);
-            }
-            if(curdToggleGroup.getToggles().get(i).isSelected())
-            {
-                curdToggleGroup.getToggles().get(i).setSelected(false);
-            }
-            if(cheeseToggleGroup.getToggles().get(i).isSelected())
-            {
-                cheeseToggleGroup.getToggles().get(i).setSelected(false);
-            }
-            if(zasnutToggleGroup.getToggles().get(i).isSelected())
-            {
-                zasnutToggleGroup.getToggles().get(i).setSelected(false);
-            }
-            if(vozderzhToggleGroup.getToggles().get(i).isSelected())
-            {
-                vozderzhToggleGroup.getToggles().get(i).setSelected(false);
-            }
-            if(restlessToggleGroup.getToggles().get(i).isSelected())
-            {
-                restlessToggleGroup.getToggles().get(i).setSelected(false);
-            }
-        }
-
-        waistTextField.setText("");
-        hipTextField.setText("");
-        dreamTextField.setText("");
         ageTextField.setText("");
         heightTextField.setText("");
         weightTextField.setText("");
-        walkTextField.setText("");
-        exerciseStressTextField.setText("");
-        exerciseStressOnWorkTextField.setText("");
-        cigarettesTextField.setText("");
-        averageSystolicTextField.setText("");
-        averageDiastolicTextField.setText("");
-        averageHeartRateTextField.setText("");
-        totalCholesterolTextField.setText("");
-        hdlTextField.setText("");
-        lpaTextField.setText("");
-        probnpTextField.setText("");
-        apobTextField.setText("");
-        glucoseTextField.setText("");
-        creatinineTextField.setText("");
-        uricAcidcreatinineTextField.setText("");
-        crpTextField.setText("");
-        insulinTextField.setText("");
-        tshTextField.setText("");
+
+        if(tabQuestions.isSelected())
+        {
+            for (int i = 0; i < 4; i++) {
+                if(meatToggleGroup.getToggles().get(i).isSelected())
+                {
+                    meatToggleGroup.getToggles().get(i).setSelected(false);
+                }
+                if(fishToggleGroup.getToggles().get(i).isSelected())
+                {
+                    fishToggleGroup.getToggles().get(i).setSelected(false);
+                }
+                if(vegesToggleGroup.getToggles().get(i).isSelected())
+                {
+                    vegesToggleGroup.getToggles().get(i).setSelected(false);
+                }
+                if(sweetsToggleGroup.getToggles().get(i).isSelected())
+                {
+                    sweetsToggleGroup.getToggles().get(i).setSelected(false);
+                }
+                if(curdToggleGroup.getToggles().get(i).isSelected())
+                {
+                    curdToggleGroup.getToggles().get(i).setSelected(false);
+                }
+                if(cheeseToggleGroup.getToggles().get(i).isSelected())
+                {
+                    cheeseToggleGroup.getToggles().get(i).setSelected(false);
+                }
+                if(zasnutToggleGroup.getToggles().get(i).isSelected())
+                {
+                    zasnutToggleGroup.getToggles().get(i).setSelected(false);
+                }
+                if(vozderzhToggleGroup.getToggles().get(i).isSelected())
+                {
+                    vozderzhToggleGroup.getToggles().get(i).setSelected(false);
+                }
+
+            }
+            walkTextField.setText("");
+            exerciseStressTextField.setText("");
+            exerciseStressOnWorkTextField.setText("");
+            cigarettesTextField.setText("");
+            System.out.println("tabQuestions");
+        }else if(tabParameters.isSelected())
+        {
+            for (int i = 0; i < 4; i++) {
+                if (restlessToggleGroup.getToggles().get(i).isSelected()) {
+                    restlessToggleGroup.getToggles().get(i).setSelected(false);
+                }
+            }
+            waistTextField.setText("");
+            hipTextField.setText("");
+            dreamTextField.setText("");
+            System.out.println("tabParameters");
+        }else if(tabAnalys.isSelected())
+        {
+            averageSystolicTextField.setText("");
+            averageDiastolicTextField.setText("");
+            averageHeartRateTextField.setText("");
+            totalCholesterolTextField.setText("");
+            hdlTextField.setText("");
+            lpaTextField.setText("");
+            probnpTextField.setText("");
+            apobTextField.setText("");
+            glucoseTextField.setText("");
+            creatinineTextField.setText("");
+            uricAcidcreatinineTextField.setText("");
+            crpTextField.setText("");
+            insulinTextField.setText("");
+            tshTextField.setText("");
+            System.out.println("tabAnalys");
+        }
     }
 
-    public void handleBtnSave(ActionEvent actionEvent) {
+    public void handleBtnSave() {
         createFileSave(user);
     }
 
-    public void handleBtnLoad(ActionEvent actionEvent) {
+    public void handleBtnLoad() {
         Optional<Human> optionalHuman = Optional.ofNullable((Human) openFileSave());
         optionalHuman.ifPresent(human -> {
             try {
@@ -1186,7 +1065,7 @@ public class UsersController implements Initializable {
         if(endPosition < 10) {
             p = "[" + 1 + "-" + endPosition + "]";
         } else {
-            p = "[" + 1 +"-9][0" + "-" + String.valueOf(endPosition).toCharArray()[1] + "]*";
+            p = "[0-9]|"+endPosition;
         }
         onlyNumbersPattern = Pattern.compile(p);
     }

@@ -7,15 +7,17 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import ru.vvsu.diseaseanalysisdes.helpers.FileHelper;
 
+import java.util.Objects;
+
 public class Main extends Application {
 
     public static Main instance;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/views/sample.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/views/sample.fxml")));
         primaryStage.setTitle("Disease Analysis Tool");
-        primaryStage.setScene(new Scene(root, 840, 710));
+        primaryStage.setScene(new Scene(root, 850, 710));
 
         primaryStage.setMinWidth(450); primaryStage.setMinHeight(250);
 //        primaryStage.setResizable(false);
