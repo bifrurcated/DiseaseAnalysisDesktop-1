@@ -17,6 +17,7 @@ public class AlgoSearch{
     private int iRangeIMB;
     private int variation;
     private int[] arr;
+    private String checkRepeat;
 
     private final Map<String,Integer> questionMap;
     private final List<String> list;
@@ -298,6 +299,11 @@ public class AlgoSearch{
         if(sb.length() != 0) {
             sb.delete(sb.length() - 5, sb.length());
         }
+        if(sb.toString().equals(checkRepeat))
+        {
+            iRangeIMB++;
+        }
+        checkRepeat = sb.toString();
         return sb;
     }
 
@@ -346,7 +352,27 @@ public class AlgoSearch{
         return 10000*w/(h*h);
     }
 
-    public Map<String, Double> getProbabilityHealthy(List<Human> list){
+    public String getTextIMB(String height, String weight){
+        double IMB = getIndexMassBody(height, weight);
+        if(IMB < 16.00){
+            return "Выраженный дефицит массы тела";
+        } else if (IMB >= 16.00 && IMB < 18.50) {
+            return "Недостаточная (дефицит) масса тела";
+        } else if (IMB >= 18.50 && IMB < 25.00) {
+            return "Норма";
+        } else if (IMB >= 25.00 && IMB < 30.00) {
+            return "Избыточная масса тела (предожирение)";
+        } else if (IMB >= 30.00 && IMB < 35.00) {
+            return "Ожирение первой степени";
+        } else if (IMB >= 35.00 && IMB < 40.00) {
+            return "Ожирение второй степени";
+        } else if (IMB >= 40.00) {
+            return "Ожирение третьей степени (морбидное)";
+        }
+        return "";
+    }
+
+    public Map<String, String> getProbabilityHealthy(List<Human> list){
         Map<String,Double> map = new HashMap<>(10);
         Map<String,Integer> mapCount = new HashMap<>(10);
         if(list.size() > 2) {
@@ -394,7 +420,7 @@ public class AlgoSearch{
                                 }
                             })
             );
-            Map<String,Double> probabilityMap = new HashMap<>(9);
+            Map<String,String> probabilityMap = new HashMap<>(9);
             for (String dis: diseases) {
                 System.out.println(dis);
                 BigDecimal decimal = BigDecimal.ZERO;
@@ -402,7 +428,7 @@ public class AlgoSearch{
                 {
                     decimal = BigDecimal.valueOf(map.get(dis)).multiply(BigDecimal.valueOf(100)).divide(BigDecimal.valueOf(mapCount.get(dis)),2,BigDecimal.ROUND_FLOOR);
                 }
-                probabilityMap.put(dis,decimal.doubleValue());
+                probabilityMap.put(dis,decimal.toString());
             }
             return probabilityMap;
         }
@@ -421,6 +447,8 @@ public class AlgoSearch{
             return "30.00";
         } else if (IMB >= 30.00 && IMB < 35.00) {
             return "35.00";
+        } else if (IMB >= 35.00 && IMB < 40.00) {
+            return "40.00";
         } else if (IMB >= 40.00) {
             return "100.00";
         }
@@ -438,6 +466,8 @@ public class AlgoSearch{
             return "25.00";
         } else if (IMB >= 30.00 && IMB < 35.00) {
             return "30.00";
+        } else if (IMB >= 35.00 && IMB < 40.00) {
+            return "35.00";
         } else if (IMB >= 40.00) {
             return "40.00";
         }

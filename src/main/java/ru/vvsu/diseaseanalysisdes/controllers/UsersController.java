@@ -22,6 +22,7 @@ import ru.vvsu.diseaseanalysisdes.helpers.FileHelper;
 import ru.vvsu.diseaseanalysisdes.managers.SQLiteManager;
 import ru.vvsu.diseaseanalysisdes.models.AlgoSearch;
 import ru.vvsu.diseaseanalysisdes.models.Human;
+import ru.vvsu.diseaseanalysisdes.models.StatisticsDiseases;
 
 import java.io.File;
 import java.io.Serializable;
@@ -36,11 +37,21 @@ import java.util.regex.Pattern;
 
 public class UsersController implements Initializable {
     private final SQLiteManager dataBase;
+    @FXML private Tab tabAnalys;
+    @FXML private Tab tabParameters;
+    @FXML private Tab tabQuestions;
+
+    @FXML private Label labelEnterData;
+    @FXML private Label labelResultSearch;
+    @FXML private Label labelStatistics;
+    @FXML private Label labelIMB;
+
     @FXML private Button proceedButton;
     @FXML private Tab tabResult;
 
     @FXML private TableView<Human> tableViewEnterData;
     @FXML private TableView<Human> tableViewResultSearch;
+    @FXML private TableView<StatisticsDiseases> tableViewStatistics;
     @FXML private ToggleGroup genderToggleGroup,vegesToggleGroup,sweetsToggleGroup,
             meatToggleGroup,fishToggleGroup,curdToggleGroup,cheeseToggleGroup,
             zasnutToggleGroup,vozderzhToggleGroup,headachesToggleGroup,restlessToggleGroup;
@@ -64,11 +75,14 @@ public class UsersController implements Initializable {
 
     private ObservableList<Human> enterDataList;
     private ObservableList<Human> resultSearchList;
+    private ObservableList<StatisticsDiseases> statisticsList;
     private Human user;
     private AlgoSearch algoSearch;
-    private Map<String, Double> probabilityMap;
+    private Map<String, String> probabilityMap;
     private Map<String,String> scaleMap;
     private SingleSelectionModel<Tab> selectionModel;
+    private double layoutEnterDataY, layoutStatisticsY, layoutLabelEnterDataY, layoutLabelStatisticsY, layoutLabelImbY;
+    private String textLabelIMB, textLabelStatistics;
 
     public UsersController(){
         dataBase = new SQLiteManager();
@@ -122,19 +136,51 @@ public class UsersController implements Initializable {
         namesColumns.put("thyroid_disease","Заболевания щитовидной железы");
         namesColumns.put("id","Идентификатор");
 
+        textLabelStatistics = labelStatistics.getText();
+        textLabelIMB = labelIMB.getText();
+        labelEnterData.setVisible(false);
+        labelResultSearch.setVisible(false);
+        labelStatistics.setVisible(false);
+        labelIMB.setVisible(false);
+        layoutLabelEnterDataY = labelEnterData.getLayoutY();
+        layoutLabelStatisticsY = labelStatistics.getLayoutY();
+        layoutLabelImbY = labelIMB.getLayoutY();
+
         enterDataList = FXCollections.observableArrayList();
         resultSearchList = FXCollections.observableArrayList();
+        statisticsList = FXCollections.observableArrayList();
         tableViewEnterData.setItems(enterDataList);
         tableViewResultSearch.setItems(resultSearchList);
+        tableViewStatistics.setItems(statisticsList);
+        layoutEnterDataY = tableViewEnterData.getLayoutY();
+        layoutStatisticsY = tableViewStatistics.getLayoutY();
         Platform.runLater(() -> {
             tableViewResultSearch.getColumns().get(tableViewResultSearch.getColumns().size()-1).setVisible(false);
             tableViewResultSearch.getColumns().get(tableViewResultSearch.getColumns().size()-1).setVisible(true);
+            tableViewStatistics.getColumns().get(tableViewStatistics.getColumns().size()-1).setVisible(false);
+            tableViewStatistics.getColumns().get(tableViewStatistics.getColumns().size()-1).setVisible(true);
         });
         selectionModel = tabResult.getTabPane().getSelectionModel();
 
         Callback<TableColumn<Human, String>, TableCell<Human, String>> defaultCellFactory
                 = TextFieldTableCell.forTableColumn();
+        Callback<TableColumn<StatisticsDiseases, String>, TableCell<StatisticsDiseases, String>> defaultCellFactoryStatistics
+                = TextFieldTableCell.forTableColumn();
         namesColumns.forEach((key, val) -> {
+            if(key.equals("osteochondrosis") || key.equals("rheumatoid_arthritis")  || key.equals("stroke")
+                    || key.equals("myocardial_infarction")  || key.equals("coronary_heart_disease")  || key.equals("arrhythmia")
+                    || key.equals("kidney_disease")  || key.equals("thyroid_disease")){
+                TableColumn<StatisticsDiseases,String> tableColumnStatistics = new TableColumn<>(val);
+                tableColumnStatistics.setCellValueFactory(new PropertyValueFactory<>(key));
+                tableColumnStatistics.setCellFactory(col -> {
+                    TableCell<StatisticsDiseases, String> cell = defaultCellFactoryStatistics.call(col);
+                    cell.setAlignment(Pos.CENTER);
+                    cell.setPrefHeight(60);
+                    return cell ;
+                });
+                tableViewStatistics.getColumns().add(tableColumnStatistics);
+            }
+
             if(!key.equals("id")){
                 TableColumn<Human,String> tableColumnEnterData = new TableColumn<>(val);
                 tableColumnEnterData.setCellValueFactory(new PropertyValueFactory<>(key));
@@ -163,6 +209,10 @@ public class UsersController implements Initializable {
                 tableViewResultSearch.getColumns().add(tableColumnResultSearch);
             }
         });
+
+        tableViewResultSearch.setVisible(false);
+        tableViewEnterData.setVisible(false);
+        tableViewStatistics.setVisible(false);
 
         probabilityMap = new HashMap<>(9);
         algoSearch = new AlgoSearch();
@@ -669,6 +719,12 @@ public class UsersController implements Initializable {
             errors(textError, proceedButton);
             return false;
         }
+        else if(!statisticCheckBox.isSelected() && !allSimilarCheckBox.isSelected())
+        {
+            String textError = "Вы не выбрали способ представления\n обработанных данных!";
+            errors(textError, proceedButton);
+            return false;
+        }
         return true;
     }
 
@@ -679,6 +735,7 @@ public class UsersController implements Initializable {
         if(!enterDataList.isEmpty()){ enterDataList.clear(); }
         enterDataList.add(user);
         if(!resultSearchList.isEmpty()){ resultSearchList.clear(); }
+        if(!statisticsList.isEmpty()){ statisticsList.clear(); }
         proceedButton.setDisable(true);
         algoSearch.setPercent(0);// задаём начальный процент выборки
         Runnable searchEqualUser2 = () -> {
@@ -740,7 +797,7 @@ public class UsersController implements Initializable {
                         if(algoSearch.getPercent() >= 500){
                             break; // порог на всякий случай
                         }
-                        resultSearchList.clear();
+                        if(!resultSearchList.isEmpty()){resultSearchList.clear();}
                     }
                     resultSet.close();
                     resultSet.getStatement().close();
@@ -749,12 +806,91 @@ public class UsersController implements Initializable {
                 }
             }
             System.out.println("percent = "+algoSearch.getPercent());
-            if(resultSearchList.size() > 2){
+            System.out.println("tableViewStatistics = "+tableViewStatistics.isDisable());
+            if(resultSearchList.size() > 2 && statisticCheckBox.isSelected()){
+                if(!allSimilarCheckBox.isSelected()){
+                    labelStatistics.setLayoutY(layoutLabelEnterDataY);
+                    tableViewStatistics.setLayoutY(layoutEnterDataY);
+                    labelIMB.setLayoutY(layoutLabelEnterDataY + 140);
+                }
+                else{
+                    tableViewStatistics.setLayoutY(layoutStatisticsY);
+                    labelStatistics.setLayoutY(layoutLabelStatisticsY);
+                    labelIMB.setLayoutY(layoutLabelImbY);
+                }
+                labelStatistics.setText(textLabelStatistics);
+                tableViewStatistics.setVisible(true);
+                labelStatistics.setVisible(true);
+                labelIMB.setVisible(true);
+                String imb = String.valueOf(algoSearch.getIndexMassBody(user.height,user.weight)).substring(0,5);
+                labelIMB.setText(textLabelIMB+" "+imb+" ( "+algoSearch.getTextIMB(user.height,user.weight)+" )");
                 probabilityMap = algoSearch.getProbabilityHealthy(resultSearchList);
-                System.out.println(probabilityMap);
+                StatisticsDiseases statisticsDiseases = new StatisticsDiseases();
+                probabilityMap.forEach((key,val) -> {
+                    switch (key) {
+                        case "osteochondrosis":
+                            statisticsDiseases.setOsteochondrosis(val);
+                            break;
+                        case "rheumatoid_arthritis":
+                            statisticsDiseases.setRheumatoid_arthritis(val);
+                            break;
+                        case "stroke":
+                            statisticsDiseases.setStroke(val);
+                            break;
+                        case "myocardial_infarction":
+                            statisticsDiseases.setMyocardial_infarction(val);
+                            break;
+                        case "coronary_heart_disease":
+                            statisticsDiseases.setCoronary_heart_disease(val);
+                            break;
+                        case "arrhythmia":
+                            statisticsDiseases.setArrhythmia(val);
+                            break;
+                        case "kidney_disease":
+                            statisticsDiseases.setKidney_disease(val);
+                            break;
+                        case "thyroid_disease":
+                            statisticsDiseases.setThyroid_disease(val);
+                            break;
+                    }
+                });
+                statisticsList.add(statisticsDiseases);
+                //System.out.println(probabilityMap);
+                autoResizeColumns(tableViewStatistics);
             }
-            autoResizeColumns(tableViewEnterData);
-            autoResizeColumns(tableViewResultSearch);
+            else{
+                if(statisticCheckBox.isSelected())
+                {
+                    if(!allSimilarCheckBox.isSelected()){
+                        labelStatistics.setLayoutY(layoutLabelEnterDataY);
+                    }
+                    else{
+                        labelStatistics.setLayoutY(layoutLabelStatisticsY);
+                    }
+                    labelStatistics.setVisible(true);
+                    labelStatistics.setText("В результате меньше 3-х прецендентов, статистика отсутствует.");
+                }
+                else{
+                    labelStatistics.setVisible(false);
+                }
+                tableViewStatistics.setVisible(false);
+                labelIMB.setVisible(false);
+            }
+            if(allSimilarCheckBox.isSelected())
+            {
+                labelEnterData.setVisible(true);
+                labelResultSearch.setVisible(true);
+                tableViewResultSearch.setVisible(true);
+                tableViewEnterData.setVisible(true);
+                autoResizeColumns(tableViewEnterData);
+                autoResizeColumns(tableViewResultSearch);
+            }
+            else{
+                labelEnterData.setVisible(false);
+                labelResultSearch.setVisible(false);
+                tableViewResultSearch.setVisible(false);
+                tableViewEnterData.setVisible(false);
+            }
             selectionModel.select(tabResult);
             proceedButton.setDisable(false);
         };
@@ -877,6 +1013,17 @@ public class UsersController implements Initializable {
         genderToggleGroup.getToggles().get(0).setSelected(true);
         headachesToggleGroup.getToggles().get(0).setSelected(false);
         headachesToggleGroup.getToggles().get(1).setSelected(false);
+
+        if(tabQuestions.isSelected())
+        {
+            System.out.println("tabQuestions");
+        }else if(tabParameters.isSelected())
+        {
+            System.out.println("tabParameters");
+        }else if(tabAnalys.isSelected())
+        {
+            System.out.println("tabAnalys");
+        }
         for (int i = 0; i < 4; i++) {
             if(meatToggleGroup.getToggles().get(i).isSelected())
             {
@@ -915,6 +1062,31 @@ public class UsersController implements Initializable {
                 restlessToggleGroup.getToggles().get(i).setSelected(false);
             }
         }
+
+        waistTextField.setText("");
+        hipTextField.setText("");
+        dreamTextField.setText("");
+        ageTextField.setText("");
+        heightTextField.setText("");
+        weightTextField.setText("");
+        walkTextField.setText("");
+        exerciseStressTextField.setText("");
+        exerciseStressOnWorkTextField.setText("");
+        cigarettesTextField.setText("");
+        averageSystolicTextField.setText("");
+        averageDiastolicTextField.setText("");
+        averageHeartRateTextField.setText("");
+        totalCholesterolTextField.setText("");
+        hdlTextField.setText("");
+        lpaTextField.setText("");
+        probnpTextField.setText("");
+        apobTextField.setText("");
+        glucoseTextField.setText("");
+        creatinineTextField.setText("");
+        uricAcidcreatinineTextField.setText("");
+        crpTextField.setText("");
+        insulinTextField.setText("");
+        tshTextField.setText("");
     }
 
     public void handleBtnSave(ActionEvent actionEvent) {

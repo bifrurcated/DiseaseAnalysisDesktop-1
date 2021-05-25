@@ -18,7 +18,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="710.0" prefWidth="840.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.vvsu.diseaseanalysisdes.controllers.UsersController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="710.0" prefWidth="840.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.vvsu.diseaseanalysisdes.controllers.UsersController">
    <tabs>
       <Tab fx:id="tabInput" text="Ввод">
          <content>
@@ -91,7 +91,7 @@
                         <Line endX="434.00006103515625" layoutX="386.0" layoutY="146.0" startX="-386.0" stroke="#dddddd" strokeWidth="3.0" />
                         <TabPane layoutX="10.0" layoutY="156.0" prefHeight="340.0" prefWidth="823.0" tabClosingPolicy="UNAVAILABLE">
                            <tabs>
-                              <Tab style="-fx-background-color: rgb(255, 240, 199);" text="Вопросы">
+                              <Tab fx:id="tabQuestions" style="-fx-background-color: rgb(255, 240, 199);" text="Вопросы">
                                  <content>
                                     <ScrollPane prefHeight="170.0" prefWidth="823.0">
                                        <content>
@@ -674,7 +674,7 @@
                                     </ScrollPane>
                                  </content>
                               </Tab>
-                              <Tab style="-fx-background-color: rgb(140, 221, 255);" text="Параметры">
+                              <Tab fx:id="tabParameters" style="-fx-background-color: rgb(140, 221, 255);" text="Параметры">
                                  <content>
                                     <ScrollPane prefHeight="170.0" prefWidth="823.0">
                                        <content>
@@ -808,7 +808,7 @@
                                     </ScrollPane>
                                  </content>
                               </Tab>
-                              <Tab style="-fx-background-color: rgb(217, 109, 82);" text="Анализы">
+                              <Tab fx:id="tabAnalys" style="-fx-background-color: rgb(217, 109, 82);" text="Анализы">
                                  <content>
                                     <ScrollPane prefHeight="170.0" prefWidth="823.0">
                                        <content>
@@ -1181,7 +1181,7 @@
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
                      <children>
                         <TableView fx:id="tableViewEnterData" layoutX="15.0" layoutY="45.0" prefHeight="120.0" prefWidth="803.0" />
-                        <Label layoutX="-5.0" layoutY="5.0" prefHeight="30.0" prefWidth="375.0" style="-fx-text-fill: black;" text="Введенные данные:">
+                        <Label fx:id="labelEnterData" layoutX="-5.0" layoutY="5.0" prefHeight="30.0" prefWidth="375.0" style="-fx-text-fill: white;" text="Введенные данные:">
                            <padding>
                               <Insets left="10.0" top="10.0" />
                            </padding>
@@ -1190,7 +1190,7 @@
                            </font>
                         </Label>
                         <TableView fx:id="tableViewResultSearch" layoutX="15.0" layoutY="215.0" prefHeight="270.0" prefWidth="803.0" />
-                        <Label layoutX="-5.0" layoutY="175.0" prefHeight="30.0" prefWidth="375.0" style="-fx-text-fill: black;" text="Результаты поиска:">
+                        <Label fx:id="labelResultSearch" layoutX="-5.0" layoutY="175.0" prefHeight="30.0" prefWidth="375.0" style="-fx-text-fill: white;" text="Результаты поиска:">
                            <padding>
                               <Insets left="10.0" top="10.0" />
                            </padding>
@@ -1198,8 +1198,16 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
-                        <TableView fx:id="tableViewEnterData1" layoutX="15.0" layoutY="535.0" prefHeight="120.0" prefWidth="803.0" />
-                        <Label layoutX="-5.0" layoutY="495.0" prefHeight="30.0" prefWidth="375.0" style="-fx-text-fill: black;" text="Статистика:">
+                        <TableView fx:id="tableViewStatistics" layoutX="15.0" layoutY="535.0" prefHeight="100.0" prefWidth="803.0" />
+                        <Label fx:id="labelStatistics" layoutX="-5.0" layoutY="495.0" prefHeight="30.0" prefWidth="679.0" style="-fx-text-fill: white;" text="Вероятность заболевания по болезням:">
+                           <padding>
+                              <Insets left="10.0" top="10.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelIMB" layoutX="-5.0" layoutY="635.0" maxWidth="1.7976931348623157E308" prefHeight="46.0" prefWidth="805.0" style="-fx-text-fill: white;" text="Ваш индекс массы тела равен:">
                            <padding>
                               <Insets left="10.0" top="10.0" />
                            </padding>
